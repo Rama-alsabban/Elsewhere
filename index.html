@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elsewhere</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Permanent+Marker&family=Instrument+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* trace your information */
+.trace{max-width:1240px;margin:0 0 34px}
+.trace h3{font-family:var(--display);font-weight:900;font-size:clamp(26px,3.4vw,44px);line-height:.98;letter-spacing:-.02em;margin:6px 0 14px;max-width:900px}
+.trpick{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.trpick button{border:1.5px solid #111;background:#fff;padding:7px 12px;font:600 14px var(--body);color:#111;box-shadow:2px 2px 0 #111;text-align:left}
+.trpick button[aria-pressed="true"]{background:#fff37a;transform:translate(1px,1px);box-shadow:1px 1px 0 #111}
+.trpick button small{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:400}
+.trex{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:#111;color:#fff;padding:3px 7px;margin:0 0 10px}
+.trpath{display:grid;grid-template-columns:1fr 1.35fr 1.05fr 1.5fr;align-items:stretch;gap:0}
+.tn{position:relative;border:1.5px solid #111;background:#fff;padding:14px 14px 16px;display:flex;flex-direction:column;gap:9px;margin-right:34px;transition:opacity .5s,transform .5s}
+.tn.off{opacity:.18;transform:translateY(6px);pointer-events:none;filter:grayscale(1)}
+.tn::after{content:"";position:absolute;right:-36px;top:42px;width:34px;border-top:3px solid #111}
+.tn.n2::after{border-top-style:solid}
+.tn.n3{border:0;background:transparent;padding:0 0 0 6px;margin-right:0}
+.tn.n3::after{display:none}
+.forks{position:relative;display:flex;flex-direction:column;gap:9px;padding-left:30px}
+.forks::before{content:"";position:absolute;left:0;top:20px;bottom:20px;border-left:2px dashed #111}
+.forks .tq{position:relative;background:rgba(255,255,255,.88)}
+.forks .tq::before{content:"";position:absolute;left:-31px;top:19px;width:29px;border-top:2px dashed #111}
+.tq>button span.poss{display:block;font-family:var(--mono);font-size:9px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:#5a3fd0;margin-bottom:2px}
+.wall{margin-right:34px}
+.tn .tst{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;display:flex;justify-content:space-between;gap:6px}
+.tn .tst b{background:#111;color:#fff;padding:2px 6px;font-weight:400}
+.tn h4{margin:0;font-family:var(--display);font-weight:900;font-size:21px;line-height:1.02;letter-spacing:-.015em}
+.tn p{margin:0;font-size:14px;line-height:1.45}
+.tn ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.tn ul li{font-size:13px;line-height:1.35;border-left:4px solid #111;padding:2px 0 2px 8px}
+.tn ul li small{display:block;font-family:var(--mono);font-size:10px;color:#444}
+.tn .ok{font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;align-self:flex-start;background:#8fd3f5;border:1px solid #111;padding:2px 6px}
+.tn .go{align-self:flex-start;margin-top:auto}
+.tq{border:1.5px dashed #111;background:#fff}
+.tq>button{width:100%;text-align:left;border:0;background:transparent;padding:8px 10px;font:600 13.5px var(--body);color:#111;display:flex;justify-content:space-between;gap:8px}
+.tq>button::after{content:"+";font-family:var(--mono)}
+.tq.open>button::after{content:"\2212"}
+.tq .ans{display:none;padding:0 10px 10px;font-size:13px;line-height:1.45}
+.tq.open .ans{display:block}
+.tq .ans i{display:inline-block;font-style:normal;font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;border:1px dashed #111;padding:1px 5px;margin-top:6px;background:#f1edff}
+.wall{position:relative;background:#111;color:#fff;padding:16px 14px;display:flex;flex-direction:column;gap:10px;justify-content:center;transition:opacity .6s,transform .6s;background-image:repeating-linear-gradient(135deg,transparent 0 9px,rgba(201,184,255,.22) 9px 11px)}
+.wall.off{opacity:.14;transform:translateX(10px)}
+.wall .big{font-family:var(--display);font-weight:900;font-size:clamp(26px,2.6vw,38px);line-height:.95;letter-spacing:-.02em}
+.wall p{margin:0;font-size:13.5px;line-height:1.45;color:#eee}
+.trsum{display:grid;grid-template-columns:repeat(3,1fr);margin-top:16px;border:1.5px solid #111;background:#fff;transition:opacity .5s}
+.trsum.off{opacity:0;pointer-events:none}
+.trsum div{padding:12px 14px;border-right:1.5px solid #111;font-size:14px;line-height:1.35}
+.trsum div:last-child{border-right:0;background:#111;color:#fff}
+.trsum b{display:block;font-family:var(--display);font-weight:900;font-size:24px;line-height:1}
+.mechs{margin-top:8px}
+.mechs summary{cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:10px 0}
+@media (max-width:1000px){.trpath{grid-template-columns:1fr}.tn{margin:0 0 28px}.tn::after{right:auto;left:28px;top:auto;bottom:-29px;width:0;height:27px;border-top:0;border-left:3px solid #111}.tn.n2::after{border-left-style:solid}.wall{margin:0 0 26px}.trsum{grid-template-columns:1fr}.trsum div{border-right:0;border-bottom:1.5px solid #111}}
+@media (prefers-reduced-motion:reduce){.tn,.wall,.trsum{transition:none}}
+/* finding */
+.finding{margin:0 0 26px;padding:22px 24px;border:1.5px solid #111;background-color:#8fd3f5}
+.finding .fh{font-family:var(--display);font-weight:900;font-size:clamp(38px,6vw,84px);line-height:.92;letter-spacing:-.03em;margin:6px 0 14px}
+.finding .fh span{display:block}
+.finding p{margin:0 0 8px;font-size:17px;line-height:1.5;max-width:820px}
+.finding ul{margin:4px 0 10px;padding-left:20px;font-size:15px;line-height:1.5}
+.finding .undo{font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;margin-top:12px;padding-top:10px;border-top:1.5px dashed #111;max-width:820px}
+/* landscape labels in the reveal: compact, deliberate */
+.pin.compact span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px}
+.bline{position:absolute;left:3vw;right:3vw;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:0}
+.bline i{flex:1;border-top:2px dashed #111;min-width:12px}
+.bline .bchip{position:static}
+.bline .bnode{background:#fff37a;border:1.5px solid #111;padding:4px 8px;font-size:11.5px;font-weight:700;white-space:nowrap}
+.bline .bwall{background:#111;color:#fff;padding:6px 10px;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.bline i.sol{border-top:3px solid #111}
+.bfork .cs{display:none}
+.bline .bnode.obs{background:#8fd3f5}
+.bfork{position:relative;display:flex;flex-direction:column;gap:5px;padding-left:30px;margin-left:16px}
+.bfork::before{content:"";position:absolute;left:0;top:12px;bottom:12px;border-left:2px dashed #111}
+.bfork .bchip{position:relative;font-size:11px;padding:3px 8px;background:rgba(255,255,255,.85)}
+.bfork .bchip::before{content:"";position:absolute;left:-30px;top:50%;width:28px;border-top:2px dashed #111}
+.bfork .bchip em{font-style:normal;font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:#5a3fd0;margin-right:5px}
+@media (max-width:760px){.bline{left:10px;right:10px}.bline i.sol{flex:0 0 14px;min-width:14px}.bline .bnode.obs,.bline i.sol:nth-of-type(2){display:none}.bline .bnode{font-size:10px;padding:3px 5px}.bline .bwall{white-space:normal;max-width:96px;font-size:8.5px;line-height:1.25;padding:4px 6px}.bfork{margin-left:6px;padding-left:16px;min-width:0;flex:1}.bfork .bchip{font-size:10px;padding:2px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.bfork .bchip::before{left:-16px;width:14px}.bfork .bchip em{display:none}.bfork .cf{display:none}.bfork .cs{display:inline}}
+/* Elsewhere: an experimental travel publication disguised as an AI planner.
+     White editorial pages, heavy sans headlines, a painted landscape that collects your answers,
+     black editorial panels for the reveal, and a live negotiation between what you give and what you get. */
+  --paper:#ffffff;
+  --ink:#111111;
+  --grey:#8a8a8a;
+  --rule:#e6e6e6;
+  --navy:#13246f;
+  --green:#2f7a4b;
+  --pink:#eaa2c9;
+  --blue:#2257d4;
+  --red:#cf3a3c;
+  --yellow:#f2d24b;
+  --display:"Archivo", "Helvetica Neue", Arial, sans-serif;
+  --sans:"Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono:"Space Mono", ui-monospace, Menlo, monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.45;overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+input{color:var(--ink);-webkit-text-fill-color:var(--ink);caret-color:var(--ink);background:transparent}
+input::placeholder{color:#9a9a9a;-webkit-text-fill-color:#9a9a9a;opacity:1}
+button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+
+/* ---------- index ---------- */
+.index{position:fixed;inset:0;overflow-y:auto;background:var(--paper);z-index:5;transition:opacity .7s}
+.index-head{max-width:1100px;margin:0 auto;padding:44px 24px 24px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px}
+.eyebrow{font-family:var(--mono);font-weight:400;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#777}
+.index-head h1{font-family:var(--display);font-weight:800;font-stretch:62%;letter-spacing:.005em;font-size:clamp(64px,11.5vw,168px);line-height:.82;color:#111;margin:4px 0 2px}
+.corner{position:absolute;top:14px;left:18px;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:#777;max-width:230px;line-height:1.5}
+.decl{max-width:760px;margin:6px auto 26px;padding:0 24px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.decl .k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#777}
+.decl q{quotes:none;font-weight:600;font-size:clamp(19px,2.2vw,24px);line-height:1.25;letter-spacing:-.01em;text-wrap:balance}
+.decl .row{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.decl button{border:1.5px solid #111;background:#fff;border-radius:999px;padding:6px 14px;font-size:14px;font-weight:500}
+.decl button[aria-pressed="true"]{background:#fff37a}
+.decl .ok{font-family:var(--mono);font-size:10px;color:#777;min-height:14px}
+.index-head p{margin:0;color:#444;font-size:17px}
+.cards{max-width:1100px;margin:0 auto;padding:0 24px 30px;display:grid;grid-template-columns:repeat(3,1fr)}
+.card{position:relative;aspect-ratio:3/4;border:0;padding:16px;text-align:left;color:#fff;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.card .top{display:flex;justify-content:space-between}
+.card canvas{position:absolute;left:50%;top:47%;width:58%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;transition:transform .5s}
+.card:hover canvas{transform:translate(-50%,-50%) scale(1.04)}
+.card .bottom{display:flex;justify-content:space-between;align-items:flex-end;position:relative}
+.card b{font-family:var(--display);font-weight:900;font-size:clamp(26px,3vw,38px);line-height:.95;letter-spacing:-.01em}
+.card .arrow{width:22px;height:22px;border:1.5px solid currentColor;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px}
+.card.other{background:var(--paper);color:var(--ink);border:1px solid var(--rule)}
+.card.other form{position:absolute;left:16px;right:16px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px}
+.card.other input{border:0;border-bottom:1.5px solid var(--ink);font:inherit;font-size:22px;padding:6px 0}
+.tag{border:1px solid var(--ink);background:var(--paper);border-radius:999px;padding:4px 11px;font-family:var(--mono);font-size:11px;letter-spacing:.03em}
+.disclose{max-width:760px;margin:0 auto;padding:0 24px 40px;font-size:13px;line-height:1.55;color:#444}
+.disclose b{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink);display:block;margin-bottom:4px}
+
+/* ---------- scene, collage, pins ---------- */
+.greenbg{position:fixed;inset:0;background:#2f9a3a;z-index:0;opacity:0;transition:opacity .8s}
+.collage-on .greenbg{opacity:1}
+#scene{position:fixed;left:0;top:0;width:100vw;height:100vh;clip-path:circle(0 at 50% 50%);z-index:1}
+#scene.open{transition:clip-path 1.4s cubic-bezier(.7,0,.2,1)}
+.scribble{position:fixed;z-index:3;left:calc(min(40vw,520px) + 22px);top:22px;font-family:"Permanent Marker","Marker Felt",sans-serif;color:#ffe14a;font-size:clamp(46px,7vw,112px);line-height:.95;letter-spacing:.14em;text-transform:uppercase;transform:rotate(-4deg);pointer-events:none;max-width:calc(100vw - min(40vw,520px) - 80px);opacity:0;transition:opacity .8s}
+.collage-on .scribble.show{opacity:1}
+.bigwhite{position:fixed;z-index:3;right:28px;bottom:calc(20vh - .55em);font-family:var(--display);font-weight:900;color:#fff;font-size:clamp(44px,6.4vw,104px);line-height:.86;letter-spacing:-.04em;text-transform:uppercase;text-align:right;pointer-events:none;opacity:0;transition:opacity .8s}
+.collage-on .bigwhite{opacity:1}
+.props{position:fixed;z-index:3;left:calc(min(40vw,520px) + 18px);right:18px;bottom:1.5vh;height:19vh;display:flex;align-items:flex-end;pointer-events:none;opacity:0;transition:opacity .6s}
+.collage-on .props{opacity:1}
+.prop{position:relative;margin-left:6px;transform:rotate(var(--r));filter:drop-shadow(0 6px 6px rgba(0,0,0,.28));animation:drop .6s cubic-bezier(.3,1.4,.5,1) both;display:flex;flex-direction:column;align-items:center;gap:5px;flex:none}
+.prop:first-child{margin-left:0}
+@keyframes drop{from{opacity:0;transform:translateY(-30px) rotate(calc(var(--r) * 3))}to{opacity:1;transform:rotate(var(--r))}}
+.prop .cap{color:#fff;font-weight:700;font-size:9.5px;letter-spacing:.03em;text-transform:uppercase;white-space:nowrap}
+.paper{background:#fff;color:#111}
+.cal{width:78px}.cal .hd{background:#e53935;color:#fff;font-weight:800;font-size:10px;text-align:center;padding:3px 0;letter-spacing:.06em;text-transform:uppercase}
+.cal .bd{height:58px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:30px;position:relative}
+.cal .bd::after{content:"";position:absolute;width:50px;height:42px;border:2.5px solid #e53935;border-radius:50%;transform:rotate(-8deg)}
+.cal.grid .bd{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;padding:6px;align-content:start}.cal.grid .bd::after{display:none}.cal.grid .bd i{height:8px;background:#ffd84a}
+.note-y{width:96px;min-height:80px;background:#ffe14a;font-family:"Permanent Marker",sans-serif;font-size:13px;line-height:1.05;padding:9px;display:flex;align-items:center;justify-content:center;text-align:center;color:#111}
+.receipt{width:80px;padding:7px 7px 14px;font-family:var(--mono);font-size:7.5px;line-height:1.5;clip-path:polygon(0 0,100% 0,100% 92%,90% 100%,80% 92%,70% 100%,60% 92%,50% 100%,40% 92%,30% 100%,20% 92%,10% 100%,0 92%)}
+.receipt b{display:block;font-family:var(--sans);font-size:12px;font-weight:900;margin-top:3px}
+.keytag{width:74px;height:96px;border-radius:12px 12px 30px 30px;background:#9fe3b0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-weight:900;font-size:10.5px;text-transform:uppercase;color:#111;padding:6px;text-align:center;line-height:1.1}
+.keytag::before{content:"";width:14px;height:14px;border-radius:50%;background:#2f9a3a;margin-bottom:4px}
+.tagp{width:104px;padding:10px 8px 10px 18px;background:#ff7ac8;color:#111;font-weight:800;font-size:10.5px;text-transform:uppercase;clip-path:polygon(14% 0,100% 0,100% 100%,14% 100%,0 50%);line-height:1.15}
+.card2{width:110px;height:68px;border-radius:6px;background:#8fd3f5;padding:7px;display:flex;flex-direction:column;justify-content:space-between;font-weight:900;font-size:11px;text-transform:uppercase;color:#111}
+.card2 small{font-family:var(--mono);font-size:7.5px;font-weight:400;text-transform:none}
+.polar{width:84px;padding:6px 6px 16px}.polar .ph2{height:62px;background:#bfe6ff;display:flex;align-items:flex-end;justify-content:center;gap:3px;padding-bottom:6px}.polar .ph2 i{width:10px;border-radius:5px 5px 3px 3px}
+
+.pins{position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:3;pointer-events:none;overflow:hidden}
+.pin{position:absolute;left:0;top:0;display:flex;flex-direction:column;border:1.5px solid #111;font-size:11.5px;font-weight:700;line-height:1.15;text-transform:uppercase;letter-spacing:.02em;max-width:210px;box-shadow:2px 2px 0 #111;transition:transform .5s cubic-bezier(.3,1,.4,1),opacity .4s;animation:pinin .5s cubic-bezier(.3,1.5,.5,1) both}
+@keyframes pinin{from{opacity:0;scale:.6}to{opacity:1;scale:1}}
+.pin .row1{display:flex}
+.pin b{background:#111;color:#fff;font-family:var(--mono);font-size:10.5px;padding:4px 5px;display:flex;align-items:center}
+.pin span{padding:4px 7px}
+.pin i.tail{position:absolute;left:10px;bottom:-8px;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #111}
+.pin .was{font-family:var(--mono);font-size:9.5px;font-weight:400;text-transform:none;letter-spacing:0;padding:2px 7px 4px;background:#fff;border-top:1px solid #111}
+.pin .was s{opacity:.7}
+.pin .inf{font-family:var(--mono);font-size:9.5px;font-weight:400;text-transform:none;letter-spacing:0;padding:3px 7px;background:#fff;border-top:1.5px dashed #111;color:#333}
+.pin.ghost{background:transparent!important;border-style:dashed;box-shadow:none;color:#fff;opacity:.85}
+.pin.ghost b{background:transparent;color:#fff;border-right:1.5px dashed #fff}
+.pin.ghost i.tail{border-top-color:#fff}
+.pin.labor{background:#111;color:#fff}
+.pin.labor b{background:#fff;color:#111}
+
+/* ---------- interview column ---------- */
+.col{position:fixed;top:0;left:0;bottom:0;width:min(40vw,520px);background:var(--paper);z-index:6;display:flex;flex-direction:column;transform:translateX(-102%);transition:transform .9s cubic-bezier(.7,0,.2,1)}
+.col.open{transform:none}
+.col-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:16px 28px 12px;border-bottom:1px solid var(--ink)}
+.col-head b{font-family:var(--display);font-weight:900;font-size:22px;letter-spacing:-.01em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.col-note{padding:6px 28px;background:#f6f6f4;font-family:var(--mono);font-size:10px;letter-spacing:.03em;color:#555;border-bottom:1px solid var(--rule)}
+.log{flex:1;overflow-y:auto;padding:8px 28px 12px;display:flex;flex-direction:column}
+.ex{display:flex;flex-direction:column;gap:10px;padding:18px 0;border-top:1px solid var(--rule);animation:fade .45s ease-out}
+.ex:first-child{border-top:0}
+@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.ex .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--grey)}
+.q{font-size:24px;font-weight:600;line-height:1.2;letter-spacing:-.01em;text-wrap:balance}
+.q.sub{font-size:19px}
+.ex.done .q{font-size:17px;color:#3a3a3a}
+.ex.done .k{color:#b0b0b0}
+.a{align-self:flex-start;background:var(--ink);color:#fff;border-radius:999px;padding:5px 13px;font-size:15px;font-weight:500}
+.a.skip{background:none;color:var(--grey);border:1px dashed #ccc}
+.ack{color:#333;font-size:15.5px}
+.rate{display:flex;gap:12px}
+.rate button{border:0;background:none;padding:0;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--grey);text-decoration:underline;text-underline-offset:3px}
+.rate button:hover{color:var(--ink)}
+.rate button.on{color:var(--ink);text-decoration:none;background:var(--yellow);padding:0 4px}
+.dots span{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ink);margin-right:5px;animation:blink 1s infinite}
+.dots span:nth-child(2){animation-delay:.15s}.dots span:nth-child(3){animation-delay:.3s}
+@keyframes blink{50%{opacity:.2}}
+.answer{padding:14px 28px 20px;border-top:1px solid var(--rule);display:flex;flex-direction:column;gap:12px}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opt{border:1px solid var(--ink);background:var(--paper);border-radius:999px;padding:7px 14px;font-size:15px;font-weight:500}
+.opt:hover{background:var(--ink);color:#fff}
+.opt.main{background:var(--ink);color:#fff}
+.opt.sel{background:var(--yellow);color:var(--ink)}
+.opt.skip{border-color:#ccc;color:var(--grey);border-style:dashed}
+.hint{font-family:var(--mono);font-size:10px;color:var(--grey);letter-spacing:.03em}
+.type{display:flex;gap:8px}
+.type input{flex:1;min-width:0;border:0;border-bottom:1.5px solid var(--ink);font:inherit;padding:8px 0}
+.type button{border:0;background:none;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.type button:disabled{opacity:.3;cursor:default}
+.save{align-self:flex-start;border:0;background:var(--ink);color:#fff;border-radius:999px;padding:12px 22px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-top:14px}
+
+/* ---------- itinerary poster ---------- */
+.sheet{position:fixed;top:0;bottom:0;right:0;left:min(40vw,520px);z-index:5;background:var(--blue);overflow:auto;display:flex;flex-direction:column;align-items:center;padding:36px 28px 48px;opacity:0;pointer-events:none;transition:opacity .5s}
+.sheet.open{opacity:1;pointer-events:auto}
+.poster{width:min(600px,100%);background:#fff;color:#111;border:1.5px solid #111;box-shadow:0 18px 40px rgba(0,0,0,.25)}
+.ph{text-align:center;padding:16px 14px 10px;border-bottom:1.5px solid #111}
+.ph .t1{font-weight:500;font-size:clamp(30px,4.2vw,46px);line-height:.95;letter-spacing:.01em;text-transform:uppercase}
+.ph .t2{font-weight:500;font-size:clamp(18px,2.4vw,26px);text-transform:uppercase;letter-spacing:.02em;margin-top:2px}
+.ph .src{display:inline-block;margin-top:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;border:1px solid #111;padding:2px 7px}
+.cols{display:grid;grid-template-columns:34px repeat(3,1fr) 50px;align-items:end;border-bottom:1.5px solid #111}
+.cols span{padding:8px 4px 6px;text-align:center;font-weight:600;font-size:clamp(14px,1.8vw,20px);text-transform:uppercase}
+.cols span:first-child,.cols span:last-child{font-family:var(--mono);font-size:9.5px;font-weight:400}
+.cols em{font-style:normal;display:inline-flex;width:1.15em;height:1.15em;border:1.5px solid #111;border-radius:50%;align-items:center;justify-content:center;font-size:.62em;margin-left:3px;vertical-align:.25em}
+.prow{display:grid;grid-template-columns:34px repeat(3,1fr) 50px;border-bottom:1px solid #111;min-height:28px}
+.prow>.n{font-family:var(--mono);font-size:10.5px;display:flex;justify-content:center;padding-top:6px;border-right:1px solid #111;text-align:center}
+.prow>.m{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;display:flex;justify-content:center;padding-top:6px;border-left:1px solid #111;text-align:center;line-height:1.2}
+.prow>.c{padding:5px 4px;display:flex;flex-direction:column;border-right:1px dashed #bbb;min-height:88px}
+.prow>.c:nth-child(4){border-right:0}
+.y{background:#fff37a;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:6px 6px 4px;gap:4px;text-align:center;font-size:11.5px;line-height:1.25;position:relative}
+.y.relax{background:repeating-linear-gradient(0deg,#cfcfcf 0 2px,#f4f4f4 2px 5px)}
+.y.chg{outline:2.5px dashed #e53935;outline-offset:-2px}
+.y.chg::before{content:"changed";position:absolute;top:-7px;right:4px;background:#e53935;color:#fff;font-family:var(--mono);font-size:8px;padding:0 4px;text-transform:uppercase}
+.y .ar{font-size:16px;line-height:1}
+.y .why{font-family:var(--mono);font-size:8.5px;color:#555;letter-spacing:.02em}
+.pill{align-self:stretch;border-radius:999px;padding:3px 8px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;text-align:center;line-height:1.2;color:#111}
+.t-culture{background:#f4a6c9}.t-food{background:#35b955;color:#fff}.t-nature{background:#3d9be9;color:#fff}.t-nightlife{background:#111;color:#fff}.t-shopping{background:#c9b8ff}.t-relax{background:#bdbdbd}.t-travel{background:#8fd3f5}.t-routine{background:#e53935;color:#fff}
+.dayhead{grid-column:2/5;padding:7px 6px 4px;font-weight:500;font-size:clamp(22px,3vw,34px);line-height:.95;text-transform:uppercase;text-align:center}
+.span3{grid-column:2/5;padding:6px 4px;display:flex;justify-content:center;gap:5px;flex-wrap:wrap;align-items:center}
+.dot{width:24px;height:24px;border-radius:50%;background:#35b955;color:#fff;font-weight:700;font-size:11px;display:inline-flex;align-items:center;justify-content:center;text-transform:uppercase}
+.why-box{padding:8px 10px;border-top:1.5px solid #111;font-size:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.why-box h5{margin:0 0 4px;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase}
+.why-box ul{margin:0;padding-left:16px}
+.why-box li.new{background:#fff37a}
+.why-box li.lost{text-decoration:line-through;color:#888}
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;padding:8px 10px;border-top:1.5px solid #111;font-size:10px;text-transform:uppercase;letter-spacing:.03em}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px;vertical-align:-1px}
+.bye{text-align:center;font-weight:600;font-size:clamp(30px,4.4vw,50px);line-height:.82;padding:10px 0 12px;text-transform:uppercase}
+.bye span{display:block;color:#fff;-webkit-text-stroke:1.2px #111}
+
+/* ---------- shared print texture ---------- */
+.tex{background-image:var(--grain);background-size:180px 180px;background-blend-mode:multiply}
+.paperbg{background-color:#f3f2ee;background-image:var(--grain);background-size:180px 180px;background-blend-mode:multiply}
+.hatch{background-image:repeating-linear-gradient(45deg,rgba(17,17,17,.10) 0 2px,transparent 2px 9px),var(--grain);background-size:auto,180px 180px}
+.boxed{font-family:var(--display);font-weight:900;line-height:1.12;margin:0;letter-spacing:-.025em}
+.boxed i{font-style:normal;background:#fff;color:#111;padding:0 .14em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.boxed span{background:#fff37a;color:#111;padding:0 .14em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.btn{border:2px solid #111;background:#fff;color:#111;border-radius:999px;padding:11px 19px;font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase}
+.btn:hover{background:#111;color:#fff}
+.btn.solid{background:#111;color:#fff}
+.btn.solid:hover{background:#333}
+.btn:disabled{opacity:.35;cursor:default}
+.mini{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+
+/* ---------- ACT 02: the reward (itinerary + postcard) ---------- */
+.reward-next{width:min(600px,100%);display:flex;flex-direction:column;gap:12px;margin-top:30px;color:#fff}
+.reward-next h3{margin:0;font-family:var(--display);font-weight:900;font-size:30px;letter-spacing:-.02em}
+.pcard{width:min(600px,100%);background:#fff;padding:14px;box-shadow:0 18px 40px rgba(0,0,0,.25);transform:rotate(-1deg)}
+.pcard img{display:block;width:100%;height:auto}
+.pcbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.pcbar .btn{background:#fff37a;border-color:#111}
+.pcnote{font-family:var(--mono);font-size:10px;color:#dbe6ff;letter-spacing:.03em}
+
+/* ---------- ACT 03: the reveal ---------- */
+.got{position:fixed;top:14px;left:20px;z-index:4;background:#fff;padding:5px 11px;border-radius:999px;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;opacity:0;transition:opacity .6s;border:1.5px solid #111}
+.got.show{opacity:1}
+.under{position:fixed;left:0;right:0;bottom:0;top:30vh;z-index:8;overflow-y:auto;transform:translateY(102%);transition:transform 1.1s cubic-bezier(.7,0,.2,1)}
+.under.open{transform:none}
+.blackband{background:#111;color:#fff;padding:30px 28px 34px}
+.blackband .in{max-width:1240px;display:grid;grid-template-columns:1.15fr 1fr;gap:32px;align-items:end}
+.blackband .boxed{font-size:clamp(36px,5vw,78px)}
+.blackband .lede2{font-size:17.5px;line-height:1.5;color:#e9e9e9}
+.lede2 mark{background:#fff37a;color:#111;padding:0 4px}
+.layers{position:sticky;top:0;z-index:3;background:#fff;display:grid;grid-template-columns:repeat(3,1fr);border-bottom:2px solid #111}
+.layers button{border:0;border-right:2px solid #111;padding:12px 16px 11px;text-align:left;display:flex;flex-direction:column;gap:2px;color:#111}
+.layers button:last-child{border-right:0}
+.layers button b{font-family:var(--display);font-weight:900;font-size:clamp(17px,2vw,24px);letter-spacing:-.015em;line-height:1}
+.layers button small{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase}
+.layers button[aria-selected="false"]{filter:saturate(.3) brightness(1.04)}
+.layers button[aria-selected="true"]{box-shadow:inset 0 -6px 0 #111}
+.L1{background-color:#fff37a}.L2{background-color:#f4a6c9}.L3{background-color:#d9cffb}
+.lpanel{padding:26px 28px 40px;min-height:60vh}
+.lpanel .intro{max-width:760px;font-size:17px;line-height:1.5;margin:0 0 20px}
+.lpanel .intro b{font-weight:700}
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;max-width:1240px}
+.blk{border:1.5px solid #111;background:#fff;display:flex;flex-direction:column}
+.blk .hd{display:flex;justify-content:space-between;gap:8px;padding:7px 10px;border-bottom:1.5px solid #111;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+.blk .bd{padding:12px 12px 14px;display:flex;flex-direction:column;gap:9px;flex:1}
+.blk .big{font-family:var(--display);font-weight:900;font-size:26px;line-height:1.02;letter-spacing:-.02em}
+.blk .sm{font-size:13.5px;line-height:1.4}
+.said{background:#fff37a;border:1.5px solid #111;padding:6px 9px;font-weight:600;font-size:14.5px;line-height:1.3}
+.inf{border:1.5px dashed #111;background:#fff;padding:6px 9px;font-size:13.5px;line-height:1.3}
+.inf::before{content:"could be inferred \2192  ";font-family:var(--mono);font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:#666}
+.blk.skipped{border-style:dotted;background:transparent}
+.blk.skipped .bd{color:#555;font-size:13.5px}
+.useblk{border:1.5px solid #111}
+.useblk .bd{gap:8px}
+.useblk .tagp2{align-self:flex-start;font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;border:1px dashed #111;padding:2px 6px;background:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip2{font-size:12px;padding:3px 8px;border:1px solid #111;border-radius:999px;background:#fff}
+.dist{max-width:900px;margin:22px 0 0;padding:14px 16px;border-left:5px solid #111;background:#fff;font-size:15px;line-height:1.5}
+.lnext{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.cta{margin:0;padding:28px;background-color:var(--blue);color:#fff;display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.cta .boxed{font-size:clamp(28px,3.8vw,56px)}
+.cta .btn{background:#fff37a}
+/* planes of the landscape: each layer looks at the same picture from a different depth */
+#scene,#pins{transition:transform .8s cubic-bezier(.3,.7,.2,1),opacity .8s,filter .8s;transform-origin:50% 0}
+.plane{position:fixed;left:0;top:0;width:100vw;z-index:4;pointer-events:none;opacity:0;transition:opacity .7s,transform .8s cubic-bezier(.3,.7,.2,1)}
+#recvPlane{transform:translateY(-16px)}
+#beyondPlane{transform:translateY(-24px);background-image:repeating-linear-gradient(45deg,rgba(201,184,255,.55) 0 3px,rgba(201,184,255,.18) 3px 12px);border-bottom:2px dashed #111}
+body.layer-1 #recvPlane{opacity:1;transform:none}
+body.layer-1 #pins{opacity:.0}
+body.layer-2 #pins{transform:translateY(-6px);filter:drop-shadow(0 8px 0 rgba(0,0,0,.25))}
+body.layer-2 #scene{filter:brightness(.92) saturate(.9)}
+body.layer-3 #scene{transform:scale(.94) translateY(8px);opacity:.55;filter:blur(1.5px)}
+body.layer-3 #pins{transform:scale(.94) translateY(8px);opacity:0}
+body.layer-3 #beyondPlane{opacity:1;transform:none}
+.rcard{position:absolute;background:#fff;border:1.5px solid #111;box-shadow:3px 3px 0 #111}
+.bchip{position:absolute;background:#fff;border:1.5px dashed #111;padding:4px 8px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.bchip::after{content:" ?";color:#7b4cff}
+
+/* ---------- ACT 04: the challenge ---------- */
+.act3{position:fixed;inset:0;z-index:9;display:grid;grid-template-rows:30vh 1fr;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .6s}
+.act3.open{opacity:1;visibility:visible}
+.band{position:relative;pointer-events:none}
+.band .boxed{position:absolute;left:24px;bottom:14px;font-size:clamp(20px,2.6vw,38px);max-width:62%}
+.viewsw{position:absolute;right:20px;bottom:16px;display:flex;border:2px solid #111;background:#fff;pointer-events:none}
+.viewsw button{border:0;background:#fff;padding:7px 12px;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase}
+.viewsw button[aria-pressed="true"]{background:#111;color:#fff}
+.halves{display:grid;grid-template-columns:1fr 1fr;min-height:0;pointer-events:none;border-top:2px solid #111}
+.act3.open .halves,.act3.open .viewsw{pointer-events:auto}
+.recv{background-color:var(--blue);overflow-y:auto;padding:22px 22px 40px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.give{overflow-y:auto;padding:22px 24px 40px;color:#111;border-left:2px solid #111}
+.halfhead{width:100%;display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase}
+.recv .halfhead{color:#fff;max-width:600px}
+.give .halfhead{border-bottom:2px solid #111;padding-bottom:9px;margin-bottom:6px}
+.changes{width:min(600px,100%);background:#fff;border:1.5px solid #111}
+.changes h5{margin:0;padding:7px 10px;border-bottom:1.5px solid #111;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:#fff37a}
+.changes ul{margin:0;padding:8px 10px 10px 26px;font-size:13px;line-height:1.45}
+.changes li small{font-family:var(--mono);font-size:9.5px;color:#666}
+.changes .none{padding:10px;font-size:13px;color:#555}
+.pathnote{font-size:15px;line-height:1.5;margin:10px 0 6px}
+.ctl{margin:14px 0;border:1.5px solid #111;background:#fff}
+.ctl h4{margin:0;padding:9px 12px;border-bottom:1.5px solid #111;font-family:var(--display);font-weight:900;font-size:19px;letter-spacing:-.01em;display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.ctl h4 small{font-family:var(--mono);font-size:9.5px;font-weight:400;letter-spacing:.05em;text-transform:uppercase}
+.ctl h4 small.chg{background:#f4a6c9;padding:1px 6px;border:1px solid #111}
+.first{font-family:var(--mono);font-size:10.5px;color:#555;padding:8px 12px 0}
+.first b{color:#111;font-weight:700}
+.choice{display:flex;flex-direction:column;gap:5px;padding:10px 12px}
+.ch{display:grid;grid-template-columns:18px 1fr auto;gap:10px;align-items:start;padding:8px 10px;border:1.5px solid #ddd;background:#fff;text-align:left;width:100%;color:#111}
+.ch:hover{border-color:#111}
+.ch .box{width:16px;height:16px;border:2px solid #111;border-radius:50%;margin-top:2px}
+.ch.multi .box{border-radius:2px}
+.ch[aria-checked="true"]{border-color:#111;background:#fff37a}
+.ch[aria-checked="true"] .box{background:#111}
+.ch .lbl{font-size:14.5px;line-height:1.3}
+.ch .lbl small{display:block;font-family:var(--mono);font-size:9.5px;color:#666;margin-top:3px;letter-spacing:.02em}
+.eff{font-family:var(--mono);font-size:9.5px;letter-spacing:.03em;text-transform:uppercase;padding:2px 6px;white-space:nowrap;align-self:center;border:1px solid #111}
+.eff.same{border-style:dotted;color:#666}
+.eff.diff{background:#f4a6c9}
+.eff.pres{background:#8fd3f5}
+.eff.cur{background:#111;color:#fff}
+.tagfirst{font-family:var(--mono);font-size:8.5px;background:#111;color:#fff;padding:1px 5px;margin-left:6px;vertical-align:1px;text-transform:uppercase;letter-spacing:.04em}
+.role{font-size:13px;padding:0 12px 12px;color:#333}
+.role b{color:#111}
+.actsbar{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+
+/* ---------- ACT 05 + 06 ---------- */
+.overlay{position:fixed;inset:0;z-index:12;overflow-y:auto;opacity:0;pointer-events:none;transition:opacity .6s;color:#111}
+.overlay.open{opacity:1;pointer-events:auto}
+.overlay .blackband .in{grid-template-columns:1fr}
+.oin{max-width:1240px;margin:0 auto;padding:30px 28px 70px;display:flex;flex-direction:column;gap:28px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.two>div{padding:20px;border:1.5px solid #111;display:flex;flex-direction:column;gap:12px}
+.two h3{margin:0;font-family:var(--display);font-weight:900;font-size:26px;letter-spacing:-.015em}
+.two ul{margin:0;padding-left:18px;font-size:15px;line-height:1.55}
+.done-msg{background:#fff;border:1.5px solid #111;padding:10px 12px;font-size:14px}
+.cmp{width:100%;border-collapse:collapse;font-size:14px;background:#fff;border:1.5px solid #111}
+.cmp th{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;text-align:left;padding:9px 8px;border-bottom:1.5px solid #111;background:#fff37a}
+.cmp td{padding:10px 8px;border-bottom:1px solid #ddd;vertical-align:top}
+.cmp td.f{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;width:140px}
+.st{font-family:var(--mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;white-space:nowrap;border:1px solid #111;border-radius:999px}
+.st.add{background:#8fd3f5}.st.rem{background:#f4a6c9}.st.gen{background:#fff37a}.st.same{border-style:dotted;color:#555}
+.kl{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.kl>div{padding:18px;border:1.5px solid #111}
+.kl h4{margin:0 0 8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase}
+.kl ul{margin:0;padding-left:18px;font-size:14px;line-height:1.5}
+.declr{display:block;padding:22px;border:1.5px solid #111;background-color:#fff37a}
+.declr .q{font-family:var(--display);font-weight:900;font-size:clamp(30px,4vw,54px);line-height:.95;letter-spacing:-.02em;margin:6px 0 12px}
+.declr .sd{display:grid;grid-template-columns:repeat(3,1fr);border:1.5px solid #111;background:#fff;margin:4px 0 16px;max-width:980px}
+.declr .sd div{padding:10px 14px 12px;border-right:1.5px solid #111;display:flex;flex-direction:column;gap:3px;position:relative}
+.declr .sd div:last-child{border-right:0}
+.declr .sd div:not(:last-child)::after{content:"\2192";position:absolute;right:-12px;top:50%;transform:translateY(-50%);background:#fff37a;border:1.5px solid #111;width:22px;height:22px;display:grid;place-items:center;font-size:13px;z-index:1}
+.declr .sd b{font-family:var(--display);font-weight:900;font-size:clamp(22px,2.4vw,32px);line-height:1;letter-spacing:-.02em}
+.declr .sd small{font-size:13px;line-height:1.35;color:#333}
+@media (max-width:700px){.declr .sd{grid-template-columns:1fr}.declr .sd div{border-right:0;border-bottom:1.5px solid #111}.declr .sd div:not(:last-child)::after{content:"\2193";right:auto;left:14px;top:auto;bottom:-12px;transform:none}}
+.declr p{margin:0 0 8px;font-size:16px;line-height:1.55;max-width:680px}
+.closing{font-family:var(--display);font-weight:900;font-size:clamp(26px,3.2vw,44px);line-height:1.08;letter-spacing:-.02em;max-width:980px;margin:0}
+.method2{font-family:var(--mono);font-size:10.5px;line-height:1.7;color:#555;max-width:980px}
+
+@media (max-width:900px){
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .col{width:100%;top:auto;height:58%;transform:translateY(102%)}
+  .col.open{transform:none}
+  .sheet{left:0;bottom:58%}
+  .props,.bigwhite{display:none}
+  .scribble{left:20px;font-size:44px;max-width:90vw}
+  .hero2,.two,.kl{grid-template-columns:1fr}
+  .r3{grid-template-columns:1fr}
+  .under{top:24vh}
+  .blackband .in{grid-template-columns:1fr}
+  .layers button small{display:none}
+  .act3{grid-template-rows:24vh 1fr}
+  .declr{grid-template-columns:1fr}
+  .halves{grid-template-columns:1fr;overflow-y:auto}
+  .recv,.give{overflow:visible}
+  .band .boxed{max-width:90%;font-size:20px;bottom:56px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="greenbg" aria-hidden="true"></div>
+<canvas id="scene" role="img" aria-label="Your destination as a painted landscape; what you share is drawn and labelled on it"></canvas>
+<div class="pins" id="pins" aria-label="Labels for what you shared"></div>
+<div class="scribble" id="scribble" aria-hidden="true"></div>
+<div class="bigwhite" aria-hidden="true">Else<br>where</div>
+<div class="props" id="props" aria-label="Scraps of what you shared"></div>
+<div class="got" id="got"></div>
+
+<!-- index -->
+<section class="index" id="index">
+  <div class="index-head">
+    <div class="eyebrow">An experiment in AI travel planning</div>
+    <h1>ELSEWHERE</h1>
+    <p>Where to go next? Pick a place. Your planner takes care of the rest.</p>
+  </div>
+  <div class="decl" role="group" aria-labelledby="declQ">
+    <span class="k">Before you go · optional</span>
+    <q id="declQ">How much do you care about keeping your personal information private when using AI?</q>
+    <div class="row" id="declRow"></div>
+    <span class="ok" id="declOk" aria-live="polite"></span>
+  </div>
+  <div class="cards" id="cards"></div>
+  <div class="disclose"><b>Research prototype · what happens to your answers</b>Elsewhere is a design research project, not a real travel service. Your itinerary is built on this page by simple, visible rules. Your answers stay in this page's memory only and are gone when you close or reload it. Nothing is stored. If you agree when asked, only the name of your destination is sent to Claude (Anthropic's AI) to suggest real places there; none of your other answers ever are. Please use made-up details for anything personal, like an address or a calendar.</div>
+</section>
+
+<!-- ACT 01: interview -->
+<section class="col" id="col" aria-label="Interview with your planner">
+  <div class="col-head"><b id="colTitle">ELSEWHERE</b><span class="mono" id="focus">In focus 0%</span></div>
+  <div class="col-note">Prototype · answers stay on this page · every question can be skipped · use made-up details</div>
+  <div class="log" id="log" aria-live="polite"></div>
+  <div class="answer" id="answer"></div>
+</section>
+<section class="sheet" id="sheet" aria-label="Your itinerary"><div id="posterA" style="width:100%;display:flex;justify-content:center"></div></section>
+
+<!-- the planes that the landscape separates into -->
+<div class="plane" id="recvPlane" aria-hidden="true"></div>
+<div class="plane" id="beyondPlane" aria-hidden="true"></div>
+
+<!-- ACT 03: the reveal -->
+<section class="under paperbg" id="under" aria-label="The exchange behind your trip">
+  <div class="blackband"><div class="in"><div><div class="mini" style="color:#fff37a;margin-bottom:12px">Meanwhile, elsewhere</div><h2 class="boxed"><i>Your trip ended.</i><br><span>This didn’t.</span></h2></div><div class="lede2" id="lede"></div></div></div>
+  <div class="layers" role="tablist" aria-label="Look at the exchange from three depths">
+    <button type="button" role="tab" class="L1 tex" id="tab1" aria-selected="true"><small>Layer 01</small><b>What You Receive</b></button>
+    <button type="button" role="tab" class="L2 tex" id="tab2" aria-selected="false"><small>Layer 02</small><b>What You Provide</b></button>
+    <button type="button" role="tab" class="L3 hatch" id="tab3" aria-selected="false"><small>Layer 03</small><b>Beyond Your View</b></button>
+  </div>
+  <div class="lpanel" id="lpanel" role="tabpanel" aria-live="polite"></div>
+  <div class="cta tex" id="cta"></div>
+</section>
+
+<!-- ACT 04: the challenge -->
+<section class="act3" id="act3" aria-label="The challenge">
+  <div class="band"><h2 class="boxed" id="chHead"></h2>
+    <div class="viewsw" role="group" aria-label="Which exchange to show"><button type="button" id="vOrig" aria-pressed="false">Original exchange</button><button type="button" id="vRev" aria-pressed="true">Revised exchange</button></div>
+  </div>
+  <div class="halves">
+    <div class="recv tex"><div class="halfhead"><span>Left · What you receive</span><span id="recvState"></span></div><div class="changes" id="changes"></div><div id="posterB" style="width:100%;display:flex;justify-content:center"></div></div>
+    <div class="give paperbg"><div class="halfhead"><span>Right · What you provide</span><span id="giveN"></span></div><p class="pathnote" id="pathNote"></p><div id="controls"></div>
+      <div class="actsbar"><button class="btn" type="button" id="resetRev">Back to my original answers</button><button class="btn solid" type="button" id="toLimits">I’m done revising →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ACT 05: the limit -->
+<section class="overlay paperbg" id="limits" aria-label="The limits of control">
+  <div class="blackband"><div class="in"><div><div class="mini" style="color:#fff37a;margin-bottom:12px">The limit</div><h2 class="boxed"><i>You changed what you shared.</i><br><span>But can you change what already happened?</span></h2></div></div></div>
+  <div class="oin">
+    <p class="lede2" style="font-size:17px;line-height:1.55;max-width:820px;margin:0">Your revision changes what you would send <b>next time</b>. It doesn’t reach what you sent the first time. Here is what you can actually control, in this prototype and in a real AI service.</p>
+    <div class="two">
+      <div class="tex" style="background-color:#fff37a"><h3>In this prototype</h3><ul id="hereList"></ul><button class="btn" type="button" id="clearOrig" style="align-self:flex-start">Clear my original answers from this page</button><p class="mini" style="margin:0;text-transform:none;letter-spacing:.02em">This is a real action here. Afterwards, the comparison can no longer show your first answers.</p><div class="done-msg" id="clearMsg" hidden></div></div>
+      <div class="hatch" style="background-color:#d9cffb"><h3>In a real AI service <span class="mini" style="font-weight:400">· not observable in this prototype</span></h3><ul>
+        <li>Deleting a chat usually removes it from <b>your</b> view. Whether and when copies are deleted from the provider’s systems depends on its retention policy.</li>
+        <li>Backups, logs and safety review may keep data for set periods, depending on the provider.</li>
+        <li>Whether conversations may be used to improve models often depends on your settings and account type, and on the provider’s policy at the time.</li>
+        <li>Information already counted in aggregate statistics or product analytics usually can’t be pulled back out one answer at a time.</li>
+        <li>Many privacy laws give you rights to access or delete your data. Using them means asking the provider, which then has to act.</li>
+      </ul><p class="mini" style="margin:0;text-transform:none;letter-spacing:.02em">None of this is about a specific company. It describes where control sits: with the provider, not in the chat box.</p></div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" type="button" id="backToCh">← Back to the challenge</button><button class="btn solid" type="button" id="toFinal">See the two exchanges side by side →</button></div>
+  </div>
+</section>
+
+<!-- ACT 06: the reflection -->
+<section class="overlay paperbg" id="final" aria-label="Your reflection">
+  <div class="oin">
+    <div><div class="mini" style="margin-bottom:10px">Act 06 · The reflection</div><p class="closing" id="finHead">Your original exchange and your revised one, side by side.</p></div>
+    <div class="finding tex" id="finding" aria-live="polite"></div>
+    <p style="font-size:17px;line-height:1.55;max-width:860px;margin:0" id="finLede"></p>
+    <div class="declr tex" id="declBack" hidden></div>
+    <table class="cmp"><thead><tr><th>Question</th><th>First time</th><th>Revised</th><th>Change</th><th>Effect of revision</th></tr></thead><tbody id="cmpBody"></tbody></table>
+    <div class="kl"><div class="tex" style="background-color:#8fd3f5"><h4>Original influence · shaped your stops</h4><ul id="kept"></ul></div><div class="tex" style="background-color:#f4a6c9"><h4>Original influence · little or no effect</h4><ul id="lost"></ul></div><div class="hatch" style="background-color:#d9cffb"><h4>Still uncertain in a real service</h4><ul id="uncertain"><li>Whether first answers are retained, and for how long</li><li>Whether they may be used for analytics, ads or model improvement</li><li>What could have been inferred from them, and where that went</li></ul></div></div>
+    <p class="closing">Privacy isn’t sharing everything or sharing nothing. It’s knowing what a service needs, what you get back, and what you can still control.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" type="button" id="finBack">← Back to the challenge</button><button class="btn solid" type="button" id="again">Plan another trip</button></div>
+    <div class="method2">ELSEWHERE is a design research prototype, not an audit of any AI provider. Inferences are examples of what a service could guess from answers like these, not conclusions about you. Uses are general categories found in published privacy policies and vary by provider, product and settings. Nothing here was used to train a model, sold, or turned into a profile. Your contribution helped produce your itinerary; any value a company might derive from contributions like it is a different thing, and isn’t measurable here.</div>
+  </div>
+</section>
+
+<script>
+(() => {
+const $ = id => document.getElementById(id);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const rng = s => () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pick = a => a[Math.floor(Math.random()*a.length)];
+const clone = o => JSON.parse(JSON.stringify(o));
+(() => { const c = document.createElement('canvas'); c.width = c.height = 180; const g = c.getContext('2d'), d = g.createImageData(180,180);
+  for (let i=0;i<d.data.length;i+=4){ const v = 150 + Math.random()*105; d.data[i]=d.data[i+1]=d.data[i+2]=v; d.data[i+3] = Math.random() < .55 ? 46 : 0; } g.putImageData(d,0,0);
+  document.documentElement.style.setProperty('--grain', `url(${c.toDataURL()})`); })();
+
+/* =========================================================
+   DESTINATIONS
+   ========================================================= */
+const DEST = [
+  {name:'NORWAY',  country:'Norway',  local:'Norge',   region:'Europe', scene:'aurora',  color:'#13246f'},
+  {name:'JAPAN',   country:'Japan',   local:'日本',     region:'Asia',   scene:'blossom', color:'#2f7a4b'},
+  {name:'MOROCCO', country:'Morocco', local:'المغرب',   region:'Africa', scene:'desert',  color:'#eaa2c9'},
+  {name:'GREECE',  country:'Greece',  local:'Ελλάδα',   region:'Europe', scene:'sea',     color:'#2257d4'},
+  {name:'FRANCE',  country:'France',  local:'France',  region:'Europe', scene:'city',    color:'#cf3a3c'}
+];
+const CITIES = {
+  norway:['Tromsø','Oslo','Bergen','Lofoten Islands'], japan:['Kyoto','Tokyo','Osaka','Hokkaido'],
+  morocco:['Marrakech','Fes','Chefchaouen','Essaouira'], greece:['Naxos','Athens','Santorini','Crete'],
+  france:['Paris','Nice','Lyon','Bordeaux'], egypt:['Cairo','Alexandria','Luxor','Aswan'], italy:['Rome','Florence','Venice','Naples'],
+  spain:['Barcelona','Madrid','Seville','Granada'], portugal:['Lisbon','Porto','the Algarve','Madeira'], 'saudi arabia':['Riyadh','Jeddah','AlUla','Abha'],
+  turkey:['Istanbul','Cappadocia','Izmir','Antalya'], 'united states':['New York','Los Angeles','Chicago','New Orleans'], usa:['New York','Los Angeles','Chicago','New Orleans'],
+  uk:['London','Edinburgh','Bath','Manchester'], 'united kingdom':['London','Edinburgh','Bath','Manchester'], germany:['Berlin','Munich','Hamburg','Cologne'],
+  china:['Beijing','Shanghai','Chengdu','Guilin'], india:['Jaipur','Mumbai','Kerala','Varanasi'], mexico:['Mexico City','Oaxaca','Tulum','Guadalajara'],
+  indonesia:['Bali','Jakarta','Yogyakarta','Lombok'], thailand:['Bangkok','Chiang Mai','Phuket','Krabi'], iceland:['Reykjavík','Akureyri','Vík','Höfn'],
+  jordan:['Amman','Petra','Wadi Rum','Aqaba'], uae:['Dubai','Abu Dhabi','Sharjah','Ras Al Khaimah'], peru:['Cusco','Lima','Arequipa','Puno'],
+  nepal:['Kathmandu','Pokhara','Chitwan','Lumbini'], 'south korea':['Seoul','Busan','Jeju','Gyeongju'], korea:['Seoul','Busan','Jeju','Gyeongju'], ireland:['Dublin','Galway','Cork','Kilkenny']
+};
+function sceneOf(t){
+  const L = [['mountain',/tibet|lhasa|nepal|kathmandu|himalaya|alps|switzerland|zermatt|peru|cusco|patagonia|bhutan|mountain|andes|cappadocia/i],
+    ['aurora',/northern|aurora|norway|iceland|lapland|finland|arctic|troms|lofoten|hokkaido|akureyri/i],
+    ['blossom',/kyoto|japan|cherry|sakura|korea|gyeongju/i],
+    ['city',/paris|london|new york|rome|city|berlin|istanbul|lisbon|amsterdam|madrid|vienna|prague|cairo|tokyo|barcelona|seoul|osaka|oslo|athens|lyon|bordeaux|florence|venice|naples|porto|munich|beijing|shanghai|mumbai|bangkok|dubai|riyadh|jeddah|chicago|los angeles|edinburgh/i],
+    ['sea',/beach|island|bali|maldives|greece|greek|sea|coast|thailand|hawaii|amalfi|croatia|alexandria|santorini|naxos|crete|\bnice\b|essaouira|algarve|madeira|phuket|krabi|jeju|aqaba|tulum|antalya|lombok|busan/i],
+    ['desert',/morocco|desert|sahara|dune|egypt|jordan|petra|alula|oman|wadi|marrakech|fes|luxor|aswan/i]];
+  for (const [k,r] of L) if (r.test(t)) return k; return 'meadow';
+}
+
+/* =========================================================
+   THE SEVEN QUESTIONS (all optional) and their answer shapes
+   ========================================================= */
+const FIELDS = ['when','interests','who','stay','budget','prefs','extra'];
+const FL = {when:'Dates', interests:'Interests', who:'Companions', stay:'Where you stay', budget:'Daily budget', prefs:'Preferences', extra:'Schedule'};
+const TAGS = {culture:'Culture & architecture', food:'Food', nature:'Nature & walks', nightlife:'Nightlife', shopping:'Markets & shopping', relax:'Slow & relaxing'};
+const PREFS = {veg:'Vegetarian', mobility:'Avoid stairs & long walks', early:'Early riser', rest:'Afternoon rest'};
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+function label(f, d){
+  if (!d) return 'Not shared';
+  switch (f){
+    case 'when': return d.start ? `${d.start}–${d.start + d.days - 1} ${d.month} · ${d.days} days` : d.month ? `${d.month} · ${d.days} days` : `${d.days} days, dates open`;
+    case 'interests': return d.tags.length ? d.tags.map(t => TAGS[t]).join(', ') : (d.raw || 'Interests');
+    case 'who': return d.label;
+    case 'stay': return d.level === 'address' ? `Exact address: ${d.address}` : d.level === 'area' ? `Neighbourhood: ${d.area}` : 'City only';
+    case 'budget': return d.label;
+    case 'prefs': { const k = Object.keys(PREFS).filter(x => d[x]); return k.length ? k.map(x => PREFS[x]).join(', ') : (d.raw || 'Preferences'); }
+    case 'extra': return d.level === 'calendar' ? 'Whole calendar (example, 34 events)' : d.calls ? 'Busy 9–10 each morning' : (d.raw || 'Schedule');
+  }
+}
+// how specific is an answer? (used to say "generalised" vs "more detail")
+function specificity(f, d){
+  if (!d) return 0;
+  switch (f){
+    case 'when': return d.start ? 3 : d.month ? 2 : 1;
+    case 'interests': return d.tags.length;
+    case 'who': return d.type === 'size' ? 1 : 2;
+    case 'stay': return d.level === 'address' ? 3 : d.level === 'area' ? 2 : 1;
+    case 'budget': return d.level === 'exact' ? 3 : d.level === 'range' ? 2 : 1;
+    case 'prefs': return Object.keys(PREFS).filter(x => d[x]).length;
+    case 'extra': return d.level === 'calendar' ? 2 : 1;
+  }
+}
+const same = (a,b) => JSON.stringify(a) === JSON.stringify(b);
+
+/* parsing typed answers: only keep what was actually said */
+function parseWhen(t){
+  const m = MONTHS.find(x => new RegExp(x.slice(0,3),'i').test(t)) || null;
+  let days = null, start = null;
+  const r = t.match(/(\d{1,2})\s*[-–to]+\s*(\d{1,2})/); if (r){ start = +r[1]; days = Math.max(1, +r[2] - +r[1] + 1); }
+  const dd = t.match(/(\d+)\s*(day|night)/i); if (dd) days = +dd[1] + (/night/i.test(dd[2]) ? 1 : 0);
+  if (!days && /week\b/i.test(t)) days = 7; if (!days && /weekend/i.test(t)) days = 3;
+  if (!days && !m) return null;
+  return {days: Math.min(10, days || 4), start: m ? start : null, month: m, assumedDays: !days};
+}
+function parseInterests(t){ const tags = [];
+  if (/cultur|museum|architect|histor|art|temple|church|mosque|building/i.test(t)) tags.push('culture');
+  if (/food|eat|cuisine|restaurant|caf|coffee|cook/i.test(t)) tags.push('food');
+  if (/natur|hik|walk|park|beach|sea|mountain|outdoor/i.test(t)) tags.push('nature');
+  if (/night|bar|club|party|music|concert/i.test(t)) tags.push('nightlife');
+  if (/shop|market|souk|vintage|craft/i.test(t)) tags.push('shopping');
+  if (/relax|slow|spa|rest|chill|read/i.test(t)) tags.push('relax');
+  return {tags, raw: tags.length ? null : t}; }
+function parseWho(t){
+  const kids = /kid|child|son|daughter|baby|toddler/i.test(t), partner = /partner|wife|husband|girlfriend|boyfriend|fianc/i.test(t);
+  const parent = /mom|mum|dad|mother|father|parent/i.test(t), friends = /friend/i.test(t), solo = /alone|solo|just me|myself/i.test(t);
+  const num = t.match(/(\d+)/); let size = num ? +num[1] : solo ? 1 : (partner && kids) ? 3 : friends ? 4 : 2;
+  const type = kids ? 'family' : partner ? 'partner' : parent ? 'parent' : friends ? 'friends' : solo ? 'solo' : 'other';
+  return {type, size, kids, label:t}; }
+function parseBudget(t){ const n = t.match(/(\d+)/); if (n){ const a = +n[1]; return {level:'exact', amount:a, max: a < 50 ? 1 : a < 110 ? 2 : 3, label:`€${a} a day`}; }
+  if (/cheap|budget|low|tight/i.test(t)) return {level:'broad', max:1, label:'Budget-friendly'};
+  if (/lux|high|comfort|splurge/i.test(t)) return {level:'broad', max:3, label:'Comfortable'};
+  return {level:'broad', max:2, label:'Mid-range'}; }
+function parsePrefs(t){ const d = {veg:/veg/i.test(t), mobility:/wheel|knee|stair|walk|mobil|hip|back/i.test(t), early:/early|sunrise|morning person/i.test(t), rest:/nap|rest|siesta|break/i.test(t)};
+  if (!Object.values(d).some(Boolean)) d.raw = t; return d; }
+function parseExtra(t){ if (/calendar/i.test(t)) return {level:'calendar', calls:true}; if (/call|meeting|work|9/i.test(t)) return {level:'calls', calls:true}; return {level:'other', calls:false, raw:t}; }
+
+/* =========================================================
+   PLACE GUIDE: what's there (built-in, or from Claude with the place name only)
+   ========================================================= */
+const I = (name, area, tags, time, cost, o={}) => ({name, area, tags, time, cost, easy:o.easy !== false, veg:!!o.veg, kids:o.kids !== false, night:!!o.night, romantic:!!o.rom, pop:o.pop || 1});
+const ALEX = {areas:['Downtown','Corniche','Anfoushi','Montaza'], items:[
+  I('Bibliotheca Alexandrina','Downtown',['culture'],'m',1,{pop:3}),
+  I('Kom el-Dikka Roman Amphitheatre','Downtown',['culture'],'a',1,{pop:2}),
+  I('Citadel of Qaitbay','Anfoushi',['culture'],'a',1,{easy:false,pop:3}),
+  I('Catacombs of Kom el Shoqafa','Downtown',['culture'],'m',1,{easy:false,pop:2}),
+  I('Royal Jewelry Museum','Downtown',['culture'],'m',1,{}),
+  I('Sunset walk on the Corniche','Corniche',['nature','relax'],'e',0,{rom:true,pop:3}),
+  I('Montaza Palace Gardens','Montaza',['nature'],'m',1,{pop:2}),
+  I('Swim at Mamoura beach','Montaza',['nature','relax'],'a',1,{}),
+  I('Boat ride in the Eastern Harbour','Corniche',['nature','relax'],'e',1,{rom:true}),
+  I('Ful & falafel breakfast at a local stand','Downtown',['food'],'m',0,{veg:true,pop:2}),
+  I('Koshary lunch downtown','Downtown',['food'],'a',0,{veg:true,pop:2}),
+  I('Fish market dinner in Anfoushi','Anfoushi',['food'],'e',2,{pop:3}),
+  I('Coffee at a historic café','Downtown',['food','relax'],'a',1,{veg:true,rom:true,pop:2}),
+  I('Vegetarian mezze dinner','Downtown',['food'],'e',2,{veg:true,rom:true}),
+  I('Attarine antiques market','Downtown',['shopping'],'a',1,{}),
+  I('Mansheya souk stroll','Downtown',['shopping'],'m',0,{pop:1}),
+  I('Stanley Bridge at night','Corniche',['nightlife','relax'],'e',0,{rom:true,pop:2}),
+  I('Rooftop bar on the Corniche','Corniche',['nightlife'],'e',2,{night:true,kids:false}),
+  I('Live music at a cultural centre','Downtown',['nightlife','culture'],'e',1,{night:true,kids:false}),
+  I('Slow afternoon at a sea-view café','Corniche',['relax','food'],'a',1,{veg:true}),
+  I('Bookshops of Nabi Daniel Street','Downtown',['shopping','culture'],'a',0,{}),
+  I('Breakfast by the sea in Montaza','Montaza',['food','relax'],'m',2,{veg:true,rom:true})
+]};
+function genericGuide(place){
+  const P = place;
+  return {areas:['Old town','Centre','Waterfront','Local quarter'], items:[
+    I(`Walk the historic centre of ${P}`,'Old town',['culture'],'m',0,{pop:3}),
+    I('A history museum (pick one on arrival)','Centre',['culture'],'m',1,{pop:2}),
+    I('A historic place of worship (pick one on arrival)','Old town',['culture'],'a',0,{pop:2}),
+    I('Architecture walk through the centre','Centre',['culture'],'a',0,{}),
+    I('Breakfast at a local bakery','Local quarter',['food'],'m',0,{veg:true,pop:2}),
+    I('Street food lunch','Centre',['food'],'a',0,{veg:true,pop:2}),
+    I('Food market tasting','Centre',['food','shopping'],'a',1,{veg:true}),
+    I('Dinner at a family-run restaurant','Old town',['food'],'e',2,{veg:true,rom:true,pop:2}),
+    I('Grill or seafood dinner by the water','Waterfront',['food'],'e',2,{}),
+    I('Morning walk in the biggest park','Centre',['nature'],'m',0,{pop:2}),
+    I('Sunset viewpoint hike','Old town',['nature'],'e',0,{easy:false,rom:true,pop:2}),
+    I('An afternoon by the water','Waterfront',['nature','relax'],'a',1,{}),
+    I('Botanical garden','Centre',['nature','relax'],'a',1,{}),
+    I('Bar street night out','Centre',['nightlife'],'e',2,{night:true,kids:false}),
+    I('Live music venue','Local quarter',['nightlife'],'e',2,{night:true,kids:false}),
+    I('Late-night food crawl','Old town',['nightlife','food'],'e',1,{night:true,kids:false,veg:true}),
+    I('Flea or antiques market','Local quarter',['shopping'],'m',0,{}),
+    I('Independent shops in the local quarter','Local quarter',['shopping'],'a',1,{}),
+    I('Slow café afternoon','Old town',['relax','food'],'a',1,{veg:true,rom:true}),
+    I('Spa or bathhouse','Centre',['relax'],'a',3,{}),
+    I('Sunset by the water','Waterfront',['relax','nature'],'e',0,{rom:true,pop:2})
+  ]};
+}
+/* BUILT-IN GUIDE: curated, real places for the cities ELSEWHERE knows by name.
+   name|area index|tags (c culture, f food, n nature, l nightlife, s shopping, r relax)|time m/a/e|cost 0–3|flags (v veg-friendly, k not for kids, n late night, r romantic, h hard on the legs, 2/3 popularity) */
+const CG = {
+oslo:['Sentrum|Bjørvika|Grünerløkka|Frogner & Bygdøy',
+ 'Vigeland Sculpture Park|3|nc|m|0|3','Opera House roof walk|1|c|m|0|3','Fram Museum|3|c|m|1|2','Astrup Fearnley Museum|0|c|m|1|','Holmenkollen ski jump & view|3|nc|m|1|','Breakfast at a Grünerløkka bakery|2|f|m|1|v',
+ 'Munch Museum|1|c|a|1|3','Norwegian Museum of Cultural History|3|c|a|1|2','Akershus Fortress|0|c|a|0|2','Mathallen food hall lunch|2|fs|a|1|v2','Ferry to Hovedøya island|0|nr|a|1|r','Walk along the Akerselva river|2|n|a|0|','Vintage shops of Grünerløkka|2|s|a|1|',
+ 'Floating sauna on the fjord|1|r|e|2|rk','Dinner on the Aker Brygge waterfront|0|f|e|3|r2','Vegetarian dinner in Grünerløkka|2|f|e|2|vr','Live music at Blå|2|l|e|2|kn','Bars along Torggata|0|l|e|2|kn','Sunset from the Opera House|1|rn|e|0|r2','Evening walk along the Akerselva|2|nr|e|0|r','Street food at Vippa|1|f|e|1|v','Sunset swim at Sørenga seawater pool|1|n|e|0|'],
+'tromso':['Sentrum|Tromsdalen|Telegrafbukta|Kvaløya',
+ 'Polaria Arctic aquarium|0|cn|m|1|2','Polar Museum|0|c|m|1|2','Arctic Cathedral|1|c|m|1|3','Breakfast at a harbour café|0|f|m|1|v','Telegrafbukta beach walk|2|n|m|0|','Tromsø Museum|2|c|m|1|',
+ 'Fjellheisen cable car|1|nr|a|2|3','Husky sledding (half-day)|3|n|a|3|h2','Fjord drive around Kvaløya|3|n|a|1|r','Perspektivet Museum|0|c|a|0|','Reindeer stew lunch at the old town|0|f|a|2|','Prestvannet lake walk|0|nr|a|0|',
+ 'Northern lights chase|3|n|e|3|r3','Arctic char dinner at Fiskekompaniet|0|f|e|3|r2','Vegetarian dinner at a Storgata café|0|f|e|2|v','Ølhallen, the old brewery bar|0|l|e|2|kn','Late bars on Storgata|0|l|e|2|kn','Evening at Pust floating sauna|0|r|e|2|r','Evening walk over the Tromsø Bridge|0|nr|e|0|r','Fish soup at a harbour café|0|f|e|1|','Concert in the Arctic Cathedral|1|c|e|1|r'],
+'bergen':['Bryggen|Sentrum|Nordnes|Fløyen',
+ 'Bryggen wharf houses|0|c|m|0|3','Fish market breakfast|1|f|m|2|2','KODE art museums|1|c|m|1|2','Bergenhus Fortress|0|c|m|0|','Bakery breakfast at Det Lille Kaffekompaniet|3|f|m|1|v','Nordnes park walk|2|n|m|0|',
+ 'Fløibanen funicular to Mount Fløyen|3|n|a|1|3','Hike Mount Ulriken|3|n|a|2|h','Bergen Aquarium|2|cn|a|2|2','Old Bergen Museum|2|c|a|1|','Shops of Marken street|1|s|a|1|','Coffee at a lake-view café|1|rf|a|1|vr',
+ 'Fjord cruise to Mostraumen|1|nr|e|3|r2','Seafood dinner at Bryggen|0|f|e|3|r2','Vegetarian dinner in Sentrum|1|f|e|2|v','Craft beer at Apollon|1|l|e|2|kn','Live music at USF Verftet|2|lc|e|2|kn','Evening walk around Lille Lungegårdsvann|1|rn|e|0|r','Sunset on Mount Fløyen|3|nr|e|1|r','Fish cakes from a Bergen deli|1|f|e|1|','Evening stroll through Nordnes|2|r|e|0|'],
+kyoto:['Higashiyama|Arashiyama|Gion|Central Kyoto',
+ 'Fushimi Inari shrine gates|3|cn|m|0|h3','Kiyomizu-dera temple|0|c|m|1|h3','Arashiyama bamboo grove|1|n|m|0|3','Philosopher’s Path|0|nr|m|0|r2','Nishiki Market breakfast|3|fs|m|1|v2','Kinkaku-ji, the Golden Pavilion|3|c|m|1|2',
+ 'Ginkaku-ji, the Silver Pavilion|0|c|a|1|','Tenryū-ji temple gardens|1|cn|a|1|2','Tea ceremony in Gion|2|cr|a|2|r','Kyoto Railway Museum|3|c|a|1|','Shopping on Teramachi arcade|3|s|a|1|','Yudōfu tofu lunch near Nanzen-ji|0|f|a|2|v',
+ 'Evening walk through Gion and Hanami-kōji|2|cr|e|0|r3','Pontochō alley dinner|2|f|e|3|r2','Shōjin ryōri temple vegetarian dinner|1|f|e|2|vr','Kaiseki dinner|2|f|e|3|r','Izakaya on Kiyamachi street|3|lf|e|2|kn','Bars of Pontochō|2|l|e|2|kn','Lanterns at Yasaka Shrine|2|cr|e|0|r2','Kamo river walk at dusk|3|nr|e|0|r','Ramen dinner near Kyoto Station|3|f|e|1|'],
+tokyo:['Asakusa|Shibuya|Shinjuku|Ueno',
+ 'Sensō-ji temple|0|c|m|0|3','Meiji Shrine|1|cn|m|0|2','Tsukiji Outer Market breakfast|0|fs|m|1|v2','Ueno Park and Tokyo National Museum|3|cn|m|1|2','Shinjuku Gyoen garden|2|nr|m|1|2','teamLab Planets|0|c|m|2|',
+ 'Shibuya Crossing and Shibuya Sky|1|c|a|2|3','Harajuku and Takeshita Street|1|s|a|1|2','Yanaka old town walk|3|c|a|0|','Akihabara electronics and arcades|3|s|a|1|','Ramen lunch in Shinjuku|2|f|a|1|','Afternoon in Kiyosumi garden|0|nr|a|1|r',
+ 'Omoide Yokocho alley dinner|2|f|e|2|2','Tokyo Tower or Skytree at dusk|0|c|e|2|r2','Vegan ramen at T’s Tantan|3|f|e|1|v','Golden Gai bars|2|l|e|2|kn','Karaoke in Shibuya|1|l|e|2|','Night cruise on the Sumida river|0|rn|e|2|r','Ameyoko street food at night|3|f|e|1|v','Sensō-ji lit up at night|0|cr|e|0|r','Free night view from the Tokyo Metropolitan Government Building|2|c|e|0|'],
+osaka:['Namba|Umeda|Osaka Castle|Shinsekai',
+ 'Osaka Castle and park|2|cn|m|1|3','Kuromon Market breakfast|0|fs|m|1|2','Sumiyoshi Taisha shrine|3|c|m|0|','Morning in Expo ’70 Commemorative Park|1|n|m|1|','Umeda Sky Building|1|c|m|2|','Bakery breakfast in Nakazakichō|1|f|m|1|v',
+ 'Kaiyukan Aquarium|1|n|a|2|2','Shinsekai and Tsūtenkaku tower|3|c|a|1|2','Shinsaibashi shopping arcade|0|s|a|1|2','Okonomiyaki lunch|0|f|a|1|v','Shitennō-ji temple|3|c|a|0|','Afternoon at Spa World|3|r|a|2|',
+ 'Dōtonbori street food walk|0|f|e|1|3','Kushikatsu dinner in Shinsekai|3|f|e|1|','Vegetarian dinner in Namba|0|f|e|2|v','Ura-Namba bars|0|l|e|2|kn','Night view from Abeno Harukas|3|cr|e|2|r2','Canal cruise on the Dōtonbori|0|r|e|1|r'],
+marrakech:['Medina|Gueliz|Kasbah|Palmeraie',
+ 'Jardin Majorelle|1|nc|m|2|3','Bahia Palace|2|c|m|1|2','Ben Youssef Madrasa|0|c|m|1|2','Saadian Tombs|2|c|m|1|','Breakfast on a riad terrace|0|f|m|1|vr','Le Jardin Secret|0|nr|m|1|',
+ 'Souks of the medina|0|s|a|1|3','Hammam afternoon|0|r|a|2|r2','Musée Yves Saint Laurent|1|c|a|2|','Tagine cooking class|0|f|a|2|v','Agafay desert trip|3|n|a|3|h','Mint tea at Café des Épices|0|fr|a|1|v',
+ 'Jemaa el-Fna square at dusk|0|cf|e|0|3','Rooftop dinner over the medina|0|f|e|2|r2','Vegetarian dinner in Gueliz|1|f|e|2|v','Gueliz bars|1|l|e|2|kn','Dinner and music at Dar Cherifa|0|fc|e|3|r','Calèche ride around the ramparts|0|r|e|1|r','Food stalls on Jemaa el-Fna|0|f|e|1|v2','Koutoubia gardens at dusk|0|nr|e|0|r'],
+fes:['Fes el-Bali|Fes el-Jdid|Ville Nouvelle|Batha',
+ 'Chouara tannery terraces|0|c|m|1|h3','Al-Attarine Madrasa|0|c|m|1|2','Bou Inania Madrasa|0|c|m|1|2','Breakfast of msemen and mint tea|0|f|m|0|v','Jnan Sbil gardens|3|nr|m|0|','Royal Palace gates|1|c|m|0|',
+ 'Souks of Talaa Kebira|0|s|a|1|3','Mellah, the old Jewish quarter|1|c|a|0|','Batha Museum|3|c|a|1|','Hammam afternoon|0|r|a|2|r','Bab Boujloud and the Blue Gate|0|c|a|0|2','Cooking class in a riad|0|f|a|2|v',
+ 'Sunset at the Merenid Tombs|0|nr|e|0|r2','Dinner in a riad courtyard|0|f|e|2|r2','Vegetarian tagine dinner|0|f|e|1|v','Café terrace on Boulevard Hassan II|2|lr|e|1|','Live Andalusian music evening|0|cl|e|2|k','Rooftop tea over the medina|0|r|e|1|r'],
+athens:['Plaka|Monastiraki|Koukaki|Kolonaki',
+ 'Acropolis and the Parthenon|0|c|m|2|h3','Ancient Agora|1|c|m|1|2','Acropolis Museum|2|c|m|1|3','National Archaeological Museum|3|c|m|1|2','Breakfast with koulouri and Greek coffee|1|f|m|0|v','Lycabettus Hill walk|3|n|m|0|h',
+ 'Plaka and Anafiotika lanes|0|c|a|0|2','Monastiraki flea market|1|s|a|0|2','Central market and souvlaki lunch|1|f|a|1|','National Garden|0|nr|a|0|r','Benaki Museum|3|c|a|1|','Day trip to Cape Sounion|2|n|a|2|r',
+ 'Sunset on Philopappos Hill|2|nr|e|0|r2','Taverna dinner in Plaka|0|f|e|2|v2','Rooftop dinner facing the Acropolis|1|f|e|3|r','Open-air cinema Thission|1|c|e|1|r','Bars of Psyrri|1|l|e|2|kn','Rebetiko music night|1|lc|e|2|kn','Souvlaki dinner in Monastiraki|1|f|e|1|','Evening walk on Dionysiou Areopagitou|0|cr|e|0|r'],
+naxos:['Chora|Agios Prokopios|Halki|Plaka beach',
+ 'Portara, the Temple of Apollo|0|c|m|0|3','Venetian Kastro and old town|0|c|m|0|2','Breakfast at a Chora bakery|0|f|m|0|v','Archaeological Museum of Naxos|0|c|m|1|','Swim at Agios Prokopios|1|nr|m|0|2','Hike to Mount Zas|2|n|m|0|h',
+ 'Halki village and Kitron distillery|2|cs|a|1|2','Beach afternoon at Plaka|3|nr|a|0|2','Temple of Demeter|2|c|a|1|','Kite-surfing lesson at Mikri Vigla|3|n|a|3|hk','Cheese and wine tasting|2|f|a|2|v','Apeiranthos marble village|2|c|a|0|',
+ 'Sunset at the Portara|0|nr|e|0|r3','Taverna dinner in Chora|0|f|e|2|v2','Fresh fish by the beach|1|f|e|2|r','Cocktails in Chora’s harbour|0|l|e|2|kn','Stroll through the Bourgos lanes|0|cr|e|0|','Open-air cinema in Chora|0|c|e|1|r'],
+santorini:['Fira|Oia|Kamari|Akrotiri',
+ 'Fira to Oia caldera hike|0|n|m|0|h3','Akrotiri archaeological site|3|c|m|1|2','Breakfast with a caldera view|0|f|m|2|vr','Red Beach|3|n|m|0|','Museum of Prehistoric Thera|0|c|m|1|','Pyrgos village walk|0|c|m|0|',
+ 'Wine tasting at Santo Wines|0|f|a|2|r2','Black-sand Kamari beach|2|nr|a|0|2','Catamaran cruise and hot springs|0|n|a|3|r2','Ancient Thera ruins|2|c|a|1|h','Fava and tomato-fritter lunch|0|f|a|1|v','Shops of Oia|1|s|a|2|',
+ 'Sunset in Oia|1|nr|e|0|r3','Dinner in Ammoudi Bay|1|f|e|3|r2','Vegetarian dinner in Fira|0|f|e|2|v','Bars of Fira|0|l|e|2|kn','Open-air cinema in Kamari|2|c|e|1|','Evening at Firostefani|0|r|e|0|r'],
+paris:['Le Marais|Saint-Germain|Montmartre|Latin Quarter',
+ 'Louvre Museum|0|c|m|2|3','Musée d’Orsay|1|c|m|2|3','Sainte-Chapelle|3|c|m|1|2','Croissants at a Marais bakery|0|f|m|1|v','Jardin du Luxembourg|1|nr|m|0|r2','Sacré-Cœur and Montmartre|2|c|m|0|h2',
+ 'Marché des Enfants Rouges lunch|0|fs|a|1|v','Musée Rodin and garden|1|cn|a|1|','Centre Pompidou|0|c|a|1|2','Shakespeare and Company bookshop|3|sc|a|0|','Canal Saint-Martin walk|0|nr|a|0|r','Galeries Lafayette rooftop|0|s|a|0|',
+ 'Eiffel Tower at dusk|1|c|e|2|r3','Bistro dinner in Saint-Germain|1|f|e|3|r2','Falafel on Rue des Rosiers|0|f|e|1|v2','Seine river cruise|1|r|e|2|r','Jazz at Le Caveau de la Huchette|3|l|e|2|kn','Bars of Le Marais|0|l|e|2|kn','Picnic on the banks of the Seine|3|fr|e|1|vr','Sunset on the steps of Montmartre|2|nr|e|0|r','Crêpes in the Latin Quarter|3|f|e|1|v'],
+nice:['Vieux Nice|Port|Cimiez|Promenade',
+ 'Cours Saleya flower market|0|sn|m|0|2','Colline du Château|0|n|m|0|h3','Musée Matisse|2|c|m|1|2','Socca breakfast in Vieux Nice|0|f|m|0|v','Morning on the Promenade des Anglais|3|nr|m|0|3','Russian Orthodox Cathedral|3|c|m|1|',
+ 'Day trip to Èze village|1|cn|a|1|h2','Musée Marc Chagall|2|c|a|1|','Beach afternoon at Plage Publique|3|nr|a|0|2','Coastal path to Villefranche|1|n|a|0|h','Shops of Vieux Nice|0|s|a|1|','Niçoise salad lunch|0|f|a|2|v',
+ 'Sunset at Coco Beach|1|nr|e|0|r2','Dinner in Vieux Nice|0|f|e|2|v2','Seafood at the port|1|f|e|3|r','Bars of Rue Bonaparte|1|l|e|2|kn','Apéritif on Place Garibaldi|1|lr|e|1|','Evening stroll along the Promenade|3|r|e|0|r'],
+lyon:['Vieux Lyon|Presqu’île|Croix-Rousse|Confluence',
+ 'Basilica of Notre-Dame de Fourvière|0|c|m|0|3','Traboules of Vieux Lyon|0|c|m|0|2','Les Halles Paul Bocuse breakfast|1|fs|m|2|v2','Parc de la Tête d’Or|1|nr|m|0|2','Roman theatres of Fourvière|0|c|m|0|h','Croix-Rousse market|2|sf|m|1|v',
+ 'Musée des Confluences|3|c|a|1|2','Musée des Beaux-Arts|1|c|a|1|2','Croix-Rousse murals and slopes|2|c|a|0|h','Silk workshop visit|2|cs|a|1|','Coffee on Place Bellecour|1|r|a|1|v','Shops of Rue Auguste-Comte|1|s|a|2|',
+ 'Dinner in a bouchon lyonnais|0|f|e|2|r3','Vegetarian dinner in Presqu’île|1|f|e|2|v','Evening along the Saône quays|0|r|e|0|r2','Péniche bars on the Rhône|1|l|e|2|kn','Opera de Lyon|1|c|e|3|r','Wine bars of Croix-Rousse|2|l|e|2|kn','Fourvière esplanade at dusk|0|nr|e|0|r','Picnic on the banks of the Rhône|1|fr|e|1|vr'],
+cairo:['Downtown|Islamic Cairo|Zamalek|Giza',
+ 'Pyramids of Giza and the Sphinx|3|c|m|2|h3','Grand Egyptian Museum|3|c|m|2|3','Egyptian Museum in Tahrir|0|c|m|1|2','Ful and ta’ameya breakfast|0|f|m|0|v2','Saladin Citadel and Muhammad Ali Mosque|1|c|m|1|2','Coptic Cairo and the Hanging Church|0|c|m|1|',
+ 'Khan el-Khalili bazaar|1|s|a|1|3','Al-Muizz Street|1|c|a|0|2','Koshary lunch at Abou Tarek|0|f|a|0|v2','Al-Azhar Park|1|nr|a|1|r','Gezira art galleries|2|c|a|1|','Felucca on the Nile|2|nr|a|1|r2',
+ 'Tanoura dance at Wekalet El Ghouri|1|c|e|1|2','Dinner on a Nile boat|2|f|e|3|r','Vegetarian dinner in Zamalek|2|f|e|2|v','El Fishawy café at night|1|lr|e|1|2','Rooftop bars in Zamalek|2|l|e|2|kn','Cairo Tower at dusk|2|r|e|1|r'],
+rome:['Centro Storico|Trastevere|Monti|Vatican',
+ 'Colosseum and Roman Forum|2|c|m|2|h3','Vatican Museums and Sistine Chapel|3|c|m|2|3','Pantheon|0|c|m|0|3','Cornetto and cappuccino at a bar|0|f|m|0|v','Campo de’ Fiori market|0|sf|m|0|v','Galleria Borghese|0|c|m|2|2',
+ 'Trevi Fountain and Spanish Steps|0|c|a|0|2','Villa Borghese gardens|0|nr|a|0|r','St Peter’s Basilica|3|c|a|0|2','Pizza al taglio lunch in Monti|2|f|a|0|v2','Vintage shops of Monti|2|s|a|1|','Aventine Keyhole and Orange Garden|1|nr|a|0|r',
+ 'Trastevere trattoria dinner|1|f|e|2|r3','Gelato walk to Piazza Navona|0|f|e|1|v2','Cacio e pepe at a Testaccio trattoria|1|f|e|2|v','Aperitivo in Monti|2|l|e|2|k','Bars of Trastevere|1|l|e|2|kn','Night walk past the lit-up Forum|2|cr|e|0|r','Pizza in Trastevere|1|f|e|1|v','Trevi Fountain by night|0|cr|e|0|r'],
+barcelona:['Barri Gòtic|El Born|Gràcia|Eixample',
+ 'Sagrada Família|3|c|m|2|3','Park Güell|2|cn|m|2|h2','La Boqueria market breakfast|0|fs|m|1|v2','Gothic Quarter and Cathedral|0|c|m|0|2','Picasso Museum|1|c|m|1|2','Bunkers del Carmel viewpoint|2|n|m|0|h',
+ 'Casa Batlló and Passeig de Gràcia|3|cs|a|3|2','Barceloneta beach|1|nr|a|0|2','Montjuïc and Fundació Joan Miró|3|cn|a|1|','Ciutadella Park|1|nr|a|0|r','Shops of El Born|1|s|a|1|','Tapas lunch at Mercat de Santa Caterina|1|f|a|1|v',
+ 'Tapas crawl in El Born|1|f|e|2|2','Vermouth and dinner in Gràcia|2|f|e|2|vr','Palau de la Música concert|1|c|e|2|r','Bunkers at sunset|2|nr|e|0|r2','Bars of the Raval|0|l|e|2|kn','Late night in Gràcia squares|2|l|e|1|kn','Magic Fountain of Montjuïc|3|c|e|0|r','Barceloneta beach at dusk|1|nr|e|0|r','Bocadillo dinner in El Raval|0|f|e|1|'],
+istanbul:['Sultanahmet|Beyoğlu|Karaköy|Kadıköy',
+ 'Hagia Sophia|0|c|m|2|3','Blue Mosque|0|c|m|0|3','Topkapı Palace|0|c|m|2|2','Turkish breakfast in Karaköy|2|f|m|1|v2','Basilica Cistern|0|c|m|2|2','Süleymaniye Mosque|0|c|m|0|',
+ 'Grand Bazaar|0|s|a|1|3','Spice Bazaar|0|sf|a|0|2','Bosphorus ferry to Kadıköy|3|nr|a|0|r2','Galata Tower|1|c|a|2|2','Hammam afternoon|0|r|a|2|r','Kadıköy market lunch|3|f|a|1|v',
+ 'Meyhane dinner in Beyoğlu|1|f|e|2|r2','Vegetarian dinner in Kadıköy|3|f|e|1|v','Sunset over the Golden Horn|1|nr|e|0|r2','Rooftop bars of Karaköy|2|l|e|2|kn','Live music on İstiklal Avenue|1|l|e|1|kn','Bosphorus dinner cruise|2|r|e|3|r','Fish sandwiches at Eminönü|0|f|e|0|2','Ortaköy waterfront at night|2|r|e|0|r'],
+london:['South Bank|Covent Garden|Shoreditch|Kensington',
+ 'British Museum|1|c|m|0|3','Tower of London|0|c|m|2|2','Borough Market breakfast|0|fs|m|1|v2','Natural History Museum|3|cn|m|0|2','Hyde Park and Kensington Gardens|3|nr|m|0|2','Westminster Abbey|0|c|m|2|',
+ 'Tate Modern|0|c|a|0|3','National Gallery|1|c|a|0|2','Columbia Road and Brick Lane|2|s|a|1|','V&A Museum|3|c|a|0|2','Thames walk from Westminster to Tower Bridge|0|nr|a|0|r','Dishoom lunch|1|f|a|2|v',
+ 'West End theatre show|1|c|e|3|r2','Dinner in Covent Garden|1|f|e|3|r','Curry on Brick Lane|2|f|e|1|v2','Pubs of Shoreditch|2|l|e|2|kn','Jazz at Ronnie Scott’s|1|l|e|3|kn','Sunset at Primrose Hill|3|nr|e|0|r','South Bank evening walk|0|nr|e|0|r','Street food at the Southbank Centre market|0|f|e|1|v'],
+lisbon:['Alfama|Baixa|Belém|Bairro Alto',
+ 'Tram 28 through Alfama|0|c|m|1|3','São Jorge Castle|0|c|m|1|h2','Pastéis de Belém breakfast|2|f|m|0|v2','Jerónimos Monastery|2|c|m|1|2','Belém Tower|2|c|m|1|','LX Factory|3|cs|m|0|',
+ 'Time Out Market lunch|1|fs|a|1|v2','National Tile Museum|0|c|a|1|','Miradouro da Senhora do Monte|0|nr|a|0|r2','Gulbenkian Museum and garden|1|cn|a|1|','Baixa and Chiado shops|1|s|a|1|','Day trip to Sintra|3|cn|a|2|h2',
+ 'Fado night in Alfama|0|cl|e|2|r3','Dinner in Bairro Alto|3|f|e|2|r','Vegetarian dinner in Príncipe Real|3|f|e|2|v','Bars of Bairro Alto|3|l|e|1|kn','Sunset at Miradouro de Santa Catarina|3|nr|e|0|r2','Ginjinha in Rossio|1|l|e|0|k','Petiscos at a tasca in Alfama|0|f|e|1|v'],
+dublin:['Temple Bar|Georgian Dublin|Smithfield|Docklands',
+ 'Trinity College and the Book of Kells|0|c|m|2|3','National Museum of Archaeology|1|c|m|0|2','Breakfast at a Grafton Street café|1|f|m|1|v','St Stephen’s Green|1|nr|m|0|2','Dublin Castle and Chester Beatty Library|0|c|m|0|2','Phoenix Park|2|n|m|0|',
+ 'Guinness Storehouse|2|cl|a|2|3','EPIC The Irish Emigration Museum|3|c|a|2|','Kilmainham Gaol|2|c|a|1|2','Howth cliff walk|3|n|a|1|h2','George’s Street Arcade|0|s|a|1|','Fish and chips lunch|0|f|a|1|',
+ 'Traditional music session at The Cobblestone|2|lc|e|1|k3','Dinner in Temple Bar|0|f|e|2|r','Vegetarian dinner at Cornucopia|1|f|e|1|v','Pubs of Camden Street|1|l|e|2|kn','Abbey Theatre|0|c|e|2|r','Evening walk along the Liffey|3|r|e|0|r'],
+'new york':['Midtown|Lower Manhattan|Brooklyn|Upper West Side',
+ 'Metropolitan Museum of Art|3|c|m|2|3','Central Park|3|nr|m|0|3','Bagel breakfast|0|f|m|0|v2','Statue of Liberty and Ellis Island|1|c|m|2|2','Museum of Modern Art|0|c|m|2|2','High Line walk|1|n|m|0|',
+ 'Brooklyn Bridge walk to DUMBO|2|nc|a|0|r3','9/11 Memorial|1|c|a|0|2','Chelsea Market lunch|1|fs|a|1|v','American Museum of Natural History|3|cn|a|2|2','Williamsburg shops|2|s|a|1|','Grand Central and the New York Public Library|0|c|a|0|',
+ 'Broadway show|0|c|e|3|r3','Top of the Rock at sunset|0|r|e|2|r2','Pizza in Brooklyn|2|f|e|1|v2','Dinner in the West Village|1|f|e|3|r','Jazz at the Village Vanguard|1|l|e|2|kn','Bars of the Lower East Side|1|l|e|2|kn','Staten Island Ferry at dusk|1|nr|e|0|r','Dumplings in Chinatown|1|f|e|1|v','Times Square at night|0|c|e|0|']
+};
+const TAGL = {c:'culture', f:'food', n:'nature', l:'nightlife', s:'shopping', r:'relax'};
+const normPlace = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ø/g, 'o').replace(/^the /, '').trim();
+function curatedGuide(place){
+  if (/alexandria/i.test(place)) return Object.assign({source:'built-in'}, ALEX);
+  const k = normPlace(place), key = Object.keys(CG).find(x => k === x || k.startsWith(x + ' ') || k.startsWith(x + ','));
+  if (!key) return null;
+  const [areas, ...rows] = CG[key], A = areas.split('|');
+  return {source:'built-in', areas:A, items: rows.map(r => { const [n, a, t, tm, c, f] = r.split('|'), pop = (f.match(/\d/) || ['1'])[0];
+    return I(n, A[+a], t.split('').map(x => TAGL[x]), tm, +c, {veg:f.includes('v'), kids:!f.includes('k'), night:f.includes('n'), rom:f.includes('r'), easy:!f.includes('h'), pop:+pop}); })};
+}
+
+let GUIDE = null;
+const samplerP = (window.claude && window.claude.use) ? window.claude.use('sample').catch(() => null) : Promise.resolve(null);
+async function claudeGuide(place){
+  let sample = null; try { sample = await Promise.race([samplerP, new Promise(r => setTimeout(() => r(null), 4000))]); } catch(e){}
+  if (!sample) return null;
+  const prompt = `List real places and activities in "${place}" for a travel planner. Reply with JSON only:
+{"areas":["4 real neighbourhoods or districts of ${place}"],"items":[{"name":"short real name, max 6 words","area":"one of the areas","tags":["one or two of: culture, food, nature, nightlife, shopping, relax"],"time":"m, a or e (morning, afternoon, evening)","cost":0-3,"easy":true if little walking or stairs,"veg":true if vegetarian-friendly food,"kids":true if fine for children,"night":true if a late-night venue,"romantic":true or false,"pop":1-3 how well known}]}
+Give 22 items: at least 3 for each tag and at least 6 per time of day. Only places that really exist in ${place}.`;
+  try {
+    const call = sample.json ? sample.json(prompt, {modelTier:'quick'}) : sample(prompt, {modelTier:'quick'}).then(r => JSON.parse(r.text.slice(r.text.indexOf('{'), r.text.lastIndexOf('}')+1)));
+    const v = await Promise.race([call, new Promise((_,rej) => setTimeout(() => rej(new Error('timeout')), 45000))]);
+    if (!v || !Array.isArray(v.items) || v.items.length < 12 || !Array.isArray(v.areas)) return null;
+    const ok = Object.keys(TAGS);
+    const items = v.items.filter(x => x && x.name).map(x => { const tg = (Array.isArray(x.tags) ? x.tags : []).filter(t => ok.includes(t)).slice(0,2); return I(String(x.name).slice(0,60), String(x.area || v.areas[0]), tg.length ? tg : ['culture'], ['m','a','e'].includes(x.time) ? x.time : 'a', Math.max(0, Math.min(3, +x.cost || 0)), {easy:x.easy !== false, veg:!!x.veg, kids:x.kids !== false, night:!!x.night, rom:!!x.romantic, pop:Math.max(1, Math.min(3, +x.pop || 1))}); });
+    return {areas:v.areas.slice(0,4).map(String), items, source:'claude'};
+  } catch(e){ return null; }
+}
+
+/* =========================================================
+   THE PLANNER: transparent rules, same for everyone
+   ========================================================= */
+const COSTW = ['free','€','€€','€€€'];
+/* How the planner works (the same for everyone, written so it can be explained):
+   1. A baseline: the best-loved places, each in its usual time of day. Nothing personal.
+   2. Each answer may only touch the stops that logically depend on it:
+      budget swaps stops that cost more than you said; a child, a parent or a mobility need swaps stops that don't suit;
+      vegetarian swaps food stops that aren't; interests swap stops that don't match for ones that do;
+      a partner or friends change one evening; where you stay changes which morning stops start near you;
+      an afternoon rest replaces afternoons. Dates, an exact address and a schedule only change labels and timing. */
+const WHY = {budget:'within your budget', kids:'child-friendly', easy:'short walks, few stairs', easyP:'gentle pace', veg:'vegetarian food', interests:'matches your interests', near:'near where you stay', pair:'an evening for two', friends:'a night out together', rest:'your afternoon rest'};
+const WHYF = {budget:'budget', kids:'who', easy:'prefs', easyP:'who', veg:'prefs', interests:'interests', near:'stay', pair:'who', friends:'who', rest:'prefs'};
+function plan(D){
+  const G = GUIDE, place = placeName();
+  const when = D.when, I2 = D.interests && D.interests.tags.length ? D.interests.tags : null, who = D.who, stay = D.stay, bud = D.budget, pr = D.prefs || {}, ex = D.extra;
+  const N = when ? when.days : 4;
+  const kids = !!(who && who.kids), pair = !!(who && who.type === 'partner'), friends = !!(who && who.type === 'friends'), parent = !!(who && who.type === 'parent');
+  const easyNeed = !!pr.mobility || parent, maxCost = bud ? bud.max : 3, veg = !!pr.veg;
+  const area = stay && (stay.level === 'area' || stay.level === 'address') && G.areas.includes(stay.area) ? stay.area : null;
+  const nightOK = friends || !!(I2 && I2.includes('nightlife'));
+  const breaks = it => { const v = []; if (it.cost > maxCost) v.push('budget'); if (kids && (!it.kids || it.night)) v.push('kids'); if (easyNeed && !it.easy) v.push(pr.mobility ? 'easy' : 'easyP'); if (veg && it.tags.includes('food') && !it.veg) v.push('veg'); return v; };
+  const allowed = it => !breaks(it).length && (!it.night || nightOK);
+  const matches = it => !!(I2 && it.tags.some(t => I2.includes(t)));
+  const items = G.items, used = new Set(), T = ['m','a','e'];
+  const best = (time, ok, extra) => { let b = null, bs = -1;
+    items.forEach((it, k) => { if (used.has(it.name) || it.time !== time || !ok(it)) return; const sc = it.pop + (extra ? extra(it) : 0) - k*0.001; if (sc > bs){ bs = sc; b = it; } });
+    return b; };
+  const mk = (it, why) => ({text:it.name, tag:it.tags[0], area:it.area, cost:it.cost, it, why:why || []});
+  const freeT = (i, s) => `Free ${['morning','afternoon','evening'][s]} around ${G.areas[(i + s) % G.areas.length]}`;
+  // 1. baseline
+  const days = [];
+  for (let i=0;i<N;i++){ const slots = T.map((tm, s) => { const it = best(tm, x => !x.night); if (!it) return {text:freeT(i, s), tag:'relax', free:true, why:[]}; used.add(it.name); return mk(it); }); days.push({slots}); }
+  const each = fn => days.forEach((d,i) => d.slots.forEach((sl,s) => fn(sl, i, s)));
+  // 2. what doesn't fit your constraints is swapped, and only that
+  each((sl,i,s) => { if (!sl.it) return; const v = breaks(sl.it); if (!v.length) return;
+    const r = best(T[s], allowed, x => matches(x) ? 2 : 0);
+    days[i].slots[s] = r ? (used.add(r.name), mk(r, v)) : {text:freeT(i, s), tag:'relax', free:true, why:v}; });
+  // 3. interests: stops that don't match are swapped for ones that do, while there are any
+  if (I2) each((sl,i,s) => { if (sl.it && matches(sl.it)) return; const r = best(T[s], it => allowed(it) && matches(it)); if (r){ used.add(r.name); days[i].slots[s] = mk(r, ['interests']); } });
+  // 4. companions: one evening
+  const ev = Math.min(1, N-1);
+  if (pair && !(days[ev].slots[2].it && days[ev].slots[2].it.romantic)){ const r = best('e', it => allowed(it) && it.romantic, x => matches(x) ? 2 : 0); if (r){ used.add(r.name); days[ev].slots[2] = mk(r, ['pair']); } }
+  if (friends && !(days[ev].slots[2].it && days[ev].slots[2].it.night)){ const r = best('e', it => allowed(it) && (it.night || it.tags.includes('nightlife'))); if (r){ used.add(r.name); days[ev].slots[2] = mk(r, ['friends']); } }
+  // 5. where you stay: mornings start nearby
+  if (area) days.forEach((d,i) => { if (i === 0) return; const sl = d.slots[0]; if (sl.it && sl.it.area === area) return; const r = best('m', it => allowed(it) && it.area === area, x => matches(x) ? 2 : 0); if (r){ used.add(r.name); d.slots[0] = mk(r, ['near']); } });
+  // 6. afternoon rest
+  if (pr.rest) days.forEach((d,i) => { if ((i > 0 && i < N-1) || N <= 2) d.slots[1] = {text:'Rest at your stay', tag:'routine', why:['rest']}; });
+  // 7. arrival and departure (their wording depends on what you shared: presentation, not content)
+  days[0].slots[0] = {travel:true, tag:'travel', text: stay && stay.level === 'address' ? `Arrive · directions to ${stay.address}` : area ? `Arrive · check in near ${area}` : 'Arrive · check in', why:[]};
+  if (N > 1) days[N-1].slots[2] = {travel:true, tag:'travel', text:'Head home', why:[]};
+  // 8. timing notes (presentation)
+  if (ex && ex.calls) days.forEach((d,i) => { if (i > 0) d.slots[0].pre = 'from 10:30, after your call'; });
+  if (pr.early && N > 1) days[1].slots[0].pre = 'sunrise start';
+  const feats = [], assumed = [];
+  if (when){ if (when.start) feats.push('dates'); else if (when.month) feats.push('season'); feats.push('length'); } else assumed.push('No dates: assumed 4 days, dates open');
+  if (I2) feats.push('interests'); else assumed.push('No interests: the best-loved places');
+  if (who){ if (kids) feats.push('kids'); else if (pair) feats.push('pair'); else if (friends) feats.push('friends'); else if (parent) feats.push('parent'); else feats.push('group'); } else assumed.push('No group info: planned for adults');
+  if (stay){ if (stay.level === 'address') feats.push('door'); if (area) feats.push('area'); if (stay.level === 'city' || (stay.level !== 'city' && !area)) assumed.push('No known neighbourhood: stops not chosen by distance'); } else assumed.push('No stay location: stops not chosen by distance');
+  if (bud){ feats.push('budget'); if (bud.level === 'exact') feats.push('spend'); } else assumed.push('No budget: prices not filtered');
+  if (veg) feats.push('veg'); if (pr.mobility) feats.push('mobility'); if (pr.early) feats.push('early'); if (pr.rest) feats.push('rest');
+  if (ex && ex.calls) feats.push('calls');
+  const dayLab = i => when && when.start ? `${when.start + i} ${when.month.slice(0,3)}` : when && when.month ? `${when.month.slice(0,3)}<br>D${i+1}` : `D${i+1}`;
+  return {place, N, days, feats, assumed, dayLab, bud, D};
+}
+const FEAT = {
+  dates:p => 'Days labelled with your dates, so opening days can be checked', season:p => `Labelled for ${p.D.when.month}`, length:p => `${p.N} days, as you asked`,
+  interests:p => `Leaning towards ${p.D.interests.tags.map(t => TAGS[t].toLowerCase()).join(', ')}`, kids:() => 'Child-friendly stops, no late nights', pair:() => 'One evening chosen for two',
+  friends:() => 'One night out together', parent:() => 'Gentle pace for travelling with a parent', group:p => `Planned for ${p.D.who.size} people`,
+  door:p => `Door-to-door directions from ${p.D.stay.address}`, area:p => `Mornings start near ${p.D.stay.area}`,
+  budget:p => `Prices kept to ${p.D.budget.label}`, spend:p => `Daily spend planned around €${p.D.budget.amount}`,
+  veg:() => 'Vegetarian food stops', mobility:() => 'Short walks, few stairs', early:() => 'An early start on day 2', rest:() => 'Afternoon rest built in', calls:() => 'Mornings start after your 9–10 calls'
+};
+const featText = (p,k) => FEAT[k] ? FEAT[k](p) : k;
+const TIMES = ['morning','afternoon','evening'];
+// compare two plans: what changed in content (which stops), and what changed only in presentation (labels, timing, notes)
+function diff(a, b){
+  const content = []; let pres = 0; const n = Math.max(a.N, b.N);
+  for (let i=0;i<n;i++) for (let s=0;s<3;s++){
+    const x = a.days[i] && a.days[i].slots[s], y = b.days[i] && b.days[i].slots[s];
+    if (!x || !y){ content.push({i, s, from: x ? x.text : null, to: y ? y.text : null, why: y ? y.why : [], extra:true}); continue; }
+    if (x.travel || y.travel){ if (x.text !== y.text) pres++; }
+    else if (x.text !== y.text) content.push({i, s, from:x.text, to:y.text, why: y.why.length ? y.why : x.why, undo: !y.why.length});
+    if ((x.pre||'') !== (y.pre||'')) pres++;
+  }
+  const fa = a.feats.map(k => featText(a,k)), fb = b.feats.map(k => featText(b,k));
+  if (a.N === b.N && JSON.stringify([...Array(a.N)].map((_,i)=>a.dayLab(i))) !== JSON.stringify([...Array(b.N)].map((_,i)=>b.dayLab(i)))) pres++;
+  return {content, slots:content.length, pres, gained: fb.filter(x => !fa.includes(x)), lost: fa.filter(x => !fb.includes(x)), days: b.N - a.N};
+}
+const reasonOf = c => { const w = (c.why || []).map(k => REASONS[WHYF[k]] || '').filter(Boolean); return [...new Set(w)].join(', '); };
+const REASONS = {budget:'daily budget', who:'companions', prefs:'preferences', interests:'interests', stay:'where you stay', when:'dates', extra:'schedule'};
+const describe = d => {
+  if (d.slots){ const why = [...new Set(d.content.map(reasonOf).filter(Boolean))]; return `${d.slots} stop${d.slots>1?'s':''} change${d.days ? ` (${d.days > 0 ? '+' : ''}${d.days} day${Math.abs(d.days)>1?'s':''})` : ''}`; }
+  if (d.pres || d.gained.length || d.lost.length) return 'labels & details only';
+  return null;
+};
+const isContent = d => d && d.slots > 0;
+
+/* =========================================================
+   STATE: original exchange (never edited) and revised exchange
+   ========================================================= */
+const S = {phase:'index', dest:null, scene:'meadow', orig:{}, rev:{}, origCleared:false, jobs:[], focus:0, blur:26, fx:.7, view:'orig', guideSource:'built-in', labour:0};
+function placeName(){ return S.dest ? S.dest.place : ''; }
+function sharedCount(D){ return FIELDS.filter(f => D[f]).length; }
+
+/* =========================================================
+   PAINTING: the landscape (backdrop) + what you shared (crayon)
+   ========================================================= */
+const grad = (g,y0,y1,a,b) => { const G = g.createLinearGradient(0,y0,0,y1); G.addColorStop(0,a); G.addColorStop(1,b); return G; };
+const ell = (g,x,y,rx,ry,f) => { g.fillStyle = f; g.beginPath(); g.ellipse(x,y,Math.max(.1,rx),Math.max(.1,ry),0,0,6.283); g.fill(); };
+function backdrop(g,w,h,type,t){
+  const R = rng(7);
+  if (type === 'aurora'){
+    g.fillStyle = grad(g,0,h,'#071139','#27508f'); g.fillRect(0,0,w,h);
+    for (let i=0;i<80;i++){ g.fillStyle = '#fff'; g.fillRect(R()*w, R()*h*.5, 1.6, 1.6); }
+    ['rgba(90,255,180,.6)','rgba(234,162,201,.5)','rgba(120,230,255,.4)'].forEach((c,k) => { g.strokeStyle = c; g.lineWidth = h*.09; g.beginPath();
+      for (let x=-20;x<=w+20;x+=w/40){ const y = h*(.16+.07*k) + Math.sin(x/w*5.5 + t*.5 + k*1.7)*h*.05; x<0 ? g.moveTo(x,y) : g.lineTo(x,y); } g.stroke(); });
+    ell(g,w*.5,h*1.32,w*.95,h*.66,grad(g,h*.66,h,'#e6eeff','#8fa6dd'));
+    g.fillStyle = '#0f1d45'; for (let i=0;i<10;i++){ const x = R()*w, s = h*(.05+R()*.06), y = h*.68+R()*h*.03; g.beginPath(); g.moveTo(x,y-s*2); g.lineTo(x+s*.6,y); g.lineTo(x-s*.6,y); g.fill(); }
+  } else if (type === 'blossom'){
+    g.fillStyle = grad(g,0,h,'#8fc3f2','#fbd7ec'); g.fillRect(0,0,w,h);
+    ell(g,w*.2,h*.78,w*.5,h*.22,'#c6b3f0'); ell(g,w*.85,h*.8,w*.45,h*.2,'#d8c6f6');
+    ell(g,w*.5,h*1.28,w*.95,h*.6,grad(g,h*.68,h,'#7fd47c','#2f9e4a'));
+    const tree = (x,y,s) => { g.fillStyle = '#5a3a7a'; g.fillRect(x-s*.06,y,s*.12,s*.7); for (let i=0;i<9;i++) ell(g,x+(R()-.5)*s*1.1,y+(R()-.6)*s*.6,s*.32,s*.28,i%2?'#f6a9d6':'#ffc8e6'); };
+    tree(w*.12,h*.58,h*.22); tree(w*.55,h*.56,h*.18); tree(w*.9,h*.6,h*.2);
+    for (let i=0;i<45;i++){ const sp = .3+R(), x = (R()*w + Math.sin(t*.6+i)*30) % w, y = (R()*h + t*h*.04*sp) % h; ell(g,x,y,4,2.5,'#ffc2e3'); }
+  } else if (type === 'desert'){
+    g.fillStyle = grad(g,0,h,'#6fb8f4','#ffe7b0'); g.fillRect(0,0,w,h);
+    const dune = (y,a,f,c) => { g.fillStyle = c; g.beginPath(); g.moveTo(0,h); for (let x=0;x<=w;x+=w/30) g.lineTo(x, y + Math.sin(x/w*f+a)*h*.04); g.lineTo(w,h); g.fill(); };
+    dune(h*.62,1,4,'#f3b9d4'); dune(h*.7,3,3,'#f4cf7a'); dune(h*.8,5,2.5,'#f8dc93');
+  } else if (type === 'sea'){
+    g.fillStyle = grad(g,0,h,'#3f9ff0','#d8f0ff'); g.fillRect(0,0,w,h);
+    g.fillStyle = grad(g,h*.58,h*.82,'#2563d4','#69b8f2'); g.fillRect(0,h*.58,w,h*.26);
+    g.strokeStyle = 'rgba(255,255,255,.75)'; g.lineWidth = 2;
+    for (let i=0;i<26;i++){ const x = R()*w, y = h*(.6+R()*.2), l = 20+R()*50, d = Math.sin(t+i)*10; g.beginPath(); g.moveTo(x+d,y); g.lineTo(x+l+d,y); g.stroke(); }
+    g.fillStyle = '#f8e4b3'; g.beginPath(); g.moveTo(0,h); g.lineTo(0,h*.8); g.quadraticCurveTo(w*.5,h*.74,w,h*.82); g.lineTo(w,h); g.fill();
+  } else if (type === 'city'){
+    g.fillStyle = grad(g,0,h,'#3b2a9e','#f5a8d8'); g.fillRect(0,0,w,h);
+    let x = 0; while (x < w){ const bw = w*(.04+R()*.06), bh = h*(.15+R()*.35); g.fillStyle = R()>.5 ? '#2b1583' : '#4b30b3'; g.fillRect(x,h*.72-bh,bw,bh);
+      g.fillStyle = 'rgba(242,210,75,.9)'; for (let yy=h*.72-bh+8; yy<h*.7; yy+=12) for (let xx=x+5; xx<x+bw-5; xx+=10) if (R()>.6) g.fillRect(xx,yy,3,4); x += bw+2; }
+    g.fillStyle = '#25126f'; g.fillRect(0,h*.72,w,h*.28);
+  } else if (type === 'mountain'){
+    g.fillStyle = grad(g,0,h,'#4f9be8','#eef5ff'); g.fillRect(0,0,w,h);
+    const peaks = (base, hgt, n, col) => { for (let i=0;i<n;i++){ const x = (i+.5)/n*w + (R()-.5)*w/n, ph = h*hgt*(.7+R()*.5), pw = w/n*1.2;
+      g.fillStyle = col; g.beginPath(); g.moveTo(x-pw,base); g.lineTo(x,base-ph); g.lineTo(x+pw,base); g.fill();
+      g.fillStyle = '#ffffff'; g.beginPath(); g.moveTo(x-pw*.28,base-ph*.72); g.lineTo(x,base-ph); g.lineTo(x+pw*.28,base-ph*.72); g.fill(); } };
+    peaks(h*.66,.42,4,'#8a93c9'); peaks(h*.72,.3,5,'#5b6aa8');
+    ell(g,w*.5,h*1.3,w*.95,h*.6,grad(g,h*.7,h,'#b9c98a','#7d9a55'));
+  } else {
+    g.fillStyle = grad(g,0,h,'#2c7bd6','#dcedf8'); g.fillRect(0,0,w,h);
+    ell(g,w*.5,h*1.26,w*.9,h*.62,grad(g,h*.64,h,'#86d46a','#2f9a3f'));
+  }
+}
+// the landscape draws only what was shared; ghosts are what the first exchange held but this view doesn't
+function details(g,w,h,t,D,G){
+  const fx = S.fx*w, U = Math.min(h, w*.75), feet = h*.88;
+  const ghostOf = f => G && G[f] && !D[f];
+  const draw = (f, fn) => { if (D[f]) fn(D[f], false); else if (ghostOf(f)) { g.save(); g.globalAlpha = .45; fn(G[f], true); g.restore(); } };
+  const C = (c, gh) => gh ? 'rgba(255,255,255,.9)' : c;
+  const outline = gh => { if (gh){ g.setLineDash([6,5]); g.strokeStyle = '#fff'; g.lineWidth = 2.5; g.stroke(); g.setLineDash([]); } };
+  // where you stay: the house, with an exact pin or a vaguer area
+  draw('stay', (d, gh) => {
+    const x = fx - U*.55, y = h*.74, s = U*.06;
+    if (!gh){ g.fillStyle = '#ffffff'; g.fillRect(x-s/2,y-s*.8,s,s*.8); g.fillStyle = '#13246f'; g.beginPath(); g.moveTo(x-s*.65,y-s*.8); g.lineTo(x,y-s*1.4); g.lineTo(x+s*.65,y-s*.8); g.fill(); }
+    if (d.level === 'address'){ g.fillStyle = C('#e53935',gh); g.beginPath(); g.arc(x, y - s*2.2, s*.45, Math.PI, 0); g.lineTo(x, y - s*1.3); g.closePath(); g.fill(); outline(gh); ell(g,x,y-s*2.25,s*.16,s*.16, gh ? 'rgba(0,0,0,0)' : '#fff'); }
+    else if (d.level === 'area'){ g.beginPath(); g.ellipse(x, y - s*.4, s*3.2, s*1.4, 0, 0, 6.283); g.fillStyle = gh ? 'rgba(255,255,255,.15)' : 'rgba(233,138,232,.35)'; g.fill(); g.lineWidth = 3; g.strokeStyle = C('#e98ae8',gh); g.stroke(); outline(gh); }
+    else { g.beginPath(); g.ellipse(x + s, y - s*.6, s*6, s*2.4, 0, 0, 6.283); g.setLineDash([8,7]); g.lineWidth = 3; g.strokeStyle = gh ? '#fff' : 'rgba(143,211,245,.95)'; g.stroke(); g.setLineDash([]); }
+  });
+  // dates: a calendar sheet in the sky; exact dates also switch the house light off
+  draw('when', (d, gh) => {
+    const x = fx - U*.38, y = h*.12, s = U*.11;
+    g.fillStyle = C('#ffffff',gh); g.fillRect(x, y, s, s*1.1); g.fillStyle = C('#e53935',gh); g.fillRect(x, y, s, s*.28); outline(gh);
+    if (d.start){ g.strokeStyle = C('#e53935',gh); g.lineWidth = 3; g.beginPath(); g.ellipse(x + s*.5, y + s*.7, s*.32, s*.24, -.1, 0, 6.283); g.stroke(); }
+    else if (d.month){ g.fillStyle = C('#ffd84a',gh); g.fillRect(x + s*.15, y + s*.45, s*.7, s*.4); }
+  });
+  // companions
+  draw('who', (d, gh) => {
+    const n = Math.min(4, d.size || 1), sp = U*.09;
+    for (let i=0;i<n;i++){
+      const small = d.kids && i === n-1, sc = small ? .62 : (d.type === 'parent' && i === 1 ? .92 : 1);
+      const x = fx + (i-(n-1)/2)*sp, CRY = [['#e98ae8','#8fd3f5'],['#ffd84a','#ff7ac8'],['#8fd3f5','#c9b8ff'],['#9fe3b0','#e98ae8']][i%4];
+      const anon = d.type === 'size';
+      g.fillStyle = C(anon ? '#d9d9d9' : CRY[0], gh); g.beginPath(); g.roundRect(x-U*.04*sc, feet-U*.17*sc, U*.08*sc, U*.17*sc, U*.035*sc); g.fill();
+      g.strokeStyle = gh ? '#fff' : (anon ? '#9a9a9a' : CRY[1]); g.lineWidth = Math.max(3,U*.008); if (gh) g.setLineDash([6,5]); g.stroke(); g.setLineDash([]);
+      ell(g,x,feet-U*.2*sc,U*.032*sc,U*.034*sc, C(anon ? '#9a9a9a' : CRY[1], gh));
+    }
+  });
+  // interests: one balloon per interest
+  draw('interests', (d, gh) => {
+    const cols = {culture:'#ff7ac8', food:'#35b955', nature:'#3d9be9', nightlife:'#111', shopping:'#c9b8ff', relax:'#ffd84a'};
+    const list = d.tags.length ? d.tags : ['raw'], k = list.length;
+    list.forEach((tg,i) => { const x = fx + (i-(k-1)/2)*U*.07, y = h*.38 + Math.sin(t*1.2+i)*U*.012;
+      g.strokeStyle = gh ? '#fff' : 'rgba(0,0,0,.55)'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(x,y+U*.045); g.lineTo(fx,h*.62); g.stroke();
+      g.beginPath(); g.ellipse(x,y,U*.035,U*.044,0,0,6.283); g.fillStyle = C(cols[tg] || '#ffffff', gh); g.fill(); outline(gh); });
+  });
+  // budget: a suitcase, with a price tag only for an exact amount
+  draw('budget', (d, gh) => {
+    const n = D.who ? Math.min(4, D.who.size) : 1, s = U*[0,.06,.08,.1][d.max || 2], x = fx + (n/2)*U*.09 + U*.03;
+    g.fillStyle = C('#ff7ac8',gh); g.beginPath(); g.roundRect(x,feet-s,s*.75,s,s*.12); g.fill(); g.strokeStyle = C('#111',gh); g.lineWidth = 2.5; if (gh) g.setLineDash([6,5]); g.stroke(); g.setLineDash([]);
+    if (d.level === 'exact'){ g.fillStyle = C('#ffd84a',gh); g.fillRect(x + s*.6, feet - s*1.15, s*.55, s*.3); g.fillStyle = gh ? 'rgba(0,0,0,0)' : '#111'; g.font = `700 ${Math.round(s*.18)}px "Space Mono", monospace`; g.fillText('€' + d.amount, x + s*.64, feet - s*.93); }
+    else if (d.level === 'range'){ g.strokeStyle = C('#ffd84a',gh); g.lineWidth = 4; g.beginPath(); g.moveTo(x - s*.1, feet - s*1.2); g.lineTo(x + s*.9, feet - s*1.2); g.stroke(); }
+  });
+  // preferences: a leaf, a stick, a small sun, a Zzz
+  draw('prefs', (d, gh) => {
+    const n = D.who ? Math.min(4, D.who.size) : 1, x = fx - (n/2)*U*.09 - U*.07;
+    if (d.veg){ g.fillStyle = C('#35b955',gh); g.beginPath(); g.ellipse(x,feet-U*.03,U*.04,U*.018,-.6,0,6.283); g.fill(); outline(gh); }
+    if (d.mobility){ g.strokeStyle = C('#8fd3f5',gh); g.lineWidth = U*.012; g.beginPath(); g.moveTo(x - U*.05,feet); g.lineTo(x - U*.038,feet-U*.17); g.stroke(); }
+    if (d.early){ ell(g, x - U*.02, h*.62, U*.03, U*.03, C('#ffd84a',gh)); }
+    if (d.rest){ g.fillStyle = C('#ffffff',gh); g.font = `900 ${Math.round(U*.05)}px "Archivo", sans-serif`; g.fillText('Zzz', x - U*.06, feet - U*.24); }
+    if (d.raw){ ell(g, x, feet - U*.03, U*.02, U*.02, C('#ffffff',gh)); }
+  });
+  // schedule: a clock, or a whole calendar grid
+  draw('extra', (d, gh) => {
+    const x = fx + U*.42, y = h*.2, r = U*.05;
+    if (d.level === 'calendar'){ const s = U*.16; g.fillStyle = C('#ffffff',gh); g.fillRect(x - s*.3, y - s*.4, s, s); for (let i=0;i<5;i++) for (let j=0;j<4;j++){ g.fillStyle = C((i+j)%3 ? '#ffd84a' : '#e53935', gh); g.fillRect(x - s*.25 + i*s*.18, y - s*.25 + j*s*.18, s*.14, s*.12); } outline(gh); }
+    else { ell(g,x,y,r,r,C('#ffffff',gh)); g.strokeStyle = C('#111',gh); g.lineWidth = 3; g.beginPath(); g.moveTo(x,y); g.lineTo(x, y - r*.7); g.moveTo(x,y); g.lineTo(x + r*.5, y); g.stroke(); }
+  });
+  // labour: a star for each rating or rewrite
+  const R = rng(99);
+  for (let i=0;i<S.labour;i++){ const x = fx + U*.12 + R()*U*.5, y = h*(.05+R()*.18), s = U*.014;
+    g.fillStyle = '#fff'; g.beginPath(); g.moveTo(x,y-s*2); g.lineTo(x+s*.4,y-s*.4); g.lineTo(x+s*2,y); g.lineTo(x+s*.4,y+s*.4); g.lineTo(x,y+s*2); g.lineTo(x-s*.4,y+s*.4); g.lineTo(x-s*2,y); g.lineTo(x-s*.4,y-s*.4); g.fill(); }
+}
+const grain = (() => { const c = document.createElement('canvas'); c.width = c.height = 200; const g = c.getContext('2d'), d = g.createImageData(200,200);
+  for (let i=0;i<d.data.length;i+=4){ const v = Math.random()*255; d.data[i]=d.data[i+1]=d.data[i+2]=v; d.data[i+3] = Math.random()<.5 ? 60 : 0; } g.putImageData(d,0,0); return c; })();
+function addGrain(g,w,h){ g.save(); g.globalCompositeOperation = 'overlay'; g.fillStyle = g.createPattern(grain,'repeat'); g.fillRect(0,0,w,h); g.restore(); }
+
+/* =========================================================
+   INDEX
+   ========================================================= */
+const DECL = ['A lot','Somewhat','Not particularly','I’d rather not answer'];
+function buildDecl(){
+  DECL.forEach(t => { const b = document.createElement('button'); b.type = 'button'; b.textContent = t; b.setAttribute('aria-pressed','false');
+    b.onclick = () => { S.decl = t; [...$('declRow').children].forEach(x => x.setAttribute('aria-pressed', x === b)); $('declOk').textContent = /rather not/.test(t) ? 'Fine. Nothing recorded.' : 'Noted, just on this page. Now pick a place.'; };
+    $('declRow').appendChild(b); });
+}
+function buildIndex(){
+  DEST.forEach(d => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'card'; b.style.background = d.color; if (d.scene === 'desert') b.style.color = '#111';
+    b.innerHTML = `<div class="top"><span class="mono">${d.region}</span><span class="mono">${d.local}</span></div><canvas width="240" height="240" aria-hidden="true"></canvas><div class="bottom"><b>${d.name}</b><span class="arrow">▶</span></div>`;
+    const c = b.querySelector('canvas'), g = c.getContext('2d'); backdrop(g,240,240,d.scene,0); addGrain(g,240,240);
+    b.onclick = () => choose(Object.assign({}, d), c); $('cards').appendChild(b);
+  });
+  const o = document.createElement('div'); o.className = 'card other';
+  o.innerHTML = `<div class="top"><span class="mono">Anywhere</span><span class="mono">—</span></div><form id="otherForm"><label class="mono" for="other">Somewhere else</label><input id="other" placeholder="A country or a city" autocomplete="off"><button class="tag" type="submit" style="align-self:flex-start">Go →</button></form><div class="bottom"><b>ELSEWHERE</b></div>`;
+  $('cards').appendChild(o);
+  $('otherForm').addEventListener('submit', e => { e.preventDefault(); const v = $('other').value.trim(); if (!v) return;
+    choose({name:v.toUpperCase(), country: CITIES[v.toLowerCase()] ? v : '', place: CITIES[v.toLowerCase()] ? '' : v, scene:sceneOf(v), color:'#13246f'}, $('other')); });
+}
+
+/* =========================================================
+   LIVE SCENE
+   ========================================================= */
+const SC = $('scene'), sg = SC.getContext('2d'), low = document.createElement('canvas'), lg = low.getContext('2d');
+let W = innerWidth, H = innerHeight;
+const HFR = {index:1, chat:.8, reveal:.3, act3:.3};
+let hcur = .8;
+function hTarget(){ const fr = HFR[S.phase] || .3; return innerWidth <= 900 && fr < .5 ? .24 : fr; }
+function size(){
+  W = innerWidth; H = Math.round(innerHeight * hcur);
+  SC.width = W; SC.height = H; SC.style.height = H + 'px'; low.width = Math.max(2, Math.round(W/2.5)); low.height = Math.max(2, Math.round(H/2.5)); $('pins').style.height = H + 'px';
+}
+size(); addEventListener('resize', () => { size(); placePins(); });
+function targetFx(){
+  if (S.phase !== 'chat' || innerWidth <= 900) return .5;
+  const colW = $('col').getBoundingClientRect().width; return (colW + (innerWidth - colW)/2) / innerWidth;
+}
+const CR = document.createElement('canvas'), cg = CR.getContext('2d');
+const chalk = (() => { const c = document.createElement('canvas'); c.width = c.height = 160; const g = c.getContext('2d'), d = g.createImageData(160,160);
+  for (let i=0;i<d.data.length;i+=4){ d.data[i+3] = Math.random() < .28 ? 255 : 0; } g.putImageData(d,0,0); return c; })();
+let boil = 0;
+function viewData(){ // what the landscape shows right now
+  if (S.phase === 'act3') return S.view === 'orig' ? {D:S.orig, G:null} : {D:S.rev, G:S.origCleared ? null : S.orig};
+  return {D:S.orig, G:null};
+}
+function loop(now){
+  if (S.phase !== 'index'){
+    const t = now/1000, ht = hTarget();
+    if (Math.abs(ht - hcur) > .002){ hcur += (ht - hcur) * (reduce ? 1 : .07); if (Math.abs(ht - hcur) <= .002) hcur = ht; size(); }
+    ['recvPlane','beyondPlane'].forEach(id => $(id).style.height = H + 'px');
+    S.fx += (targetFx() - S.fx) * (reduce ? 1 : .06);
+    const blurTarget = 2 + 24*(1 - S.focus); S.blur += (blurTarget - S.blur) * (reduce ? 1 : .04);
+    lg.setTransform(1,0,0,1,0,0); lg.save(); lg.scale(low.width/W, low.height/H); backdrop(lg,W,H,S.scene,t); lg.restore();
+    sg.filter = `blur(${S.blur.toFixed(1)}px)`; sg.drawImage(low,-30,-30,W+60,H+60); sg.filter = 'none';
+    sg.fillStyle = `rgba(255,255,255,${(.5*(1-S.focus)).toFixed(3)})`; sg.fillRect(0,0,W,H);
+    addGrain(sg,W,H);
+    if (CR.width !== W || CR.height !== H){ CR.width = W; CR.height = H; }
+    cg.setTransform(1,0,0,1,0,0); cg.clearRect(0,0,W,H);
+    const v = viewData(); details(cg,W,H,t,v.D,v.G);
+    cg.save(); cg.globalCompositeOperation = 'destination-out'; if (!reduce && (++boil % 8 === 0)) boil += 37;
+    cg.translate((boil*13)%160, (boil*7)%160); cg.fillStyle = cg.createPattern(chalk,'repeat'); cg.fillRect(-160,-160,W+320,H+320); cg.restore();
+    sg.globalAlpha = .55; sg.drawImage(CR, 1.5, -1); sg.globalAlpha = 1; sg.drawImage(CR, 0, 0);
+    placePins();
+  }
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+function setFocus(){ const n = 1 + sharedCount(S.orig); S.focus = Math.min(1, .22 + n * .1); $('focus').textContent = `In focus ${Math.round(S.focus*100)}%`; }
+
+/* =========================================================
+   PINS: labels on the landscape
+   ========================================================= */
+const PINC = ['#f2d24b','#9fe3b0','#eaa2c9','#9ad1ff','#ffffff','#c9b8ff','#ffd3a8'];
+let pins = [];
+function pinAnchor(f){
+  const fx = S.fx*W, U = Math.min(H, W*.75), ux = S.phase === 'act3' ? Math.max(U, W*.28) : U, feet = H*.88;
+  const n = S.orig.who ? Math.min(4, S.orig.who.size) : 1;
+  return ({dest:[fx - ux*.95, H*.30], when:[fx - ux*.38, H*.12], interests:[fx + ux*.08, H*.33], who:[fx, H*.6], stay:[fx - ux*.55, H*.62], budget:[fx + (n/2)*U*.09 + ux*.08, feet - U*.16], prefs:[fx - (n/2)*U*.09 - ux*.12, feet - U*.05], extra:[fx + ux*.42, H*.18]})[f] || [fx + ux*.2, H*.06];
+}
+const INFER = {
+  when:d => d.start ? 'when your home may be empty' : d.month ? 'your travel season' : null,
+  interests:() => 'a lifestyle and spending profile',
+  who:d => d.kids ? 'that you have a young child' : d.type === 'partner' ? 'your relationship status' : d.type === 'parent' ? 'your family situation' : d.type === 'friends' ? 'your social circle' : d.type === 'solo' ? 'that you travel alone' : d.type === 'size' ? 'household size' : 'who you spend time with',
+  stay:d => d.level === 'address' ? 'exactly where you sleep each night' : d.level === 'area' ? 'roughly where you are' : null,
+  budget:d => d.level === 'exact' ? 'a fairly precise income signal' : 'an income bracket',
+  prefs:d => d.mobility ? 'a possible health condition' : d.veg ? 'lifestyle or beliefs' : 'your daily rhythm',
+  extra:d => d.level === 'calendar' ? 'your whole routine: people, places, habits' : 'your work pattern'
+};
+function renderPins(mode){
+  $('pins').innerHTML = ''; pins = [];
+  const v = viewData(), D = v.D, O = S.origCleared ? {} : S.orig;
+  const add = (f, html, cls, bg) => { const el = document.createElement('div'); el.className = 'pin ' + (cls || ''); if (bg) el.style.background = bg; el.innerHTML = html; $('pins').appendChild(el); pins.push({el, f}); };
+  if (S.dest && S.phase !== 'reveal') add('dest', `<div class="row1"><b>00</b><span>Destination · ${esc(placeName())}</span></div><i class="tail"></i>`, '', '#ffffff');
+  FIELDS.forEach((f,i) => {
+    const cur = D[f], was = O[f], num = String(i+1).padStart(2,'0');
+    if (cur){
+      let extra = '';
+      if (S.phase === 'act3' && S.view === 'rev' && was && !same(was, cur)) extra = `<div class="was">was: <s>${esc(label(f, was))}</s></div>`;
+      if (S.phase === 'act3' && S.view === 'rev' && !was && !S.origCleared) extra = `<div class="was">added in your revision</div>`;
+      if (S.phase === 'reveal'){ add(f, `<div class="row1"><b>${num}</b><span>${esc(FL[f])} · ${esc(label(f, cur))}</span></div><i class="tail"></i>`, 'compact', PINC[i % PINC.length]); return; }
+      add(f, `<div class="row1"><b>${num}</b><span>${esc(FL[f])} · ${esc(label(f, cur))}</span></div>${extra}<i class="tail"></i>`, '', PINC[i % PINC.length]);
+    } else if (S.phase === 'act3' && S.view === 'rev' && was){
+      add(f, `<div class="row1"><b>${num}</b><span>${esc(FL[f])} · removed from the revision</span></div><div class="was" style="background:transparent;color:#fff;border-top:1px dashed #fff">still part of the original exchange</div><i class="tail"></i>`, 'ghost');
+    }
+  });
+  if (S.phase !== 'act3' && S.phase !== 'reveal') for (let k=0;k<S.jobs.length;k++) add('labor' + k, `<div class="row1"><b>✦</b><span>Feedback · ${esc(S.jobs[k])}</span></div><i class="tail"></i>`, 'labor');
+  placePins();
+}
+function placePins(){
+  const colR = (S.phase === 'chat' && innerWidth > 900) ? $('col').getBoundingClientRect().right : 0;
+  if (S.phase === 'reveal'){ const n = pins.length; pins.forEach((p, i) => { const w = p.el.offsetWidth || 150, h = p.el.offsetHeight || 24, slot = (W - 40) / Math.max(1, n);
+    const x = Math.max(12, Math.min(W - w - 12, 20 + slot * i + (slot - w) / 2)), y = (i % 2 ? .56 : .22) * H; p.el.style.transform = `translate(${x}px,${y}px)`; }); return; }
+  const placed = [], hit = (x,y,w,h) => placed.some(r => x < r.x + r.w + 6 && x + w + 6 > r.x && y < r.y + r.h + 6 && y + h + 6 > r.y);
+  pins.forEach((p, idx) => {
+    let [x,y] = p.f.startsWith('labor') ? (() => { const k = +p.f.slice(5), fx = S.fx*W, U = Math.min(H, W*.75); return [fx + U*.2 + (k%3)*U*.22, H*.06 + Math.floor(k/3)*U*.08]; })() : pinAnchor(p.f);
+    const w = p.el.offsetWidth || 120, h = p.el.offsetHeight || 24;
+    x = Math.max(colR + 12, Math.min(W - w - 12, x - 10)); y = Math.max(8, Math.min(H - h - 14, y - h - 8));
+    let tries = 0, y0 = y, x0 = x, step = h + 8;
+    while (hit(x,y,w,h) && tries < 24){ tries++; y = tries % 2 ? y0 + step*Math.ceil(tries/2) : y0 - step*Math.ceil(tries/2);
+      if (y < 8 || y > H - h - 14){ y = Math.max(8, Math.min(H - h - 14, y)); x = Math.max(colR + 12, Math.min(W - w - 12, x0 + (tries % 4 < 2 ? 1 : -1) * (w*.7) * Math.ceil(tries/4))); } }
+    placed.push({x,y,w,h}); p.el.style.transform = `translate(${x}px,${y}px)`;
+  });
+}
+
+/* =========================================================
+   PAPER SCRAPS (collage) for each answer
+   ========================================================= */
+function addProp(f, d){
+  const v = esc(label(f, d)), html = {
+    when: () => d.start ? `<div class="paper cal"><div class="hd">${esc(d.month.slice(0,5))}</div><div class="bd">${d.start}</div></div>` : `<div class="paper cal"><div class="hd">${esc(d.month ? d.month.slice(0,5) : 'Trip')}</div><div class="bd" style="font-size:18px">${d.days}d</div></div>`,
+    interests: () => `<div class="note-y">${d.tags.length ? d.tags.map(t => esc(TAGS[t])).join(' + ') : esc(d.raw)}</div>`,
+    who: () => `<div class="paper polar"><div class="ph2">${Array.from({length:Math.min(4, d.size || 1)},(_,i) => `<i style="height:${d.kids && i === Math.min(4,d.size)-1 ? 16 : 26}px;background:${['#e98ae8','#ffd84a','#8fd3f5','#9fe3b0'][i%4]}"></i>`).join('')}</div></div>`,
+    stay: () => `<div class="keytag">${d.level === 'address' ? esc(d.address) : d.level === 'area' ? esc(d.area) : 'City'}</div>`,
+    budget: () => `<div class="paper receipt">ELSEWHERE<br>PER DAY<br>------<br>BUDGET<b>${esc(d.label)}</b></div>`,
+    prefs: () => `<div class="tagp">${v}</div>`,
+    extra: () => d.level === 'calendar' ? `<div class="paper cal grid"><div class="hd">Calendar</div><div class="bd">${'<i></i>'.repeat(20)}</div></div>` : `<div class="card2">${esc(label(f,d))}<small>schedule</small></div>`
+  }[f];
+  if (!html) return;
+  const el = document.createElement('div'); el.className = 'prop'; el.style.setProperty('--r', ((Math.random()*14) - 7).toFixed(1) + 'deg');
+  el.innerHTML = html() + `<span class="cap">${esc(FL[f])}</span>`; $('props').appendChild(el);
+}
+
+/* =========================================================
+   ACT 01 — the conversation
+   ========================================================= */
+const log = $('log'), ans = $('answer');
+const down = () => { log.scrollTop = log.scrollHeight; };
+function wait(ms){ return new Promise(r => { const d = document.createElement('div'); d.className = 'dots'; d.innerHTML = '<span></span><span></span><span></span>'; log.appendChild(d); down(); setTimeout(() => { d.remove(); r(); }, reduce ? 80 : ms); }); }
+let curEx = null;
+function ask(text, tag){
+  if (!tag && curEx){ const q = document.createElement('div'); q.className = 'q sub'; q.innerHTML = text; curEx.appendChild(q); down(); return; }
+  if (curEx) curEx.classList.add('done');
+  curEx = document.createElement('div'); curEx.className = 'ex';
+  curEx.innerHTML = `<span class="k">${tag}</span><div class="q">${text}</div>`; log.appendChild(curEx); down();
+}
+function said(text, skip){ const a = document.createElement('div'); a.className = 'a' + (skip ? ' skip' : ''); a.textContent = text; (curEx || log).appendChild(a); down(); }
+function ack(html){
+  const w = document.createElement('div');
+  w.innerHTML = `<div class="ack">${html}</div><div class="rate"><button type="button">Helpful</button><button type="button">Not helpful</button><button type="button">Rewrite</button></div>`;
+  const [up,dn,re] = w.querySelectorAll('button'); let rated = false;
+  const rate = (b, what) => { if (rated) return; rated = true; b.classList.add('on'); S.jobs.push(what); S.labour++; renderPins(); };
+  up.onclick = () => rate(up, 'rated helpful'); dn.onclick = () => rate(dn, 'rated not helpful');
+  re.onclick = () => { w.firstChild.innerHTML = pick(['Let me put it differently. ','Another way to say it: ']) + html; re.classList.add('on'); re.disabled = true; S.jobs.push('asked for a rewrite'); S.labour++; renderPins(); };
+  (curEx || log).appendChild(w); down();
+}
+// chips (single or multi), free text, and an always-visible Skip
+function options(list, {input=true, multi=false, placeholder='Or write your own', hint=''} = {}){
+  return new Promise(res => {
+    ans.innerHTML = '';
+    const box = document.createElement('div'); box.className = 'opts'; const chosen = new Set();
+    list.forEach(o => { const b = document.createElement('button'); b.type = 'button'; b.className = 'opt'; b.textContent = o.label;
+      b.onclick = () => { if (multi){ chosen.has(o) ? chosen.delete(o) : chosen.add(o); b.classList.toggle('sel'); b.setAttribute('aria-pressed', chosen.has(o)); done.disabled = !chosen.size; } else { ans.innerHTML = ''; res({pick:o}); } };
+      if (multi) b.setAttribute('aria-pressed','false'); box.appendChild(b); });
+    const skip = document.createElement('button'); skip.type = 'button'; skip.className = 'opt skip'; skip.textContent = 'Skip'; skip.onclick = () => { ans.innerHTML = ''; res(null); }; box.appendChild(skip);
+    ans.appendChild(box);
+    let done = null;
+    if (multi){ done = document.createElement('button'); done.type = 'button'; done.className = 'opt main'; done.textContent = 'Done'; done.disabled = true; done.onclick = () => { ans.innerHTML = ''; res({picks:[...chosen]}); }; box.insertBefore(done, skip); }
+    if (input){ const f = document.createElement('form'); f.className = 'type';
+      f.innerHTML = `<input aria-label="Your answer" placeholder="${placeholder}" autocomplete="off"><button type="submit" disabled>Send</button>`;
+      const i = f.querySelector('input'), bt = f.querySelector('button'); i.oninput = () => bt.disabled = !i.value.trim();
+      f.onsubmit = e => { e.preventDefault(); const v = i.value.trim(); if (v){ ans.innerHTML = ''; res({text:v}); } }; ans.appendChild(f); }
+    if (hint){ const h = document.createElement('div'); h.className = 'hint'; h.textContent = hint; ans.appendChild(h); }
+  });
+}
+async function skipped(){ said('Skipped', true); await wait(400); const w = document.createElement('div'); w.className = 'ack'; w.textContent = pick(['No problem, I’ll plan without it.','That’s fine, I’ll keep that part general.','Sure. I’ll make a reasonable assumption and tell you what it is.']); curEx.appendChild(w); down(); }
+function record(f, d, shownAs){
+  if (!d){ return; }
+  S.orig[f] = d; said(shownAs || label(f, d)); addProp(f, d); setFocus(); renderPins();
+}
+
+async function interview(){
+  const d = S.dest, cities = CITIES[(d.country || '').toLowerCase()];
+  if (cities && !d.place){
+    const nice = d.country.replace(/\b\w/g, c => c.toUpperCase());
+    await wait(600); ask(`${esc(nice)}, lovely. Where in ${esc(nice)}?`, 'Destination');
+    let c = null; while (!c){ c = await options(cities.map(x => ({label:x})), {placeholder:'Or type a city or region'}); if (!c){ said('Skipped', true); await wait(300); ask('I need at least a city to plan anything. Pick one, or type your own.'); } }
+    d.place = c.pick ? c.pick.label : c.text; said(d.place);
+  }
+  d.place = d.place || d.name; S.scene = sceneOf(d.place) !== 'meadow' ? sceneOf(d.place) : S.scene;
+  $('colTitle').textContent = d.place; $('scribble').textContent = d.place; $('scribble').classList.add('show'); renderPins();
+  // the place guide: only with consent, only the place name
+  await wait(600);
+  ask(`I can look up real places in ${esc(d.place)} for you. That sends only the name “${esc(d.place)}” to Claude, Anthropic’s AI — none of your answers. Or I can use my built-in guide.`, 'Places');
+  const gq = await options([{label:'Yes, look up real places'},{label:'Use the built-in guide'}], {input:false});
+  const cur = curatedGuide(d.place), builtin = cur || Object.assign({source:'general'}, genericGuide(d.place));
+  let guideP = Promise.resolve(builtin), lookup = !!(gq && gq.pick && /^Yes/.test(gq.pick.label));
+  if (lookup) said('Yes, look up real places');
+  else { said(gq ? 'Use the built-in guide' : 'Skipped', !gq);
+    if (!cur){ await wait(400); ask(`My built-in guide doesn’t know ${esc(d.place)} by name, so it could only suggest kinds of places, not real ones. Look up real places after all? Again, only the name “${esc(d.place)}” would be sent.`);
+      const g2 = await options([{label:'Yes, look up real places'},{label:'Keep general suggestions'}], {input:false});
+      lookup = !!(g2 && g2.pick && /^Yes/.test(g2.pick.label)); said(g2 ? g2.pick.label : 'Skipped', !g2); } }
+  if (lookup) guideP = claudeGuide(d.place).then(g => g || builtin);
+  guideP.then(g => { GUIDE = g; S.guideSource = g.source; });
+
+  // 01 dates
+  await wait(600); ask('When are you travelling, and for how long?', '01 · Dates');
+  let a = await options([{label:'12–16 April · 5 days', d:{days:5,start:12,month:'April'}},{label:'Sometime in May · 3 days', d:{days:3,start:null,month:'May'}},{label:'About a week, dates open', d:{days:7,start:null,month:null}}], {placeholder:'e.g. 3–6 June, or 4 days'});
+  if (!a) await skipped(); else { const v = a.pick ? a.pick.d : parseWhen(a.text); if (!v){ said(a.text); await wait(300); ack('I couldn’t read a date or length there, so I’ll leave dates open.'); } else { record('when', v); await wait(400); ack(v.assumedDays ? `Got the month. I’ll assume ${v.days} days.` : 'Noted.'); } }
+
+  // 02 interests
+  await wait(600); ask('What do you enjoy doing when you travel?', '02 · Interests');
+  a = await options(Object.keys(TAGS).map(k => ({label:TAGS[k], k})), {multi:true, placeholder:'Or describe it', hint:'Pick any, then Done'});
+  if (!a) await skipped(); else { const v = a.picks ? {tags:a.picks.map(x => x.k)} : parseInterests(a.text); record('interests', v, a.text || null); await wait(400); ack(v.tags.length ? 'Great, I’ll lean the plan that way.' : 'I’ll keep that in mind, though I can’t match it to specific places.'); }
+
+  // 03 companions
+  await wait(600); ask('Who are you travelling with?', '03 · Companions');
+  a = await options([{label:'Just me', d:{type:'solo',size:1,kids:false,label:'Just me'}},{label:'My partner', d:{type:'partner',size:2,kids:false,label:'My partner'}},{label:'Friends, 4 of us', d:{type:'friends',size:4,kids:false,label:'Friends, 4 of us'}},{label:'My partner and our 6-year-old', d:{type:'family',size:3,kids:true,label:'My partner and our 6-year-old'}},{label:'My mom', d:{type:'parent',size:2,kids:false,label:'My mom'}}]);
+  if (!a) await skipped(); else { const v = a.pick ? a.pick.d : parseWho(a.text); record('who', v); await wait(400); ack(v.kids ? 'I’ll keep it child-friendly.' : 'Lovely.'); }
+
+  // 04 where you stay (needs the guide's areas)
+  const G = await guideP;
+  await wait(600); ask('Where will you be staying?', '04 · Where you stay');
+  a = await options([{label:'Just the city', d:{level:'city'}},{label:`Neighbourhood: ${G.areas[0]}`, d:{level:'area', area:G.areas[0]}},{label:'Exact address: 14 Example Street (made-up)', d:{level:'address', area:G.areas[0], address:'14 Example Street'}}], {placeholder:'Or type a neighbourhood or a made-up address'});
+  if (!a) await skipped(); else {
+    let v = a.pick ? a.pick.d : null;
+    if (!v){ const t = a.text, ar = G.areas.find(x => new RegExp(x.split(' ')[0], 'i').test(t)); v = /\d/.test(t) ? {level:'address', area: ar || null, address:t} : ar ? {level:'area', area:ar} : {level:'area', area:t, unknown:true}; }
+    record('stay', v); await wait(400); ack(v.level === 'city' ? 'Okay, I’ll plan across the city.' : 'Got it.'); }
+
+  // 05 daily budget
+  await wait(600); ask('What’s your approximate daily budget?', '05 · Daily budget');
+  a = await options([{label:'Under €50 a day', d:{level:'range', max:1, label:'Under €50 a day'}},{label:'€50–100 a day', d:{level:'range', max:2, label:'€50–100 a day'}},{label:'€100–200 a day', d:{level:'range', max:3, label:'€100–200 a day'}},{label:'Exactly €85 a day', d:{level:'exact', amount:85, max:2, label:'€85 a day'}}], {placeholder:'Or type an amount'});
+  if (!a) await skipped(); else { const v = a.pick ? a.pick.d : parseBudget(a.text); record('budget', v); await wait(400); ack('I’ll plan within that.'); }
+
+  // 06 preferences
+  await wait(600); ask('Any dietary requirements, mobility needs or routines I should account for?', '06 · Preferences');
+  a = await options(Object.keys(PREFS).map(k => ({label:PREFS[k], k})), {multi:true, placeholder:'Or describe it', hint:'Pick any, then Done — or Skip'});
+  if (!a) await skipped(); else { const v = a.picks ? Object.fromEntries(Object.keys(PREFS).map(k => [k, a.picks.some(x => x.k === k)])) : parsePrefs(a.text); record('prefs', v, a.text || null); await wait(400); ack('Thank you, I’ll take care of that.'); }
+
+  // 07 extra personalisation
+  await wait(600); ask('Want to make it even more convenient? Share your daily schedule or calendar and I’ll plan around it.', '07 · Schedule');
+  a = await options([{label:'I have work calls 9–10 each morning', d:{level:'calls', calls:true}},{label:'Here’s my whole calendar (made-up example, 34 events)', d:{level:'calendar', calls:true}}], {placeholder:'Or describe your schedule'});
+  if (!a) await skipped(); else { const v = a.pick ? a.pick.d : parseExtra(a.text); record('extra', v, a.text || null); await wait(400); ack(v.level === 'calendar' ? 'Thanks. I found one thing that matters: your 9–10 calls.' : 'I’ll plan around that.'); }
+
+  // the reward
+  await wait(700); ask('Your trip is ready.', 'Ready');
+  ans.innerHTML = `<div class="opts"><button class="opt main" type="button" id="make">Show my trip</button></div>`;
+  await new Promise(r => $('make').onclick = r); ans.innerHTML = '';
+  if (!GUIDE) GUIDE = await guideP;
+  S.rev = clone(S.orig);
+  const p = plan(S.orig);
+  $('posterA').innerHTML = posterHTML(p, null);
+  $('sheet').classList.add('open'); $('sheet').scrollTop = 0;
+  ask(`${esc(placeName())}, ${p.N} days. Here’s your trip →`, 'Your trip'); ack('I hope it’s useful. Everything on it comes from what you told me, and the assumptions are listed at the bottom.');
+  await wait(900);
+  ask('And a little something to keep: your postcard.', 'Your postcard');
+  const holder = document.createElement('div'); holder.className = 'reward-next'; holder.id = 'pcHolder';
+  holder.innerHTML = `<h3>Your postcard</h3><div class="pcard"><img id="pcImg" alt="Your postcard from ${esc(placeName())}"></div><div class="pcbar"><button class="btn" type="button" id="pcSave">Download postcard (PNG)</button><span class="pcnote" id="pcNote">No personal details on it: just the place, the length of your trip and three highlights.</span></div>`;
+  $('sheet').appendChild(holder);
+  await renderPostcard(p);
+  $('pcSave').onclick = savePostcard;
+  setTimeout(() => holder.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'}), 400);
+  const b = document.createElement('button'); b.type = 'button'; b.className = 'save'; b.textContent = 'Save my trip and continue →'; b.onclick = reveal; curEx.appendChild(b); down();
+}
+
+/* =========================================================
+   THE POSTCARD: the visible benefit of the exchange
+   ========================================================= */
+let PC = null, PCURL = '';
+async function renderPostcard(p){
+  try { if (document.fonts) await Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 1500))]); } catch(e){}
+  const w = 1800, h = 1200, c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d');
+  const art = document.createElement('canvas'); art.width = w/2; art.height = h/2; const ag = art.getContext('2d');
+  ag.save(); ag.scale(.5,.5); backdrop(ag, w, h, S.scene, 2.2); ag.restore();
+  g.filter = 'blur(3px)'; g.drawImage(art, -10, -10, w + 20, h + 20); g.filter = 'none';
+  for (let k=0;k<3;k++) addGrain(g, w, h);
+  const place = p.place.toUpperCase(), box = DEST.find(d => S.dest.country && d.country.toLowerCase() === String(S.dest.country).toLowerCase());
+  const col = box ? box.color : '#2257d4', fg = col === '#eaa2c9' ? '#111' : '#fff';
+  g.fillStyle = '#fff'; g.font = '700 30px "Space Mono", monospace'; g.fillText('GREETINGS FROM', 92, 150);
+  let fs = 300; g.font = `900 ${fs}px "Archivo", sans-serif`;
+  while (g.measureText(place).width > w - 520 && fs > 90){ fs -= 10; g.font = `900 ${fs}px "Archivo", sans-serif`; }
+  const tw = g.measureText(place).width;
+  g.fillStyle = col; g.fillRect(70, 180, tw + 50, fs * .92);
+  g.fillStyle = fg; g.fillText(place, 95, 180 + fs * .8);
+  const sx = w - 300, sy = 70; g.fillStyle = '#fff'; g.fillRect(sx, sy, 210, 250);
+  g.save(); g.beginPath(); g.rect(sx + 16, sy + 16, 178, 178); g.clip(); g.drawImage(art, art.width*.3, art.height*.3, art.width*.4, art.height*.4, sx + 16, sy + 16, 178, 178); g.restore();
+  g.fillStyle = '#111'; g.font = '700 22px "Space Mono", monospace'; g.fillText('ELSEWHERE', sx + 28, sy + 228);
+  g.save(); g.translate(sx - 190, sy + 440); g.rotate(-.25); g.strokeStyle = 'rgba(255,255,255,.9)'; g.lineWidth = 5; g.beginPath(); g.arc(0,0,110,0,6.283); g.stroke(); g.beginPath(); g.arc(0,0,84,0,6.283); g.stroke();
+  g.fillStyle = 'rgba(255,255,255,.95)'; g.font = '700 24px "Space Mono", monospace'; g.textAlign = 'center'; g.fillText(p.D.when && p.D.when.month ? p.D.when.month.toUpperCase() : 'ANY DAY', 0, -6); g.fillText(`${p.N} DAYS`, 0, 26); g.restore(); g.textAlign = 'left';
+  const by = h - 300; g.fillStyle = '#fff'; g.fillRect(0, by, w, 300); g.fillStyle = '#111'; g.fillRect(0, by, w, 6);
+  g.font = '500 64px "Instrument Sans", sans-serif'; g.fillStyle = '#111'; g.fillText(`${p.N} DAYS IN ${place}`.slice(0, 40), 70, by + 100);
+  const hl = []; p.days.forEach(d => d.slots.forEach(sl => { if (!sl.travel && sl.it && hl.length < 3 && !hl.some(x => x.text === sl.text)) hl.push(sl); }));
+  const PILL = {culture:['#f4a6c9','#111'], food:['#35b955','#fff'], nature:['#3d9be9','#fff'], nightlife:['#111','#fff'], shopping:['#c9b8ff','#111'], relax:['#bdbdbd','#111']};
+  let x = 70; g.font = '700 30px "Instrument Sans", sans-serif';
+  hl.forEach(sl => { const [bg,tx] = PILL[sl.tag] || ['#fff37a','#111']; let t = sl.text.toUpperCase(); while (g.measureText(t).width > 440 && t.length > 6) t = t.slice(0,-2);
+    if (t !== sl.text.toUpperCase()) t = t.trim() + '…';
+    const tw2 = g.measureText(t).width + 56; g.fillStyle = '#fff37a'; g.fillRect(x - 10, by + 140, tw2 + 20, 110);
+    g.fillStyle = bg; g.beginPath(); g.roundRect(x, by + 165, tw2, 60, 30); g.fill(); g.fillStyle = tx; g.fillText(t, x + 28, by + 205); x += tw2 + 50; });
+  g.fillStyle = '#111'; g.font = '400 22px "Space Mono", monospace'; g.textAlign = 'right'; g.fillText('AN EXPERIMENT IN AI TRAVEL PLANNING', w - 70, by + 60); g.textAlign = 'left';
+  addGrain(g, w, h);
+  PC = c; PCURL = c.toDataURL('image/jpeg', .8); $('pcImg').src = c.toDataURL('image/png');
+}
+const downloadsP = (window.claude && window.claude.use) ? window.claude.use('downloads').catch(() => null) : Promise.resolve(null);
+async function savePostcard(){
+  if (!PC) return; const note = $('pcNote'); let dl = null; try { dl = await Promise.race([downloadsP, new Promise(r => setTimeout(() => r(null), 3000))]); } catch(e){}
+  const fname = `elsewhere-${placeName().toLowerCase().replace(/[^a-z0-9]+/g,'-')}-postcard.png`;
+  if (!dl){ PC.toBlob(blob => { try { const u = URL.createObjectURL(blob), a = document.createElement('a'); a.href = u; a.download = fname; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000); note.textContent = 'Downloaded. Enjoy it.'; }
+    catch(e){ note.textContent = 'Saving didn’t work here. Right-click or long-press the postcard to save the image.'; } }, 'image/png'); return; }
+  PC.toBlob(async blob => { try { await dl.save({filename:`elsewhere-${placeName().toLowerCase().replace(/[^a-z0-9]+/g,'-')}-postcard.png`, data:blob}); note.textContent = 'Saved. Enjoy it.'; }
+    catch(e){ note.textContent = e && e.code === 'declined' ? 'Not saved. You can download it any time before you continue.' : 'Saving didn’t work here. Right-click or long-press the postcard to save the image.'; } }, 'image/png');
+}
+
+/* =========================================================
+   POSTER
+   ========================================================= */
+function posterHTML(p, base){
+  const D = p.D, d0 = base;
+  const cell = (sl, i, s) => { const prev = d0 && d0.days[i] && d0.days[i].slots[s]; const chg = d0 && (!prev || prev.text !== sl.text || (prev.pre||'') !== (sl.pre||''));
+    const tag = sl.tag === 'travel' ? 'travel' : sl.tag;
+    return `<div class="c"><div class="y${sl.free ? ' relax' : ''}${chg ? ' chg' : ''}"><span class="pill t-${tag}">${esc(sl.text)}</span>${sl.pre ? `<span class="why">${esc(sl.pre)}</span>` : ''}${sl.why && sl.why.length ? `<span class="why">${esc(sl.why.map(k => WHY[k] || '').filter(Boolean).join(' · '))}</span>` : ''}${sl.cost != null ? `<span class="why">${COSTW[sl.cost]}</span>` : ''}<span class="ar">↓</span></div></div>`; };
+  let rows = '';
+  p.days.forEach((d,i) => {
+    rows += `<div class="prow"><div class="n">${String(i+1).padStart(2,'0')}</div><div class="dayhead">Day 0${i+1}</div><div class="m">${p.dayLab(i)}</div></div>`;
+    rows += `<div class="prow"><div class="n">09<br><br>14<br><br>19</div>${d.slots.map((sl,s) => cell(sl,i,s)).join('')}<div class="m"></div></div>`;
+    if (i === 1){ const letters = p.place.replace(/[^A-Za-zÀ-ſ]/g,'').slice(0,12).split(''); rows += `<div class="prow"><div class="n">•</div><div class="span3">${letters.map(c => `<span class="dot">${esc(c)}</span>`).join('')}</div><div class="m"></div></div>`; }
+  });
+  const fe = p.feats.map(k => featText(p,k)), fb = d0 ? d0.feats.map(k => featText(d0,k)) : fe;
+  const lostF = d0 ? fb.filter(x => !fe.includes(x)) : [];
+  const ab = d0 ? d0.assumed : p.assumed;
+  const src = GUIDE && GUIDE.source === 'claude' ? 'Places suggested by Claude from the place name only · assembled on this page by rules' : GUIDE && GUIDE.source === 'general' ? 'General suggestions · the built-in guide doesn’t know this place by name' : 'Simulated · built on this page from a built-in guide of real places';
+  return `<div class="poster">
+    <div class="ph"><div class="t1">Itinerary</div><div class="t2">${esc(p.place)}${D.when && D.when.month ? ' · ' + esc(D.when.start ? `${D.when.start}–${D.when.start + D.when.days - 1} ${D.when.month}` : D.when.month) : ''}</div><span class="src">${src}</span></div>
+    <div class="cols"><span>No.</span><span>Morn<em>1</em></span><span>Aft<em>2</em></span><span>Eve<em>3</em></span><span>Day</span></div>
+    ${rows}
+    <div class="why-box"><div><h5>Personalised by what you shared</h5><ul>${fe.length ? fe.map(x => `<li${d0 && !fb.includes(x) ? ' class="new"' : ''}>${esc(x)}</li>`).join('') : '<li>Nothing personal: planned from the destination alone</li>'}${lostF.map(x => `<li class="lost">${esc(x)}</li>`).join('')}</ul></div>
+      <div><h5>Assumed, because it wasn’t shared</h5><ul>${p.assumed.length ? p.assumed.map(x => `<li${d0 && !ab.includes(x) ? ' class="new"' : ''}>${esc(x)}</li>`).join('') : '<li>Nothing assumed</li>'}</ul></div></div>
+    <div class="legend"><span><i class="t-culture"></i>Culture</span><span><i class="t-food"></i>Food</span><span><i class="t-nature"></i>Nature</span><span><i class="t-nightlife"></i>Nightlife</span><span><i class="t-shopping"></i>Markets</span><span><i class="t-relax"></i>Slow</span><span><i class="t-travel"></i>Travel</span><span><i class="t-routine"></i>Your routine</span></div>
+    <div class="bye">Bye<span>Bye</span></div>
+  </div>`;
+}
+
+/* =========================================================
+   CHOOSE A DESTINATION
+   ========================================================= */
+function torn(){ const R = rng(17), pts = ['0% 0%','100% 0%']; let x = 100;
+  while (x > 0){ const sp = R() < .12; pts.push(`${x.toFixed(1)}% ${sp ? (89 + R()*3).toFixed(1) : (95 + R()*5).toFixed(1)}%`); x -= sp ? 1 : 2 + R()*5; }
+  pts.push('0% 96%'); return `polygon(${pts.join(',')})`; }
+function choose(d, el){
+  S.dest = d; S.scene = d.scene; S.phase = 'chat'; hcur = .8; size();
+  $('colTitle').textContent = d.name;
+  const r = el.getBoundingClientRect(), x = r.left + r.width/2, y = r.top + r.height/2;
+  SC.classList.remove('open'); SC.style.clipPath = `circle(${Math.max(20,r.width/2)}px at ${x}px ${y}px)`; void SC.offsetWidth;
+  SC.classList.add('open'); SC.style.clipPath = `circle(150vmax at ${x}px ${y}px)`;
+  setTimeout(() => { SC.classList.remove('open'); SC.style.clipPath = torn(); document.body.classList.add('collage-on'); }, reduce ? 0 : 1500);
+  $('index').style.opacity = 0; setTimeout(() => { $('index').hidden = true; }, 700);
+  setFocus();
+  setTimeout(() => { $('col').classList.add('open'); interview(); }, reduce ? 0 : 900);
+}
+
+/* =========================================================
+   ACT 03 — the reveal, seen at three depths
+   ========================================================= */
+const USES = {
+  when:['Personalisation','Timed offers'], interests:['Personalisation & profiling','Ads & recommendations'], who:['Personalisation & profiling'],
+  stay:['Referrals for stays and transport nearby','Location profiling'], budget:['Pricing & ads','Referrals'], prefs:['Personalisation','Often treated as sensitive data by law'], extra:['Personalisation','Profiling of routines']
+};
+function reveal(){
+  S.phase = 'reveal';
+  $('col').classList.remove('open'); $('sheet').classList.remove('open');
+  document.body.classList.remove('collage-on'); SC.style.clipPath = 'none';
+  const p = plan(S.orig);
+  $('got').textContent = `What you got · a ${p.N}-day trip and a postcard`; $('got').classList.add('show');
+  renderPins('reveal');
+  S.trace = null;
+  const n = sharedCount(S.orig), fb = S.jobs.length;
+  $('lede').innerHTML = n === 0 ? `You shared <mark>nothing</mark> beyond your destination, and still got a trip and a postcard. Look at the exchange from three depths to see what a planner like this <i>could</i> have asked of you.`
+    : `You shared <mark>${n} of 7</mark> answers${fb ? ` and ${fb} piece${fb>1?'s':''} of feedback` : ''} to get your trip. In this prototype they stayed in this page${S.guideSource === 'claude' ? ' (only the place name went to Claude)' : ''}. In a real AI service, what happens next depends on the provider and your settings.`;
+  $('recvPlane').innerHTML = `<div class="rcard" style="left:3vw;top:14%;width:min(24vw,280px);transform:rotate(-3deg);padding:6px"><img src="${PCURL}" alt="" style="width:100%;display:block"></div>
+    <div class="rcard" style="left:calc(min(24vw,280px) + 6vw);top:22%;padding:10px 12px;transform:rotate(2deg)"><div class="mini">Itinerary</div><div style="font-family:var(--display);font-weight:900;font-size:26px;line-height:1">${p.N} days · ${p.days.reduce((a,d) => a + d.slots.filter(x => x.it).length, 0)} stops</div><div class="mini" style="margin-top:4px">${esc(p.place)}</div></div>`;
+  const chipsB = ['Personalisation & profiling','Product analytics','Referrals & ads','Model improvement, where permitted','Retention & deletion policies'];
+  $('beyondPlane').innerHTML = `<div class="bline"><span class="bnode">${n ? 'Your answers' : 'Your destination'}</span><i class="sol"></i><span class="bnode obs">Your trip · observed</span><i class="sol"></i><span class="bwall">What this prototype can verify ends here</span><div class="bfork">${chipsB.map((c,k) => `<span class="bchip"><em>Possible</em><span class="cf">${c}</span><span class="cs">${['Personalisation','Analytics','Referrals & ads','Model training','Retention'][k]}</span></span>`).join('')}</div></div>`;
+  const path = n <= 1 ? 'B' : n >= 5 ? 'A' : 'C'; S.path = path;
+  const head = {A:'<i>How much of what you shared</i><br><span>did you actually need to share?</span>', B:'<i>How much personalisation can you get</i><br><span>without revealing more?</span>', C:'<i>Can you keep the trip</i><br><span>without giving away as much?</span>'}[path];
+  $('cta').innerHTML = `<div class="mini">Act 04 · The challenge</div><h2 class="boxed">${head}</h2><p style="margin:0;max-width:660px;font-size:16px">${{A:'Remove, generalise or replace your answers and watch the itinerary change. Some details matter for this task. Some don’t.', B:'Try adding one piece of information at a time and see what each one actually changes.', C:'Add what helps, remove what doesn’t, and watch the itinerary respond.'}[path]} No score, no time limit.</p><button class="btn" type="button" id="toAct3">Take the challenge →</button>`;
+  $('toAct3').onclick = startAct3;
+  setLayer(1);
+  $('under').classList.add('open'); $('under').scrollTop = 0;
+}
+function setLayer(k){
+  document.body.classList.remove('layer-1','layer-2','layer-3'); document.body.classList.add('layer-' + k);
+  [1,2,3].forEach(i => $('tab' + i).setAttribute('aria-selected', i === k));
+  const p = plan(S.orig), O = S.orig, n = sharedCount(O);
+  let html = '';
+  if (k === 1){
+    const personal = p.feats.length, stops = p.days.reduce((a,d) => a + d.slots.filter(x => x.it).length, 0);
+    html = `<p class="intro">Everything here is what the planner gave you in return.</p><div class="lgrid">
+      <div class="blk"><div class="hd L1 tex"><span>Itinerary</span><span>01</span></div><div class="bd"><div class="big">${p.N} days, ${stops} stops in ${esc(p.place)}</div><div class="sm">${personal ? `Shaped by ${personal} thing${personal>1?'s':''} you told it.` : 'Built from the destination alone, with its assumptions listed.'}</div></div></div>
+      <div class="blk"><div class="hd L1 tex"><span>Postcard</span><span>02</span></div><div class="bd"><img src="${PCURL}" alt="Your postcard" style="width:100%;border:1px solid #111"><div class="sm">A souvenir with no personal details on it.</div></div></div>
+      <div class="blk"><div class="hd L1 tex"><span>Recommendations</span><span>03</span></div><div class="bd"><div class="chips">${p.days.flatMap(d => d.slots.filter(x => x.it)).slice(0,6).map(x => `<span class="chip2">${esc(x.text)}</span>`).join('')}</div></div></div>
+      <div class="blk"><div class="hd L1 tex"><span>Saved effort</span><span>04</span></div><div class="bd"><div class="big">${n ? `${n} answer${n>1?'s':''} → one plan` : 'One click → one plan'}</div><div class="sm">No searching, comparing or scheduling on your side.</div></div></div>
+    </div><div class="lnext"><button class="btn solid" type="button" data-go="2">Next layer: What You Provide →</button></div>`;
+  }
+  if (k === 2){
+    html = `<p class="intro">Solid yellow is what you actually said. Dashed is what <b>could be inferred</b> from it: a guess a service might make, not a fact about you.</p><div class="lgrid">` +
+      FIELDS.map((f,i) => { const d = O[f]; const num = String(i+1).padStart(2,'0');
+        if (!d) return `<div class="blk skipped"><div class="hd"><span>${FL[f]}</span><span>${num}</span></div><div class="bd">You skipped this. Nothing to show.</div></div>`;
+        const inf = INFER[f] && INFER[f](d);
+        return `<div class="blk"><div class="hd L2 tex"><span>${FL[f]}</span><span>${num}</span></div><div class="bd"><div class="said">${esc(label(f,d))}</div>${inf ? `<div class="inf">${esc(inf)}?</div>` : ''}</div></div>`; }).join('') +
+      (S.jobs.length ? `<div class="blk"><div class="hd L2 tex"><span>Feedback & corrections</span><span>✦</span></div><div class="bd"><div class="said">${S.jobs.map(esc).join(', ')}</div><div class="inf">which answers people like you find useful</div></div></div>` : '') +
+      `</div><div class="lnext"><button class="btn solid" type="button" data-go="3">Next layer: Beyond Your View →</button></div>`;
+  }
+  if (k === 3){
+    const mech = [['Personalisation & profiling','Answers may help build a profile that shapes what you are shown next time.'],['Product analytics','Patterns across many conversations may show what to build or sell next.'],['Commercial recommendations','A planner may earn a referral fee when it sends someone to a stay, tour or restaurant.'],['Model improvement','Some providers may use conversations or feedback to improve models, depending on their policy and your settings.'],['Retention & deletion','How long anything is kept, and what deleting does, depends on the provider’s policies and systems.']];
+    html = `<section class="trace" aria-labelledby="trH"><div class="mini">Trace your information</div><h3 id="trH">${sharedCount(S.origCleared ? {} : S.orig) ? 'Pick one thing you shared and follow it as far as it can be followed.' : 'Follow one answer as far as it can be followed.'}</h3><div id="trace"></div></section>` +
+      `<details class="mechs"><summary>The five possible mechanisms, in general →</summary><p class="intro">These are <b>possible</b> practices in real AI services, not events. None of them is observable in this prototype, and none of them happened here.</p><div class="lgrid">` +
+      mech.map(([t,d],i) => `<div class="blk useblk"><div class="hd L3 hatch"><span>Possible mechanism</span><span>0${i+1}</span></div><div class="bd"><div class="big" style="font-size:22px">${t}</div><div class="sm">${d}</div><span class="tagp2">Not observable in this prototype</span></div></div>`).join('') + `</div></details>` +
+      `<div class="dist"><b>Contribution is not the same as value.</b> Your answers helped produce <i>your</i> itinerary. Any value a company might derive from contributions like yours is a different thing, and it isn’t measurable here. ELSEWHERE puts no price on your information.</div>`;
+  }
+  $('lpanel').innerHTML = html;
+  $('lpanel').className = 'lpanel ' + (k === 3 ? 'hatch' : 'tex');
+  $('lpanel').style.backgroundColor = k === 1 ? '#fffbe0' : k === 2 ? '#fdeef5' : '#f1edff';
+  $('lpanel').querySelectorAll('[data-go]').forEach(b => b.onclick = () => goLayer(+b.dataset.go));
+  if (k === 3) renderTrace();
+}
+
+/* ---------- Trace your information: what you sent → what it did here → where the trace ends ---------- */
+const TRQ = [
+  ['Could this information contribute to personalization?', f => `Possibly. A service could keep an answer like this to shape what it suggests to you next time${INFER[f] && INFER[f](S.orig[f] || EXAMPLE.d) ? `, and could infer from it ${INFER[f](S.orig[f] || EXAMPLE.d)}` : ''}. Whether it does depends on the provider and your settings.`],
+  ['Could it be used in analytics?', () => 'Possibly, usually combined with many other people’s answers to see patterns, such as which trips are popular or which questions people skip. Whether this happens, and in what form, can’t be seen from here.'],
+  ['Could it influence commercial recommendations?', f => ({budget:'Possibly. A budget is the kind of signal that could shape which paid stays, tours or offers are shown, and some planners earn referral fees.', stay:'Possibly. Where you stay is the kind of signal that could shape nearby offers, and some planners earn referral fees.', interests:'Possibly. Interests are the kind of signal that could shape which tours, venues or ads are shown.'}[f] || 'Possibly. Answers like this could shape which paid options are shown first, in some services. Nothing here is sold or advertised.')],
+  ['Could it be retained or used for model improvement?', () => 'It depends on the provider’s retention policy and on whether your settings allow your conversations to be used for training. Providing information is not the same as it being used for training.']
+];
+const EXAMPLE = {f:'budget', d:{level:'range', max:1, label:'Under €50 a day'}};
+function observeField(f, D){
+  const without = clone(D); delete without[f]; const pw = plan(without), pd = plan(D), dd = diff(pw, pd);
+  const changes = dd.content.map(c => { const w = [...new Set((c.why || []).map(x => WHY[x]).filter(Boolean))];
+    return `<li>Day ${c.i+1} · ${TIMES[c.s]}: <b>${esc(c.to || '(no stop)')}</b><small>instead of ${esc(c.from || '(no stop)')}${w.length ? ` · ${esc(w.join(', '))}` : ''}</small></li>`; });
+  const lead = {budget:'Your budget filtered out stops that cost more than you said.', interests:'Your interests swapped stops that didn’t match for ones that did.', who:'Your companions told the planner who the stops had to suit.', stay:'Where you stay decided which later mornings start near you.', when:'Your dates set how many days the plan has and how they are labelled.', prefs:'Your preferences set which stops suit you.', extra:'Your schedule moved morning starts around your calls.'}[f];
+  let body;
+  if (dd.slots) body = `<p>${lead} Without it, the planner would have chosen differently for <b>${dd.slots} stop${dd.slots>1?'s':''}</b>:</p><ul>${changes.slice(0,4).join('')}${changes.length > 4 ? `<li>…and ${changes.length - 4} more</li>` : ''}</ul>`;
+  else if (dd.pres || dd.gained.length || dd.days) body = `<p>It didn’t change which places you got. It changed ${dd.days ? 'the length of the trip and ' : ''}labels and details: ${esc(dd.gained.join('; ') || 'timing notes')}.</p>`;
+  else body = `<p>In this itinerary it made <b>no visible difference</b>. That says something about this planner and this trip, not about the answer in general.</p>`;
+  return body;
+}
+function renderTrace(){
+  const box = $('trace'); if (!box) return;
+  const O = S.origCleared ? {} : S.orig, shared = FIELDS.filter(f => O[f]);
+  const ex = !shared.length, T = S.trace || (S.trace = {f: ex ? EXAMPLE.f : null, step: ex ? 1 : 0, open: []});
+  const D = ex ? {[EXAMPLE.f]: EXAMPLE.d} : O, f = T.f, val = f ? (ex ? EXAMPLE.d : O[f]) : null;
+  let pick = ex ? `<p class="intro">${S.origCleared ? 'You cleared your original answers from this page, so there is nothing of yours left here to trace.' : 'You didn’t share any optional answers, so there is no personal answer to trace.'} Here is an <b>illustrative example</b> instead, run through the same planner.</p><span class="trex">Illustrative example · not your data</span>`
+    : `<div class="trpick" role="group" aria-label="Choose an answer to trace">${shared.map(x => `<button type="button" data-f="${x}" aria-pressed="${x === f}"><small>${FL[x]}</small>${esc(label(x, O[x]))}</button>`).join('')}</div>`;
+  if (!f){ box.innerHTML = pick + `<p class="intro">Choose one of your answers above.</p>`; bindTrace(); return; }
+  const n1 = `<div class="tn n1"><div class="tst"><span>Step 1</span><b>Known to you</b></div><h4>What you submitted</h4><div class="said">${esc(FL[f])}: ${esc(label(f, val))}</div><p>You can see this because you typed or picked it.</p>${T.step < 2 ? '<button class="btn go" type="button" data-step="2">Follow it into your trip →</button>' : ''}</div>`;
+  const n2 = `<div class="tn n2${T.step < 2 ? ' off' : ''}"><div class="tst"><span>Step 2 · Stage A</span><b>Observable</b></div><h4>What we can observe</h4>${T.step >= 2 ? observeField(f, D) : ''}<span class="ok">Visible in this prototype</span>${T.step === 2 ? '<button class="btn go" type="button" data-step="3">Try to follow it further →</button>' : ''}</div>`;
+  const n3 = `<div class="tn n3${T.step < 3 ? ' off' : ''}"><div class="tst"><span>Beyond the boundary · Stage B</span><b>Possibilities, not events</b></div><h4>What remains beyond your view</h4><p>Separate possibilities, not steps in a sequence. None of them is confirmed.</p><div class="forks">${TRQ.map((q,i) => `<div class="tq${T.open.includes(i) ? ' open' : ''}"><button type="button" data-q="${i}" aria-expanded="${T.open.includes(i)}"><span><span class="poss">Possibility · unconfirmed</span>${q[0]}</span></button><div class="ans">${q[1](f)}<br><i>Possible practice · not a confirmed event</i></div></div>`).join('')}</div></div>`;
+  const wall = `<div class="wall${T.step < 3 ? ' off' : ''}" role="note"><div class="mini" style="color:#c9b8ff">Step 3 · Boundary</div><div class="big">The trace ends here.</div><p>This is as far as the prototype can verify. Following it further would take the real provider’s policies, systems and settings. This prototype has none of them, it doesn’t monitor any real AI service, and you can’t check them from where you are.</p></div>`;
+  const sum = `<div class="trsum${T.step < 3 ? ' off' : ''}"><div><b>✓ Known</b>What you submitted</div><div><b>✓ Observed</b>How it shaped this result</div><div><b>? Unknown</b>What happens after that, in a real service, can’t be established from here</div></div>`;
+  box.innerHTML = pick + `<div class="trpath">${n1}${n2}${wall}${n3}</div>${sum}`;
+  bindTrace();
+}
+function bindTrace(){
+  const box = $('trace');
+  box.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { S.trace = {f:b.dataset.f, step:1, open:[]}; renderTrace(); });
+  box.querySelectorAll('[data-step]').forEach(b => b.onclick = () => { S.trace.step = +b.dataset.step; renderTrace(); const nx = box.querySelectorAll('.tn,.wall')[S.trace.step - 1]; if (nx && nx.focus){ nx.setAttribute('tabindex','-1'); nx.focus({preventScroll:true}); } });
+  box.querySelectorAll('[data-q]').forEach(b => b.onclick = () => { const i = +b.dataset.q, o = S.trace.open; o.includes(i) ? o.splice(o.indexOf(i),1) : o.push(i); renderTrace(); });
+}
+
+function goLayer(i){ setLayer(i); const u = $('under'), t = $('lpanel').offsetTop - 50; if (u.scrollTop > t) u.scrollTop = t; }
+[1,2,3].forEach(i => $('tab' + i).onclick = () => goLayer(i));
+
+/* =========================================================
+   ACT 03 — the challenge
+   ========================================================= */
+// the choices for each question: the same for everyone, plus whatever the visitor originally typed
+function choicesFor(f){
+  const O = S.orig[f], G = GUIDE, c = [];
+  const push = (d, lbl, note) => { if (!c.some(x => same(x.d, d))) c.push({d, lbl: lbl || label(f, d), note}); };
+  if (f === 'when'){ const b = O || {days:5, start:12, month:'April'};
+    if (b.start) push({days:b.days, start:b.start, month:b.month}, null, 'exact dates'); else push({days:5,start:12,month:'April'}, null, 'exact dates');
+    push({days:b.days, start:null, month:b.month || 'April'}, null, 'month only'); push({days:b.days, start:null, month:null}, null, 'length only'); }
+  if (f === 'who'){ if (O) push(O, null, 'what you said'); [['solo',1,false,'Just me'],['partner',2,false,'My partner'],['friends',4,false,'Friends, 4 of us'],['family',3,true,'My partner and our 6-year-old'],['parent',2,false,'My mom']].forEach(([type,size,kids,l]) => push({type,size,kids,label:l}));
+    const sz = O ? O.size : 2; push({type:'size', size:sz, kids:false, label:`Just the group size: ${sz} people`}, null, 'no relationships'); }
+  if (f === 'stay'){ const addr = O && O.level === 'address' ? O : {level:'address', area:G.areas[0], address:'14 Example Street'};
+    push(addr, null, 'made-up'); const ar = O && O.area && !O.unknown ? O.area : G.areas[0]; push({level:'area', area:ar}); G.areas.filter(x => x !== ar).slice(0,2).forEach(x => push({level:'area', area:x})); push({level:'city'}); }
+  if (f === 'budget'){ if (O && O.level === 'exact') push(O); else push({level:'exact', amount:85, max:2, label:'€85 a day'});
+    push({level:'range', max:1, label:'Under €50 a day'}); push({level:'range', max:2, label:'€50–100 a day'}); push({level:'range', max:3, label:'€100–200 a day'}); if (O && O.level === 'broad') push(O); }
+  if (f === 'extra'){ push({level:'calendar', calls:true}, null, 'made-up example'); push({level:'calls', calls:true}); if (O && O.level === 'other') push(O); }
+  return c;
+}
+function startAct3(){
+  S.phase = 'act3'; S.view = 'rev';
+  document.body.classList.remove('layer-1','layer-2','layer-3');
+  $('under').classList.remove('open'); $('got').classList.remove('show');
+  $('chHead').innerHTML = {A:'<i>How much of what you shared</i><br><span>did you actually need?</span>', B:'<i>How much personalisation</i><br><span>without revealing more?</span>', C:'<i>Keep the trip,</i><br><span>give away less?</span>'}[S.path];
+  $('pathNote').innerHTML = {A:'You shared a lot. Try removing or generalising answers. Each option shows what it would change before you pick it.', B:'You shared very little, and that’s a valid choice. Try adding one thing at a time. Each option shows what it would change before you pick it.', C:'You shared some things and kept others. Try both directions: add what might help, remove what might not.'}[S.path];
+  $('act3').classList.add('open');
+  setView('rev'); renderAct3();
+}
+function setView(v){ S.view = v; $('vOrig').setAttribute('aria-pressed', v === 'orig'); $('vRev').setAttribute('aria-pressed', v === 'rev'); renderPins(); renderPoster(); }
+$('vOrig').onclick = () => setView('orig'); $('vRev').onclick = () => setView('rev');
+function renderPoster(){
+  const O = S.origCleared ? null : plan(S.orig), R = plan(S.rev);
+  if (S.view === 'orig'){ $('posterB').innerHTML = S.origCleared ? '<p style="color:#fff">Your original answers were cleared from this page.</p>' : posterHTML(O, null); $('recvState').textContent = 'Original exchange'; }
+  else { $('posterB').innerHTML = posterHTML(R, O); const dd0 = O ? diff(O, R) : null, d = dd0 ? describe(dd0) : null; $('recvState').textContent = d ? `Revised · ${d} vs original` : 'Revised · same as original'; }
+  const ch = $('changes');
+  if (S.view === 'orig' || S.origCleared){ ch.innerHTML = ''; ch.hidden = true; return; }
+  ch.hidden = false; const dd = diff(O, R);
+  const items = dd.content.map(c => `<li><b>Day ${c.i+1} · ${TIMES[c.s]}</b>: ${c.from ? esc(c.from) : '(new day)'} → ${c.to ? esc(c.to) : '(day removed)'} <small>${c.extra ? 'because of your dates' : c.undo ? `the original stop was there for: ${esc(reasonOf(c) || 'the baseline')}` : 'because of: ' + esc(reasonOf(c) || 'your answers')}</small></li>`);
+  if (dd.pres) items.push(`<li>${dd.pres} label${dd.pres>1?'s':''} or timing note${dd.pres>1?'s':''} changed <small>presentation only, same stops</small></li>`);
+  dd.gained.forEach(x => items.push(`<li>Added: ${esc(x)} <small>detail</small></li>`)); dd.lost.forEach(x => items.push(`<li>Gone: ${esc(x)} <small>detail</small></li>`));
+  ch.innerHTML = `<h5>What changed from your original, and why</h5>${items.length ? `<ul>${items.join('')}</ul>` : '<div class="none">Nothing yet. Pick any option on the right; each one shows what it would change before you choose it.</div>'}`;
+}
+function effectOf(f, d){ // what would this option do to the current revision?
+  const now = plan(S.rev), test = clone(S.rev); if (d) test[f] = d; else delete test[f];
+  if (same(test[f], S.rev[f])) return {cls:'cur', txt:'current'};
+  const dd = diff(now, plan(test)), t = describe(dd); return t ? {cls: dd.slots ? 'diff' : 'pres', txt:t} : {cls:'same', txt:'no change'};
+}
+function roleOf(f){ // with everything else as revised, what does this field do?
+  if (!S.rev[f]) { return null; }
+  const test = clone(S.rev); delete test[f]; const dd = diff(plan(test), plan(S.rev)), t = describe(dd);
+  return dd.slots ? `Right now this <b>changes which stops you get</b>: ${t}.` : t ? 'Right now this only changes <b>labels and details</b>, not the stops.' : 'Right now this makes <b>no visible difference</b> to your itinerary.';
+}
+function renderAct3(){
+  const O = S.origCleared ? {} : S.orig;
+  $('giveN').textContent = `${sharedCount(S.rev)} of 7 in your revision`;
+  $('controls').innerHTML = '';
+  FIELDS.forEach((f,i) => {
+    const box = document.createElement('div'); box.className = 'ctl';
+    const changed = !same(O[f] || null, S.rev[f] || null);
+    box.innerHTML = `<h4><span>${String(i+1).padStart(2,'0')} · ${FL[f]}</span><small class="${changed && !S.origCleared ? 'chg' : ''}">${S.origCleared ? '' : changed ? 'changed' : 'unchanged'}</small></h4><div class="first">First time: <b>${S.origCleared ? 'cleared from this page' : esc(label(f, O[f]))}</b></div>`;
+    const list = document.createElement('div'); list.className = 'choice'; box.appendChild(list);
+    const mk = (lbl, small, checked, eff, multi, onpick, isFirst) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'ch' + (multi ? ' multi' : ''); b.setAttribute('role', multi ? 'checkbox' : 'radio'); b.setAttribute('aria-checked', checked);
+      b.innerHTML = `<span class="box"></span><span class="lbl">${esc(lbl)}${isFirst ? '<span class="tagfirst">first time</span>' : ''}${small ? `<small>${esc(small)}</small>` : ''}</span><span class="eff ${eff.cls}">${esc(eff.txt)}</span>`;
+      b.onclick = onpick; list.appendChild(b); };
+    if (f === 'interests' || f === 'prefs'){
+      const keys = f === 'interests' ? Object.keys(TAGS) : Object.keys(PREFS), names = f === 'interests' ? TAGS : PREFS;
+      const cur = S.rev[f], has = k => f === 'interests' ? !!(cur && cur.tags.includes(k)) : !!(cur && cur[k]);
+      const wasHas = k => f === 'interests' ? !!(O[f] && O[f].tags.includes(k)) : !!(O[f] && O[f][k]);
+      keys.forEach(k => {
+        const next = clone(cur || (f === 'interests' ? {tags:[]} : {}));
+        if (f === 'interests'){ next.tags = has(k) ? next.tags.filter(x => x !== k) : next.tags.concat(k); delete next.raw; }
+        else { next[k] = !has(k); delete next.raw; }
+        const empty = f === 'interests' ? !next.tags.length : !Object.keys(PREFS).some(x => next[x]);
+        const eff = (() => { const e = effectOf(f, empty ? null : next); return e.cls === 'cur' ? {cls:'same',txt:'no change'} : e; })();
+        mk(names[k], null, has(k), has(k) ? Object.assign({}, eff, {txt: eff.cls === 'diff' ? 'removing: ' + eff.txt : 'removing: no change'}) : Object.assign({}, eff, {txt: eff.cls === 'diff' ? 'adding: ' + eff.txt : 'adding: no change'}), true, () => { if (empty) delete S.rev[f]; else S.rev[f] = next; afterEdit(); }, wasHas(k));
+      });
+    } else {
+      choicesFor(f).forEach(c => { const e = effectOf(f, c.d); mk(c.lbl, c.note, same(S.rev[f], c.d), e, false, () => { S.rev[f] = clone(c.d); afterEdit(); }, same(O[f], c.d)); });
+    }
+    const e = effectOf(f, null); mk('Don’t share', null, !S.rev[f], e, false, () => { delete S.rev[f]; afterEdit(); }, !O[f] && !S.origCleared);
+    const role = roleOf(f); if (role){ const r = document.createElement('div'); r.className = 'role'; r.innerHTML = role; box.appendChild(r); }
+    $('controls').appendChild(box);
+  });
+}
+function afterEdit(){ const y = $('controls').parentNode.scrollTop; S.view = 'rev'; setView('rev'); renderAct3(); $('controls').parentNode.scrollTop = y; }
+$('resetRev').onclick = () => { S.rev = S.origCleared ? {} : clone(S.orig); afterEdit(); };
+
+/* =========================================================
+   LIMITS OF CONTROL
+   ========================================================= */
+function hereList(){
+  $('hereList').innerHTML = [
+    'Your revision: fully yours. Change it any time.',
+    S.origCleared ? 'Your original answers: cleared from this page. They are no longer anywhere in this prototype.' : 'Your original answers: held only in this page’s memory. You can clear them below; they also vanish when you close or reload.',
+    S.guideSource === 'claude' ? `Sent outside this page: only the place name “${esc(placeName())}”, to Claude, when you agreed. Clearing here can’t recall that request — the same limit, on a small scale.` : 'Sent outside this page: nothing.',
+    'Stored: nothing. No cookies, no account, no server.'
+  ].map(x => `<li>${x}</li>`).join('');
+}
+$('toLimits').onclick = () => { hereList(); $('clearMsg').hidden = true; $('clearOrig').disabled = S.origCleared; $('limits').classList.add('open'); $('limits').scrollTop = 0; };
+$('clearOrig').onclick = () => { S.orig = {}; S.origCleared = true; $('clearOrig').disabled = true;
+  $('clearMsg').hidden = false; $('clearMsg').innerHTML = 'Done, and in this prototype that’s real: your original answers are gone from the page. In a real service, a button like this would send a request, and what happens next would depend on the provider.'; hereList(); renderPins(); };
+$('backToCh').onclick = () => { $('limits').classList.remove('open'); renderAct3(); setView(S.view); };
+$('toFinal').onclick = () => { fillFinal(); $('limits').classList.remove('open'); $('final').classList.add('open'); $('final').scrollTop = 0; };
+
+/* =========================================================
+   FINAL REFLECTION (adapts to what the visitor did)
+   ========================================================= */
+function fillFinal(){
+  const C = S.origCleared, O = C ? {} : S.orig, R = S.rev;
+  const po = plan(O), pr = plan(R);
+  let added = 0, removed = 0, gen = 0, more = 0, kept = 0;
+  $('cmpBody').innerHTML = FIELDS.map(f => {
+    const a = O[f], b = R[f]; let st, cls;
+    if (C){ return `<tr><td class="f">${FL[f]}</td><td style="color:#888">cleared from this page</td><td>${esc(label(f,b))}</td><td><span class="st same">can’t compare</span></td><td>Can’t compare: original cleared</td></tr>`; }
+    if (!a && !b){ st = 'never shared'; cls = 'same'; }
+    else if (!a && b){ st = 'added'; cls = 'add'; added++; }
+    else if (a && !b){ st = 'removed'; cls = 'rem'; removed++; }
+    else if (same(a,b)){ st = 'kept'; cls = 'same'; kept++; }
+    else if (specificity(f,b) < specificity(f,a)){ st = 'generalised'; cls = 'gen'; gen++; }
+    else { st = specificity(f,b) > specificity(f,a) ? 'more detail' : 'replaced'; cls = 'add'; more++; }
+    // effect: this field alone, on top of the original
+    const t = clone(O); if (b) t[f] = b; else delete t[f];
+    const e = !a && !b ? 'Not shared either time' : same(a, b) ? 'No change from original' : (() => { const x = describe(diff(po, plan(t))); return x ? (x === 'labels & details only' ? 'Only labels & details changed' : `${x.charAt(0).toUpperCase() + x.slice(1)} from original`) : 'No change to the itinerary'; })();
+    return `<tr><td class="f">${FL[f]}</td><td>${esc(label(f,a))}</td><td>${esc(label(f,b))}</td><td><span class="st ${cls}">${st}</span></td><td>${esc(e)}</td></tr>`;
+  }).join('');
+  const nO = sharedCount(O), nR = sharedCount(R), d = diff(po, pr);
+  const stops = q => q.days.reduce((a,x) => a + x.slots.filter(y => y.it).length, 0), sR = stops(pr);
+  const plural = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`, names = fs => fs.map(f => FL[f].toLowerCase()), list = a => a.length < 2 ? a.join('') : a.slice(0,-1).join(', ') + ' and ' + a[a.length-1];
+  const remF = FIELDS.filter(f => O[f] && !R[f]), addF = FIELDS.filter(f => !O[f] && R[f]), genF = FIELDS.filter(f => O[f] && R[f] && !same(O[f], R[f]) && specificity(f,R[f]) < specificity(f,O[f])), repF = FIELDS.filter(f => O[f] && R[f] && !same(O[f], R[f]) && !genF.includes(f));
+  const unchanged = !C && same(O, R);
+  /* ---- the finding: made from what this visitor actually did ---- */
+  let h1, h2, body = '', undo = '';
+  const changeList = () => `<ul>${d.content.slice(0,4).map(c => `<li>Day ${c.i+1} · ${TIMES[c.s]}: ${esc(c.from || '(new day)')} → <b>${esc(c.to || '(day removed)')}</b>${reasonOf(c) ? ` <small>(${esc(c.undo ? 'the original was there for your ' + reasonOf(c) : 'because of your ' + reasonOf(c))})</small>` : ''}</li>`).join('')}${d.content.length > 4 ? `<li>…and ${d.content.length - 4} more</li>` : ''}</ul>`;
+  if (C){
+    h1 = 'Original cleared.'; h2 = `${plural(sR, 'stop')} in your revision.`;
+    body = `<p>You removed your first answers from this page, so there is nothing left here to compare your revision against, not even for you.</p>`;
+    undo = 'In a real service, clearing would be a request. What it removes, and when, would depend on the provider.';
+  } else if (!nO && !nR){
+    h1 = 'Nothing shared.'; h2 = `Still ${plural(sR, 'stop')}.`;
+    body = `<p>You went through the whole experiment on the destination alone. There is no personal exchange to compare and nothing personal to withdraw. The trip is general: it can’t account for a budget, companions or needs it was never told.</p>`;
+  } else if (unchanged){
+    h1 = 'No changes.'; h2 = `The same ${plural(sR, 'stop')}.`;
+    body = `<p>You kept your ${plural(nO, 'answer')} exactly as they were. That is a choice too: you saw what each answer did, and kept the trade.</p>`;
+  } else {
+    const delta = nO - nR;
+    h1 = delta > 0 ? `${plural(delta, 'fewer answer').replace('fewer answers','fewer answers')}.` : delta < 0 ? `${plural(-delta, 'more answer')}.` : genF.length ? `${plural(genF.length, 'answer')} made vaguer.` : `${plural(repF.length || 1, 'answer')} changed.`;
+    if (delta > 0) h1 = `${delta} fewer answer${delta === 1 ? '' : 's'}.`;
+    h2 = d.slots ? `${plural(d.slots, 'stop')} different.` : `The same ${plural(sR, 'stop')}.`;
+    const NOUN = {when:'your dates', interests:'your interests', who:'who you travel with', stay:'where you stay', budget:'your budget', prefs:'your preferences', extra:'your schedule'}, nn = fs => list(fs.map(f => NOUN[f]));
+    const did = [remF.length && `withholding ${nn(remF)}`, genF.length && `making ${nn(genF)} vaguer`, repF.length && `changing ${nn(repF)}`, addF.length && `adding ${nn(addF)}`].filter(Boolean);
+    if (!d.slots) body = `<p>For this particular itinerary, ${list(did)} didn’t change the recommended places.${d.pres || d.gained.length || d.lost.length ? ' Only labels and details changed' + (d.lost.length ? `: you lost “${esc(d.lost[0])}”` : '') + '.' : ''}</p><p>That doesn’t make ${remF.length + genF.length > 1 || did.length > 1 ? 'those details' : 'that detail'} unnecessary everywhere. A different trip, or a different service, might use ${remF.length + genF.length > 1 || did.length > 1 ? 'them' : 'it'}.</p>`;
+    else body = `<p>${did.length ? list(did).charAt(0).toUpperCase() + list(did).slice(1) : 'Your changes'} changed ${plural(d.slots, 'stop')}${d.days ? ` and the trip’s length by ${Math.abs(d.days)} day${Math.abs(d.days) > 1 ? 's' : ''}` : ''}. Here is what actually moved:</p>${changeList()}<p>${sR - d.slots > 0 ? `The other ${plural(Math.max(0, sR - d.slots), 'stop')} stayed the same.` : ''}</p>`;
+  }
+  if (!C && nO) undo = 'Changing your answers here changes what you would share next time. It doesn’t undo the first exchange: in a real service, what you already sent would depend on the provider, not on this revision.';
+  $('finding').innerHTML = `<div class="mini">Effect of revision · original vs revised itinerary</div><div class="fh"><span>${h1}</span><span>${h2}</span></div>${body}${undo ? `<div class="undo">${undo}</div>` : ''}`;
+  /* ---- which answers did real work, and which didn't ---- */
+  const real = [], little = [];
+  FIELDS.forEach(f => {
+    if (!C && O[f]){ const t2 = clone(O); delete t2[f]; const d2 = diff(plan(t2), po);
+      if (f === 'when'){
+        const lenSet = plan(t2).N !== po.N, ORD = ['first','second','third','fourth','fifth','sixth','seventh','eighth','ninth','tenth','eleventh'];
+        let rv = '';
+        if (!same(O.when, R.when)){
+          const t3 = clone(O); if (R.when) t3.when = R.when; else delete t3.when;
+          const p3 = plan(t3), dd = p3.N - po.N, ds = stops(p3) - stops(po), verb = R.when ? 'Revising them' : 'Removing them';
+          rv = dd > 0 ? ` ${verb} during revision resulted in ${dd === 1 ? `a ${ORD[po.N] || `${po.N + 1}th`} day` : `${dd} more days`} with ${plural(ds, 'additional stop')}.`
+            : dd < 0 ? ` ${verb} during revision removed ${dd === -1 ? 'a day' : `${-dd} days`} and ${plural(-ds, 'stop')}.`
+            : ` ${verb} during revision didn’t change the trip length.`;
+        }
+        (lenSet ? real : little).push(`${FL[f]}: ${label(f,O[f])} — ${lenSet ? 'determined the original trip length.' : 'only labels and details of your original itinerary.'}${rv}`);
+        return;
+      }
+      const rev = !R[f] ? ' · removed in your revision' : same(O[f], R[f]) ? '' : ` · revised to: ${label(f, R[f])}`;
+      (d2.slots ? real : little).push(`${FL[f]}: ${label(f,O[f])} — ${d2.slots ? `shaped ${plural(d2.slots, 'stop')} of your original itinerary` : d2.pres || d2.gained.length || d2.days ? 'only labels and details of your original itinerary' : 'no visible effect on your original itinerary'}${rev}`); }
+    else if (R[f]){ const t = clone(R); delete t[f]; const dd = diff(plan(t), pr);
+      (dd.slots ? real : little).push(`${FL[f]}: ${label(f,R[f])} (${C ? 'in your revision' : 'added in your revision'}) — ${dd.slots ? `shapes ${plural(dd.slots, 'stop')} of your revised itinerary` : dd.pres || dd.gained.length || dd.days ? 'only labels and details' : 'no visible effect'}`); }
+  });
+  $('kept').innerHTML = real.length ? real.map(x => `<li>${esc(x)}</li>`).join('')
+    : `<li>${!nR && !nO ? 'Nothing personal: every stop came from the destination alone' : !nR ? 'Nothing now: without any answers the plan falls back to the destination alone' : 'None of your answers changed which stops you got'}</li>`;
+  $('lost').innerHTML = little.length ? little.map(x => `<li>${esc(x)}</li>`).join('')
+    : `<li>${!nR && !nO ? 'Nothing to list: you shared no optional answers' : !nR ? 'Nothing to list: your revision has no optional answers' : 'Nothing: every answer you shared shaped at least one stop'}</li>`;
+  /* ---- the declaration, set against what was actually shared and revised ---- */
+  const db = $('declBack'), dec = S.decl && !/rather not/.test(S.decl) ? S.decl : null;
+  if (dec){
+    const kw = dec === 'A lot' ? 'a lot' : dec === 'Somewhat' ? 'somewhat' : 'not particularly', cares = dec !== 'Not particularly';
+    const keptF = FIELDS.filter(f => O[f] && R[f] && same(O[f], R[f])), gained = po.feats.length;
+    const step = (lab, big, sm) => `<div><span class="mini">${lab}</span><b>${big}</b><small>${sm}</small></div>`;
+    let strip, q;
+    if (C){
+      strip = step('You said', `“${esc(dec)}”`, 'at the start') + step('You shared', 'Unknown here', 'you cleared your first answers') + step('You now share', `${nR} of 7`, 'in your revision');
+      q = `<p>You cleared your first answers, so this page can no longer show what you gave. It can only show that, at the end, you chose to take it back. In a real service, that choice would reach only as far as the provider allows.</p>`;
+    } else if (!nO){
+      strip = step('You said', `“${esc(dec)}”`, 'at the start') + step('You shared', '0 of 7', 'only the destination') + step('You got', `${plural(sR, 'stop')}`, 'a general trip');
+      q = cares ? `<p>What you said and what you did point the same way: you gave nothing optional and still left with a trip. The convenience on offer wasn’t enough to make you trade. What would have been?</p>`
+        : `<p>You said privacy doesn’t matter much to you, yet you shared nothing optional. Maybe none of the questions seemed worth answering. Sometimes holding back is less about privacy than about whether the trade looks worth it.</p>`;
+    } else {
+      const revised = unchanged ? 'You kept them all' : `You kept ${keptF.length}${remF.length ? `, withdrew ${remF.length}` : ''}${genF.length ? `, made ${genF.length} vaguer` : ''}`;
+      strip = step('You said', `“${esc(dec)}”`, 'how much you care about privacy with AI') + step('You shared', `${nO} of 7`, `for a more convenient trip: ${esc(list(names(FIELDS.filter(f => O[f]))))}`) + step('Then, knowing more', esc(revised), unchanged ? 'after seeing what each one did' : d.slots ? `${plural(d.slots, 'stop')} changed as a result` : 'and your stops stayed the same');
+      if (cares){
+        q = `<p>You said you care ${kw} about keeping your information private. Then, for a more convenient, more personal trip, you ${nO === 7 ? 'answered every question' : `answered ${nO} of the 7 questions`}${S.jobs.length ? `, plus ${plural(S.jobs.length, 'piece')} of feedback` : ''}. Nothing pressured you, and every question could be skipped.</p>`
+          + (unchanged ? `<p>Even once you could see what each answer did, and what it might be used for elsewhere, you kept them all. Is that a contradiction, or a price you decided was worth paying?</p>`
+            : !d.slots ? `<p>When you took ${remF.length + genF.length > 1 ? 'some of it' : 'one of them'} back, your trip barely changed. So part of what you gave wasn’t needed for this result, yet in the moment it felt worth giving. Why?</p>`
+            : `<p>When you took some of it back, ${plural(d.slots, 'stop')} changed. You found a line between what you were willing to give and what you wanted in return. Where was it before you could see it?</p>`)
+          + `<p class="mini" style="margin-top:10px">The privacy paradox</p>`;
+      } else q = `<p>You said privacy doesn’t matter much to you, and you shared ${plural(nO, 'answer')}. ${unchanged ? 'Seeing what each one did didn’t change your mind.' : `Yet once you could see what each one did, you ${remF.length ? 'withdrew' : 'changed'} ${plural(remF.length + genF.length + repF.length || 1, 'answer')}. Did any of them feel different from the others?`}</p>`;
+    }
+    db.innerHTML = `<div class="mini">At the start you said</div><div class="q">“I care ${kw} about keeping my personal information private when using AI.”</div><div class="sd">${strip}</div>${q}`;
+    db.hidden = false;
+  } else db.hidden = true;
+  $('uncertain').innerHTML = (!C && !nO ? ['Whether a real service would log even a destination and your clicks','How long records of that kind are kept','What could be inferred from them, if anything'] : ['Whether first answers are retained, and for how long','Whether they may be used for analytics, ads or model improvement','What could have been inferred from them, and where that went']).map(x => `<li>${x}</li>`).join('');
+  $('finLede').innerHTML = C ? `Your revision shares <b>${nR} of 7</b>.` : `The first time you shared <b>${nO} of 7</b>. Your revision shares <b>${nR} of 7</b>${addF.length ? `, ${addF.length} added` : ''}${remF.length ? `, ${remF.length} removed` : ''}${genF.length ? `, ${genF.length} generalised` : ''}${repF.length ? `, ${repF.length} replaced or more detailed` : ''}.`;
+}
+$('finBack').onclick = () => { $('final').classList.remove('open'); renderAct3(); setView(S.view); };
+$('again').onclick = () => location.reload();
+
+buildDecl(); buildIndex();
+})();
+</script>
+</body>
+</html>
